@@ -22,6 +22,24 @@ byte smiley[8] = {
   B01110,
   B00000
 };
+byte test[8] = {
+  B00000,
+  B11111,
+  B00100,
+  B00100,
+  B00100,
+  B00100,
+  B00100
+};
+byte test2[8] = {
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B11111,
+  B00000
+};
 void setup() {
   lcd2.init();
   etime = millis();
@@ -30,12 +48,18 @@ void setup() {
   counter2 = 0;
   lcd2.backlight();
   lcd2.clear();
-  lcd.createChar(0, smiley);
+  lcd2.createChar(0, smiley);
+  lcd2.createChar(1, test);
+  lcd2.createChar(2, test2);
 
   // Display the custom character
-  lcd.setCursor(0, 0);
-  lcd.print("Smiley: ");
-  lcd.write(byte(0));
+  lcd2.setCursor(0, 0);
+  lcd2.print("Smiley: ");
+
+  lcd2.write(byte(1));
+  lcd2.write(byte(2));
+  lcd2.write(byte(1));
+
 }
 
 void loop() {
@@ -47,7 +71,7 @@ void loop() {
     String str = String(counter);
     lcd2.print(str + "セカンド");
     counter++;
-  }
+  }*/
   if (millis() - etime2 > 30) {
     etime2 = millis();
     lcd2.setCursor(counter2, 1);
@@ -59,5 +83,5 @@ void loop() {
     } else {
       counter2++;
     }
-  }*/
+  }
 }

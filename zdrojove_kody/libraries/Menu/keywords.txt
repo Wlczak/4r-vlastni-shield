@@ -1,16 +1,16 @@
 ################################################
-# Syntax Coloring Map For LCDChars
+# Syntax Coloring Map For Menu
 ################################################
 
 ################################################
 # Datatypes (KEYWORD1)
 ################################################
-LCDChars			KEYWORD1
+Menu			KEYWORD1
 
 ################################################
 # Methods and Functions (KEYWORD2)
 ################################################
-getChar				KEYWORD2
+placeholder			KEYWORD2
 
 ################################################
 # Instances (KEYWORD2)

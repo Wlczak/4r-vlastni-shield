@@ -7,12 +7,18 @@
 typedef uint8_t byte;
 
 int test;
+LCDChars lcd;
 Menu::Menu()
 {
-    test = 15;
+    LCDChars lcd;
 }
-int main(){
+void Menu::placeholder() {
+
+};
+/*
+int main()
+{
     Menu menu;
     std::cout << test;
     return 0;
-}
+}*/

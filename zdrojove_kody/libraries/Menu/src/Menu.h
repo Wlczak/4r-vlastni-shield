@@ -10,9 +10,9 @@ class Menu
 {
 public:
   Menu();
+  void placeholder();
 
 private:
-
 };
 
 #endif

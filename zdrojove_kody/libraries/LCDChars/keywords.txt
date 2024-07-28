@@ -1,0 +1,31 @@
+################################################
+# Syntax Coloring Map For LCDChars
+################################################
+
+################################################
+# Datatypes (KEYWORD1)
+################################################
+LCDChars			KEYWORD1
+
+################################################
+# Methods and Functions (KEYWORD2)
+################################################
+getChar				KEYWORD2
+
+################################################
+# Instances (KEYWORD2)
+################################################
+lcd					KEYWORD2
+lcd1				KEYWORD2
+lcd2				KEYWORD2
+lcd3				KEYWORD2
+
+################################################
+# Constants (LITERAL1)
+################################################
+CustomizedLetterNum		LITERAL1
+CustomizedLetters		LITERAL1
+ROMLetterNum			LITERAL1
+ROMLetters				LITERAL1
+MinExcludedChar			LITERAL1
+MaxExcludedChar			LITERAL1

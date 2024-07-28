@@ -5,8 +5,6 @@
 Menu menu;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-
-
 void setup() {
   byte vc1[] = {
     B01010,
@@ -25,7 +23,7 @@ void setup() {
     B00101,
     B10100,
     B10100,
-    B01000, 
+    B01000,
     B01000
   };
   byte vc3[] = {
@@ -35,7 +33,7 @@ void setup() {
     B11111,
     B00110,
     B01000,
-    B01000, 
+    B01000,
     B00110
   };
   // put your setup code here, to run once:
@@ -52,7 +50,7 @@ void setup() {
   lcd.write(0);
   lcd.write(1);
   lcd.write(3);
-  lcd.setCursor(1,1);
+  lcd.setCursor(1, 1);
   lcd.print("Vlasta's corp.");
 }
 

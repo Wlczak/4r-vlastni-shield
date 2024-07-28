@@ -6,6 +6,11 @@
             "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
             "args": [
                 "-fdiagnostics-color=always",
+                "-I${workspaceFolder}/../LiquidCrystal_I2C",
+                "-I${workspaceFolder}/",
+                "-I C:/Users/Wlczak/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/3.1.2/cores/esp8266/",
+                "-I C:/Users/Wlczak/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/3.1.2/variants/nodemcu",
+                "-I C:/Users/Wlczak/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/3.1.2/libraries",
                 "-g",
                 "${file}",
                 "-o",

@@ -10,6 +10,7 @@ class LCDChars
 {
 public:
   LCDChars();
+  //void loadChars();
   byte *getChar(int num);
 
 private:

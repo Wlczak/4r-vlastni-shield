@@ -1,11 +1,13 @@
-#include <LiquidCrystal_I2C.h>
 #include <wifi_auth.h>
 #include <Menu.h>
 
 Menu menu;
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+//LiquidCrystal_I2C lcd(0x27, 16, 2);
+
 
 void setup() {
+  menu.loadChars();
+  /*
   byte vc1[] = {
     B01010,
     B01010,
@@ -36,11 +38,10 @@ void setup() {
     B01000,
     B00110
   };
+  */
   // put your setup code here, to run once:
-  lcd.init();
-  lcd.clear();
-  lcd.backlight();
-
+ 
+  /*
   lcd.createChar(0, vc1);
   lcd.createChar(1, vc2);
   lcd.createChar(3, vc3);
@@ -52,6 +53,7 @@ void setup() {
   lcd.write(3);
   lcd.setCursor(1, 1);
   lcd.print("Vlasta's corp.");
+  */
 }
 
 void loop() {

@@ -1,24 +1,12 @@
 #include "Menu.h"
-#include <cstdint>
-#include <iostream>
-#include <bitset>
 #include "LCDChars.h"
 
-typedef uint8_t byte;
-
-int test;
-LCDChars lcd;
+LCDChars lcdChars;
 Menu::Menu()
 {
-    LCDChars lcd;
+    LCDChars lcdChars;
 }
-void Menu::placeholder() {
-
+void Menu::loadChars() {
+    lcdChars.begin();
+    lcdChars.loadChars();
 };
-
-int main()
-{
-    Menu menu;
-    std::cout << test;
-    return 0;
-}

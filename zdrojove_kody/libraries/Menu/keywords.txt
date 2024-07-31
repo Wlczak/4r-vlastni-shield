@@ -10,7 +10,7 @@ Menu			KEYWORD1
 ################################################
 # Methods and Functions (KEYWORD2)
 ################################################
-placeholder			KEYWORD2
+loadChars		KEYWORD2
 
 ################################################
 # Instances (KEYWORD2)

@@ -1,28 +1,37 @@
 #include "LCDChars.h"
-#include <cstdint>
-#include <iostream>
-#include <bitset>
-//#include <LiquidCrystal_I2C.h>
 
-typedef uint8_t byte;
-
-LCDChars::LCDChars()
+LCDChars::LCDChars() : lcd(0x27, 16, 2)
 {
-  _num = 0;
+  Serial.begin(9600);
 }
 
-/*void LCDChars::loadChars(){ 
-  LiquidCrystal_I2C lcd(0x27, 16, 2);
-  byte* tmp;
+void LCDChars::begin()
+{
+  lcd.init();
+  //lcd.begin(16, 2);
+  lcd.noBacklight();
+
+  Serial.print("help please");
+}
+
+void LCDChars::loadChars()
+{
+
+  lcd.clear();
+  byte *tmp;
   byte charMap[8];
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 8; i++)
+  {
     tmp = getChar(i);
-    for (int j = 0; j < 8; j++) {
+    for (int j = 0; j < 8; j++)
+    {
       charMap[j] = tmp[j];
     }
     lcd.createChar(i, charMap);
+    // lcd.write(byte(i));
   }
-}*/
+  lcd.print("fuck this");
+}
 
 byte *LCDChars::getChar(int num)
 {
@@ -120,20 +129,4 @@ byte *LCDChars::getChar(int num)
     break;
   }
   return character;
-}
-
-int main()
-{
-  LCDChars chars;
-  byte *test = chars.getChar(1);
-
-  std::cout << "Byte array contents (hexadecimal):\n";
-  for (int i = 0; i < sizeof(test); ++i)
-  {
-    std::bitset<5> binary(test[i]);
-    std::cout << binary << " ";
-  }
-  std::cout << std::dec << std::endl; // Reset to decimal output
-
-  return 0;
 }

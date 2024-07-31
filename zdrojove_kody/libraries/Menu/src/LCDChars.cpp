@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "LCDChars.h"
 #include <cstdint>
 #include <iostream>

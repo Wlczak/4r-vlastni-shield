@@ -15,10 +15,10 @@ Menu::Menu()
 void Menu::placeholder() {
 
 };
-/*
+
 int main()
 {
     Menu menu;
     std::cout << test;
     return 0;
-}*/
+}

@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "LCDChars.h"
 #include <cstdint>
 #include <iostream>
@@ -11,7 +12,7 @@ LCDChars::LCDChars()
   _num = 0;
 }
 
-/*void LCDChars::loadChars(){
+/*void LCDChars::loadChars(){ 
   LiquidCrystal_I2C lcd(0x27, 16, 2);
   byte* tmp;
   byte charMap[8];
@@ -122,7 +123,7 @@ byte *LCDChars::getChar(int num)
   return character;
 }
 
-int notMain()
+int main()
 {
   LCDChars chars;
   byte *test = chars.getChar(1);

@@ -10,7 +10,6 @@ void LCDChars::begin()
 {
   lcd.init();
   lcd.setCursor(0, 0);
-  // lcd.begin(16, 2);
   lcd.backlight();
   lcd.clear();
 }
@@ -31,14 +30,10 @@ void LCDChars::loadChars()
     lcd.setCursor(i, 0);
     lcd.write(byte(i));
   }
-  // lcd.clear();
 }
 
 byte *LCDChars::getChar(int num)
 {
-
-  _num = num;
-  // byte character[8];
   switch (num)
   {
   case 0:

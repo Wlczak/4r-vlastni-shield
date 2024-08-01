@@ -8,6 +8,6 @@ Menu::Menu()
 }
 void Menu::loadChars()
 {
-    lcdChars.begin();
+    //lcdChars.begin();
     lcdChars.loadChars();
 };

@@ -15,7 +15,7 @@ public:
 
 private:
   LiquidCrystal_I2C lcd;
-  int _num; // Private variable to store the pin number
+  
   byte character[8];
 };
 

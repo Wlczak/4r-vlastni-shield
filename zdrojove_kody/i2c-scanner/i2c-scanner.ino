@@ -3,7 +3,8 @@
 void setup() {
   Wire.begin();
   Serial.begin(9600);
-  while (!Serial); // Wait for serial monitor
+  while (!Serial)
+    ;  // Wait for serial monitor
   Serial.println("\nI2C Scanner");
 }
 

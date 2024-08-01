@@ -40,7 +40,7 @@ void setup() {
   };
   */
   // put your setup code here, to run once:
- 
+
   /*
   lcd.createChar(0, vc1);
   lcd.createChar(1, vc2);

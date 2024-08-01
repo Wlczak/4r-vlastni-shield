@@ -9,11 +9,7 @@
                 "C:/Users/Wlczak/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/3.1.2/variants/nodemcu",
                 "C:/Users/Wlczak/AppData/Local/Arduino15/packages/esp8266/hardware/esp8266/3.1.2/libraries"
             ],
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE"
-            ],
+            "defines": ["_DEBUG", "UNICODE", "_UNICODE"],
             "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
             "intelliSenseMode": "windows-gcc-x64",
             "cStandard": "c11",

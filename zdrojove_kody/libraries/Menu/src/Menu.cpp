@@ -6,7 +6,8 @@ Menu::Menu()
 {
     LCDChars lcdChars;
 }
-void Menu::loadChars() {
+void Menu::loadChars()
+{
     lcdChars.begin();
     lcdChars.loadChars();
 };

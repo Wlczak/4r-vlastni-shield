@@ -28,10 +28,10 @@ void LCDChars::loadChars()
       charMap[j] = tmp[j];
     }
     lcd.createChar(i, charMap);
-    lcd.setCursor(i,0);
+    lcd.setCursor(i, 0);
     lcd.write(byte(i));
   }
-  //lcd.clear();
+  // lcd.clear();
 }
 
 byte *LCDChars::getChar(int num)

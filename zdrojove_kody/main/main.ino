@@ -59,7 +59,6 @@ void setup() {
   lcd2.write(byte(1));
   lcd2.write(byte(2));
   lcd2.write(byte(1));
-
 }
 
 void loop() {
@@ -76,7 +75,7 @@ void loop() {
     etime2 = millis();
     lcd2.setCursor(counter2, 1);
     lcd2.print("-");
-    lcd2.setCursor(15-counter2,1);
+    lcd2.setCursor(15 - counter2, 1);
     lcd2.print("+");
     if (counter2 == 15) {
       counter2 = 0;

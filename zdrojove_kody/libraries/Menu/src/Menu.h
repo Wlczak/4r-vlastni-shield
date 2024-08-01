@@ -8,6 +8,7 @@ class Menu
 public:
   Menu();
   void loadChars();
+  void debug();
 
 private:
   LCDChars lcdChars;

@@ -28,10 +28,17 @@ void LCDChars::loadChars()
     }
     lcd.createChar(i, charMap);
     lcd.setCursor(i, 0);
+  }
+}
+void LCDChars::writeAllChars()
+{
+  lcd.clear();
+  lcd.setCursor(4, 0);
+  for (int i = 0; i < 8; i++)
+  {
     lcd.write(byte(i));
   }
 }
-
 byte *LCDChars::getChar(int num)
 {
   switch (num)

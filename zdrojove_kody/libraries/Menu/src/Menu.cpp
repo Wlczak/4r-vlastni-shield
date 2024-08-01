@@ -1,5 +1,4 @@
-#include "Menu.h"   
-
+#include "Menu.h"
 
 Menu::Menu()
 {
@@ -8,4 +7,9 @@ Menu::Menu()
 void Menu::loadChars()
 {
     lcdChars.loadChars();
+};
+
+void Menu::debug()
+{
+    lcdChars.writeAllChars();
 };

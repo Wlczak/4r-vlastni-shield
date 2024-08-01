@@ -11,11 +11,12 @@ public:
   LCDChars();
   void begin();
   void loadChars();
+  void writeAllChars();
   byte *getChar(int num);
 
 private:
   LiquidCrystal_I2C lcd;
-  
+
   byte character[8];
 };
 

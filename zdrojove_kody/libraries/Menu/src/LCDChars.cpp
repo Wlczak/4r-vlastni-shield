@@ -3,21 +3,21 @@
 LCDChars::LCDChars() : lcd(0x27, 16, 2)
 {
   Serial.begin(9600);
+  begin();
 }
 
 void LCDChars::begin()
 {
   lcd.init();
-  //lcd.begin(16, 2);
-  lcd.noBacklight();
-
-  Serial.print("help please");
+  lcd.setCursor(0, 0);
+  // lcd.begin(16, 2);
+  lcd.backlight();
+  lcd.clear();
 }
 
 void LCDChars::loadChars()
 {
 
-  lcd.clear();
   byte *tmp;
   byte charMap[8];
   for (int i = 0; i < 8; i++)
@@ -30,7 +30,7 @@ void LCDChars::loadChars()
     lcd.createChar(i, charMap);
     // lcd.write(byte(i));
   }
-  lcd.print("fuck this");
+  //lcd.clear();
 }
 
 byte *LCDChars::getChar(int num)

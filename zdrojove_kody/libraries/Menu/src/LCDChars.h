@@ -3,7 +3,7 @@
 #define LCDChars_h
 
 #include <Arduino.h>
-#include <LCDI2C_Katakana_Symbols.h>
+#include <LiquidCrystal_I2C.h>
 
 class LCDChars
 {
@@ -14,7 +14,7 @@ public:
   byte *getChar(int num);
 
 private:
-  LCDI2C_Katakana_Symbols lcd;  
+  LiquidCrystal_I2C lcd;
   int _num; // Private variable to store the pin number
   byte character[8];
 };

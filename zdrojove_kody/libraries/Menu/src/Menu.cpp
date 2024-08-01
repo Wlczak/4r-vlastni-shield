@@ -1,13 +1,11 @@
-#include "Menu.h"
-#include "LCDChars.h"
+#include "Menu.h"   
 
-LCDChars lcdChars;
+
 Menu::Menu()
 {
     LCDChars lcdChars;
 }
 void Menu::loadChars()
 {
-    //lcdChars.begin();
     lcdChars.loadChars();
 };

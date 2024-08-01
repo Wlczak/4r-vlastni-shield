@@ -1,6 +1,7 @@
-
 #ifndef Menu_h
 #define Menu_h
+
+#include "LCDChars.h"
 
 class Menu
 {
@@ -9,6 +10,7 @@ public:
   void loadChars();
 
 private:
+  LCDChars lcdChars;
 };
 
 #endif

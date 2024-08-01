@@ -2,7 +2,7 @@
 
 LCDChars::LCDChars() : lcd(0x27, 16, 2)
 {
-  Serial.begin(9600);
+  // Serial.begin(9600); //debugging only
   begin();
 }
 
@@ -38,26 +38,6 @@ byte *LCDChars::getChar(int num)
   {
   case 0:
     character[0] = 0b00000;
-    character[1] = 0b00110;
-    character[2] = 0b01100;
-    character[3] = 0b10000;
-    character[4] = 0b11111;
-    character[5] = 0b10000;
-    character[6] = 0b01100;
-    character[7] = 0b00110;
-    break;
-  case 1:
-    character[0] = 0b00000;
-    character[1] = 0b00000;
-    character[2] = 0b00110;
-    character[3] = 0b01000;
-    character[4] = 0b11111;
-    character[5] = 0b01000;
-    character[6] = 0b00110;
-    character[7] = 0b00000;
-    break;
-  case 2:
-    character[0] = 0b00000;
     character[1] = 0b00000;
     character[2] = 0b00100;
     character[3] = 0b01000;
@@ -66,7 +46,7 @@ byte *LCDChars::getChar(int num)
     character[6] = 0b00100;
     character[7] = 0b00000;
     break;
-  case 3:
+  case 1:
     character[0] = 0b11111;
     character[1] = 0b11111;
     character[2] = 0b11011;
@@ -75,17 +55,36 @@ byte *LCDChars::getChar(int num)
     character[5] = 0b10111;
     character[6] = 0b11011;
     character[7] = 0b11111;
-
+    break;
+  case 2:
+    character[0] = 0b01010;
+    character[1] = 0b01010;
+    character[2] = 0b01010;
+    character[3] = 0b00100;
+    character[4] = 0b11111;
+    character[5] = 0b00000;
+    character[6] = 0b00000;
+    character[7] = 0b00000;
+    break;
+  case 3:
+    character[0] = 0b00010;
+    character[1] = 0b00010;
+    character[2] = 0b00101;
+    character[3] = 0b00101;
+    character[4] = 0b10100;
+    character[5] = 0b10100;
+    character[6] = 0b01000;
+    character[7] = 0b01000;
     break;
   case 4:
-    character[0] = 0b10001;
+    character[0] = 0b00000;
     character[1] = 0b00000;
     character[2] = 0b00000;
-    character[3] = 0b00000;
-    character[4] = 0b11000;
-    character[5] = 0b00000;
-    character[6] = 0b11111;
-    character[7] = 0b10001;
+    character[3] = 0b11111;
+    character[4] = 0b00110;
+    character[5] = 0b01000;
+    character[6] = 0b01000;
+    character[7] = 0b00110;
     break;
   case 5:
     character[0] = 0b10001;

@@ -8,15 +8,13 @@
 class LCDChars
 {
 public:
-  LCDChars();
-  void begin();
+  LCDChars(LiquidCrystal_I2C &lcd);
   void loadChars();
   void writeAllChars();
   byte *getChar(int num);
 
 private:
-  LiquidCrystal_I2C lcd;
-
+  LiquidCrystal_I2C &lcd;
   byte character[8];
 };
 

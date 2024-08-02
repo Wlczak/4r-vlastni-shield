@@ -1,18 +1,10 @@
 #include "LCDChars.h"
 
-LCDChars::LCDChars() : lcd(0x27, 16, 2)
+LCDChars::LCDChars(LiquidCrystal_I2C &lcd) : lcd(lcd)
 {
-  // Serial.begin(9600); //debugging only
-  begin();
+  //Serial.begin(9600); //debugging only
 }
 
-void LCDChars::begin()
-{
-  lcd.init();
-  lcd.setCursor(0, 0);
-  lcd.backlight();
-  lcd.clear();
-}
 
 void LCDChars::loadChars()
 {
@@ -27,8 +19,8 @@ void LCDChars::loadChars()
       charMap[j] = tmp[j];
     }
     lcd.createChar(i, charMap);
-    lcd.setCursor(i, 0);
   }
+  lcd.setCursor(0,0);
 }
 void LCDChars::writeAllChars()
 {

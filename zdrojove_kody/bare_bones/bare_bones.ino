@@ -3,7 +3,8 @@ Menu menu;
 void setup() {
   // put your setup code here, to run once:
   menu.loadChars();
-  menu.debug();
+  // menu.debug();
+  menu.loadingScreen();
 }
 
 void loop() {

@@ -9,9 +9,11 @@ public:
   Menu();
   void loadChars();
   void debug();
+  void loadingScreen();
 
 private:
   LCDChars lcdChars;
+  LiquidCrystal_I2C lcd;
 };
 
 #endif

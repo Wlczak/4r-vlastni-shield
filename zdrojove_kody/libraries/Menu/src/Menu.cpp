@@ -78,13 +78,30 @@ void Menu::clearArea(int x1, int x2, int y1, int y2)
 
 void Menu::typeOut(int startX, int startY, String msg)
 {
-    if (msg.length() < 16 - startX)
+    
+    if (msg.length() <= 16 - startX)
     {
+        for (int i = 0; i < 2; i++)
+        {
+            lcd.setCursor(startX, startY);
+            lcd.print((char)255);
+            delay(333);
+            lcd.setCursor(startX, startY);
+            lcd.print((char)32);
+            delay(333);
+        }
+
         for (int i = 0; i < msg.length(); i++)
         {
+            lcd.setCursor(i + startX + 1, startY);
+            lcd.print((char)255);
+            lcd.setCursor(i + startX, startY);
             lcd.print(msg.charAt(i));
             delay(100);
         }
+        lcd.setCursor(msg.length() + startX, startY);
+        lcd.print(" ");
+        
     }
     else
     {

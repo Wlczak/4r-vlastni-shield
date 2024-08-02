@@ -5,7 +5,8 @@ void setup() {
   menu.loadChars();
   // menu.debug();
   menu.loadingScreen();
-  menu.typeOut(0, 0, "Typed out text");
+  menu.typeOut(1, 0, "Typed out text");
+  menu.typeOut(1, 0, "is really cool");
 }
 
 void loop() {

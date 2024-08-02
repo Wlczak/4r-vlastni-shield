@@ -15,14 +15,63 @@ void Menu::loadChars()
 void Menu::debug()
 {
     lcdChars.writeAllChars();
-};
+}
 
 void Menu::loadingScreen()
 {
+    bool finished = false;
+    int dotCount = 1;
+    long mainTime;
+    long time;
+
     lcd.setCursor(6, 0);
     lcd.write(2);
     lcd.write(3);
     lcd.write(4);
     lcd.setCursor(1, 1);
     lcd.print("Vlasta's corp.");
+    delay(1500);
+
+    clearArea(0, 15, 1, 1);
+    lcd.setCursor(3, 1);
+    lcd.print("Loading");
+
+    time = millis();
+    mainTime = millis();
+
+    while (!finished)
+    {
+        if (millis() - time > 300)
+        {
+            if (dotCount >= 4)
+            {
+                clearArea(10, 12, 1, 1);
+                dotCount = 1;
+            }
+
+            lcd.setCursor((9 + dotCount), 1);
+            lcd.print(".");
+
+            dotCount++;
+            time = millis();
+        }
+        if (millis() - mainTime > 3000)
+        {
+            finished = true;
+            lcd.clear();
+        }
+        delay(50);
+    }
+}
+
+void Menu::clearArea(int x1, int x2, int y1, int y2)
+{
+    for (int x = x1; x <= x2; x++)
+    {
+        for (int y = y1; y <= y2; y++)
+        {
+            lcd.setCursor(x, y);
+            lcd.print(" ");
+        }
+    }
 }

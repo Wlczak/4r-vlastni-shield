@@ -75,3 +75,29 @@ void Menu::clearArea(int x1, int x2, int y1, int y2)
         }
     }
 }
+
+void Menu::typeOut(int startX, int startY, String msg)
+{
+    if (msg.length() < 16 - startX)
+    {
+        for (int i = 0; i < msg.length(); i++)
+        {
+            lcd.print(msg.charAt(i));
+            delay(100);
+        }
+    }
+    else
+    {
+        error("string too long");
+    }
+}
+void Menu::error(String msg)
+{
+    lcd.clear();
+    lcd.backlight();
+    lcd.setCursor(5, 0);
+    lcd.print("Error");
+
+    lcd.setCursor(0, 1);
+    lcd.print(msg);
+}

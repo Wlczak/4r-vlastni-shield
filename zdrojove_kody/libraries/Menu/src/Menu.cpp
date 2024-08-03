@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu() : lcd(0x27, 16, 2), lcdChars(lcd)
+Menu::Menu() : lcd(0x27, cols, 2), lcdChars(lcd)
 {
     lcd.init();
     lcd.setCursor(0, 0);
@@ -65,7 +65,7 @@ void Menu::loadingScreen()
 }
 void Menu::clearArea()
 {
-    clearArea(0, 16, 0, 1);
+    clearArea(0, cols, 0, 1);
 }
 
 void Menu::clearArea(int x1, int x2, int y1, int y2)
@@ -82,9 +82,9 @@ void Menu::clearArea(int x1, int x2, int y1, int y2)
 
 void Menu::centerTypeOut(int row, String msg)
 {
-    if (msg.length() <= 16)
+    if (msg.length() <= cols)
     {
-        typeOut(floor((16 - msg.length()) / 2), row, msg);
+        typeOut(floor((cols - msg.length()) / 2), row, msg);
     }
     else
     {
@@ -96,9 +96,9 @@ void Menu::centerTypeOut(int row, String msg)
 void Menu::typeOut(int startX, int startY, String msg)
 {
 
-    if (msg.length() <= 16 - startX)
+    if (msg.length() <= cols - startX)
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < rows; i++)
         {
             lcd.setCursor(startX, startY);
             lcd.print((char)255);

@@ -63,6 +63,10 @@ void Menu::loadingScreen()
         delay(50);
     }
 }
+void Menu::clearArea()
+{
+    clearArea(0, 16, 0, 1);
+}
 
 void Menu::clearArea(int x1, int x2, int y1, int y2)
 {
@@ -76,9 +80,21 @@ void Menu::clearArea(int x1, int x2, int y1, int y2)
     }
 }
 
+void Menu::centerTypeOut(int row, String msg)
+{
+    if (msg.length() <= 16)
+    {
+        typeOut(floor((16 - msg.length()) / 2), row, msg);
+    }
+    else
+    {
+        error("string too long");
+    }
+}
+
 void Menu::typeOut(int startX, int startY, String msg)
 {
-    
+
     if (msg.length() <= 16 - startX)
     {
         for (int i = 0; i < 2; i++)
@@ -101,7 +117,6 @@ void Menu::typeOut(int startX, int startY, String msg)
         }
         lcd.setCursor(msg.length() + startX, startY);
         lcd.print(" ");
-        
     }
     else
     {

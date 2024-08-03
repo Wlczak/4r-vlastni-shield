@@ -89,6 +89,7 @@ void Menu::centerTypeOut(int row, String msg)
     else
     {
         error("string too long");
+        delay(120000);
     }
 }
 

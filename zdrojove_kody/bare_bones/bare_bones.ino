@@ -7,6 +7,8 @@ bool needToChangeMenu = true;
 int incomingSerial;
 String menuName = "Main menu";
 String menuItems[] = { "thing1", "thing2", "thing3", "thing4" };
+long fpsTime = millis();
+long fpsCounter = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -26,9 +28,9 @@ void handleSerial() {
   switch (incomingSerial) {
     case 49:  // left
       menu.typeOut(0, 0, "hello kello to");
-      delay(1000);
       menu.clearArea();
-      //Serial.println("left");
+
+      Serial.println("left");
       break;
     case 50:  // down
       Serial.println("down");
@@ -47,8 +49,20 @@ void handleSerial() {
   }
 }
 
+void fps() {
+  fpsCounter++;
+  if (millis() - fpsTime > 1000) {
+    // Serial.println(millis() - fpsTime);
+    Serial.println(fpsCounter);
+    fpsTime = millis();
+    fpsCounter = 0;
+  }
+}
+
 void loop() {
   if (Serial.available() > 0) {
     handleSerial();
   }
+  menu.render();
+  //fps();
 }

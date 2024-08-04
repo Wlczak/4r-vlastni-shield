@@ -12,6 +12,7 @@ class Menu
 {
 public:
   Menu();
+
   // execute slowly, works like intended
   void loadChars();
   void debug();
@@ -28,6 +29,7 @@ public:
   void changeMenu(String menuName, String &menuItems);
 
   // rendering engine methods
+  void render();
 
 private:
   // object declaration
@@ -39,15 +41,20 @@ private:
   int rows = 2;
 
   // engine variables
-  String renderQueue[8];
-  bool renderStatus[8];
-  int renderInt[8][3];
+  int queueSize = 8;
+  int renderQueue[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+  // render parameters
+  int renderFramesLeft[8];
+  int renderDuration[8];
+  long renderDelay[8][2];
+  int renderInt[8][2];
   String renderString[8][1];
 
   // engine methods
-  void render();
-  void addTask(String taskType, int int1, int int2, String string1);
-  void renderTypeOut();
+  int addTask(int taskType);
+  int addTask(int taskType, int int1, int int2, String string1);
+  void renderTypeOut(int taskId);
 };
 
 #endif

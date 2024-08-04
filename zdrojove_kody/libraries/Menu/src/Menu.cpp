@@ -97,7 +97,14 @@ void Menu::typeOut(int startX, int startY, String msg)
 {
     if (msg.length() <= cols - startX)
     {
-        addTask("typeOut", startX, startY, msg);
+        int taskId = addTask(1, startX, startY, msg);
+        if (taskId >= 0)
+        {
+            int frameCount = 4 + msg.length() + 1; // 2x on and off + typing out + delete cursor
+            renderFramesLeft[taskId] = frameCount;
+            renderDuration[taskId] = frameCount;
+            renderDelay[taskId][0] = 333;
+        }
     }
     else
     {

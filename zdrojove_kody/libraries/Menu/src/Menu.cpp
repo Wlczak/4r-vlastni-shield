@@ -90,35 +90,14 @@ void Menu::centerTypeOut(int row, String msg)
     else
     {
         error("string too long");
-        delay(120000);
     }
 }
 
 void Menu::typeOut(int startX, int startY, String msg)
 {
-
     if (msg.length() <= cols - startX)
     {
-        for (int i = 0; i < rows; i++)
-        {
-            lcd.setCursor(startX, startY);
-            lcd.print((char)255);
-            delay(333);
-            lcd.setCursor(startX, startY);
-            lcd.print((char)32);
-            delay(333);
-        }
-
-        for (int i = 0; i < msg.length(); i++)
-        {
-            lcd.setCursor(i + startX + 1, startY);
-            lcd.print((char)255);
-            lcd.setCursor(i + startX, startY);
-            lcd.print(msg.charAt(i));
-            delay(100);
-        }
-        lcd.setCursor(msg.length() + startX, startY);
-        lcd.print(" ");
+        addTask("typeOut", startX, startY, msg);
     }
     else
     {
@@ -134,6 +113,7 @@ void Menu::error(String msg)
 
     lcd.setCursor(0, 1);
     lcd.print(msg);
+    delay(120000);
 }
 
 void Menu::changeMenu(String menuName, String &menuItems)

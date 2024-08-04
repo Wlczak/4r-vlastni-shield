@@ -25,9 +25,10 @@ void handleSerial() {
 
   switch (incomingSerial) {
     case 49:  // left
-      Serial.println("left");
-      menuId = 1;
-      needToChangeMenu = true;
+      menu.typeOut(0, 0, "hello kello to");
+      delay(1000);
+      menu.clearArea();
+      //Serial.println("left");
       break;
     case 50:  // down
       Serial.println("down");
@@ -49,16 +50,5 @@ void handleSerial() {
 void loop() {
   if (Serial.available() > 0) {
     handleSerial();
-  }
-  if (needToChangeMenu) {
-    switch (menuId) {
-      case 0:
-        menu.changeMenu(menuName, *menuItems);
-        break;
-      case 1:
-        menu.changeMenu("left", *menuItems);
-        break;
-    }
-    needToChangeMenu = false;
   }
 }

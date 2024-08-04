@@ -39,4 +39,38 @@ int Menu::addTask(int taskType, int int1, int int2, String string1)
 
 void Menu::renderTypeOut(int taskId)
 {
+    int &framesLeft = renderFramesLeft[taskId];
+    int duration = renderDuration[taskId];
+    int currentFrame = duration - framesLeft;
+    long &delay = renderDelay[taskId][0];
+    long &lastMillis = renderDelay[taskId][1];
+
+    int startX = renderInt[taskId][0];
+    int startY = renderInt[taskId][1];
+    String msg = renderString[taskId][0];
+
+    if (millis() - lastMillis > delay)
+    {
+        lastMillis = millis();
+        if (currentFrame < 4)
+        {
+
+            lcd.setCursor(startX, startY);
+            if (currentFrame % 2 == 0)
+            {
+                lcd.write((char)255);
+                Serial.println("hello?");
+            }
+            else
+            {
+                lcd.write((char)32);
+                Serial.println("hello!");
+            }
+        }
+        framesLeft--;
+        if (framesLeft == 0)
+        {
+            renderQueue[taskId] = 0;
+        }
+    }
 }

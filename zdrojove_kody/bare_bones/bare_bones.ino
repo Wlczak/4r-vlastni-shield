@@ -28,8 +28,6 @@ void handleSerial() {
   switch (incomingSerial) {
     case 49:  // left
       menu.typeOut(0, 0, "hello kello to");
-      menu.clearArea();
-
       Serial.println("left");
       break;
     case 50:  // down

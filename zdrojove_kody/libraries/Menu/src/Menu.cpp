@@ -104,6 +104,7 @@ void Menu::typeOut(int startX, int startY, String msg)
             renderFramesLeft[taskId] = frameCount;
             renderDuration[taskId] = frameCount;
             renderDelay[taskId][0] = 333;
+            renderDelay[taskId][1] = millis();
         }
     }
     else

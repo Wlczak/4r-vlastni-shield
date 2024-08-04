@@ -20,6 +20,7 @@ public:
   void centerTypeOut(int row, String msg);
   void typeOut(int startX, int startY, String msg);
   void error(String msg);
+  void changeMenu(String menuName, String &menuItems);
 
 private:
   LCDChars lcdChars;

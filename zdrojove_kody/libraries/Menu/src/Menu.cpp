@@ -15,6 +15,7 @@ void Menu::loadChars()
 void Menu::debug()
 {
     lcdChars.writeAllChars();
+    delay(120000);
 }
 
 void Menu::loadingScreen()
@@ -133,4 +134,10 @@ void Menu::error(String msg)
 
     lcd.setCursor(0, 1);
     lcd.print(msg);
+}
+
+void Menu::changeMenu(String menuName, String &menuItems)
+{
+    clearArea();
+    centerTypeOut(0, menuName);
 }

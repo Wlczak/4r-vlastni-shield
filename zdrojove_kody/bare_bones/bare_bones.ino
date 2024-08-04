@@ -5,6 +5,8 @@ Menu menu;
 int menuId = 0;
 bool needToChangeMenu = true;
 int incomingSerial;
+String menuName = "Main menu";
+String menuItems[] = { "thing1", "thing2", "thing3", "thing4" };
 
 void setup() {
   Serial.begin(9600);
@@ -16,11 +18,6 @@ void setup() {
   menu.typeOut(1, 1, "V.corp. shield");
   delay(600);
   menu.clearArea();*/
-
-  // opens main menu
-  menu.centerTypeOut(0, "Main menu");
-  delay(500);
-  menu.clearArea();
 }
 
 void handleSerial() {
@@ -29,6 +26,8 @@ void handleSerial() {
   switch (incomingSerial) {
     case 49:  // left
       Serial.println("left");
+      menuId = 1;
+      needToChangeMenu = true;
       break;
     case 50:  // down
       Serial.println("down");
@@ -39,8 +38,11 @@ void handleSerial() {
     case 53:  // up
       Serial.println("up");
       break;
+    case 114:  // r
+      break;
     default:
-      Serial.println("undefined");
+      Serial.print("undefined: ");
+      Serial.println(incomingSerial);
   }
 }
 
@@ -50,6 +52,13 @@ void loop() {
   }
   if (needToChangeMenu) {
     switch (menuId) {
+      case 0:
+        menu.changeMenu(menuName, *menuItems);
+        break;
+      case 1:
+        menu.changeMenu("left", *menuItems);
+        break;
     }
+    needToChangeMenu = false;
   }
 }

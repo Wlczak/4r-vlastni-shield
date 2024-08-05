@@ -30,13 +30,14 @@ void handleSerial() {
 
   switch (incomingSerial) {
     case 49:  // left
-      menu.typeOut(0, 0, "hello kello to");
-      Serial.println("left");
+      menu.typeOut(1, 1, "left");
       break;
     case 50:  // down
+      menu.typeOut(8, 1, "down");
       Serial.println("down");
       break;
     case 51:  // right
+      menu.centerTypeOut(0, "right");
       Serial.println("right");
       break;
     case 53:  // up
@@ -71,7 +72,6 @@ void loop() {
     handleSerial();
   }
   menu.render();
-  //fps();
   if (showFps) {
     fps();
   }

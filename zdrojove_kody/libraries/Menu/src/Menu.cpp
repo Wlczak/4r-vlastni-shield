@@ -15,7 +15,8 @@ void Menu::loadChars()
 void Menu::debug()
 {
     lcdChars.writeAllChars();
-    delay(120000);
+    delay(3000);
+    lcd.clear();
 }
 
 void Menu::loadingScreen()
@@ -100,7 +101,7 @@ void Menu::typeOut(int startX, int startY, String msg)
         int taskId = addTask(1, startX, startY, msg);
         if (taskId >= 0)
         {
-            int frameCount = 4 + msg.length() + 1; // 2x on and off + typing out + delete cursor
+            int frameCount = 4 + msg.length(); // 2x on and off + typing out + delete cursor (deletes on last frame)
             renderFramesLeft[taskId] = frameCount;
             renderDuration[taskId] = frameCount;
             renderDelay[taskId][0] = 333;
@@ -121,7 +122,7 @@ void Menu::error(String msg)
 
     lcd.setCursor(0, 1);
     lcd.print(msg);
-    delay(120000);
+    delay(5000);
 }
 
 void Menu::changeMenu(String menuName, String &menuItems)

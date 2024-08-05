@@ -24,9 +24,13 @@ public:
   void clearArea(int x1, int x2, int y1, int y2);
 
   // execute slowly - stops the whole code from executing
+  void changeMenu(String menuName, String &menuItems);
+  
+  // modular frame by frame sytem
   void centerTypeOut(int row, String msg);
   void typeOut(int startX, int startY, String msg);
-  void changeMenu(String menuName, String &menuItems);
+
+
 
   // rendering engine methods
   void render();

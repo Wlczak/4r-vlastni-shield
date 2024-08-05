@@ -4,6 +4,12 @@ void Menu::render()
 {
     for (int i = 0; i < queueSize; i++)
     {
+        // cleans finished tasks
+        if (renderFramesLeft[i] == 0)
+        {
+            renderQueue[i] = 0;
+        }
+
         switch (renderQueue[i])
         {
         case 1:
@@ -42,12 +48,14 @@ void Menu::renderTypeOut(int taskId)
     int &framesLeft = renderFramesLeft[taskId];
     int duration = renderDuration[taskId];
     int currentFrame = duration - framesLeft;
+    int charIndex = currentFrame - 4; // -4 == first four frames
     long &delay = renderDelay[taskId][0];
     long &lastMillis = renderDelay[taskId][1];
 
     int startX = renderInt[taskId][0];
     int startY = renderInt[taskId][1];
     String msg = renderString[taskId][0];
+
 
     if (millis() - lastMillis > delay)
     {
@@ -59,18 +67,24 @@ void Menu::renderTypeOut(int taskId)
             if (currentFrame % 2 == 0)
             {
                 lcd.write((char)255);
-                Serial.println("hello?");
             }
             else
             {
                 lcd.write((char)32);
-                Serial.println("hello!");
             }
+        }
+        else
+        {
+            lcd.setCursor(startX + charIndex, startY);
+            lcd.print(msg.charAt(charIndex));
+            lcd.setCursor(startX + charIndex + 1, startY);
+            lcd.write((char)255);
         }
         framesLeft--;
         if (framesLeft == 0)
         {
-            renderQueue[taskId] = 0;
+            lcd.setCursor(startX + charIndex + 1, startY);
+            lcd.write((char)32);
         }
     }
 }

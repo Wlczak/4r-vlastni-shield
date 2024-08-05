@@ -22,6 +22,10 @@ void Menu::render()
             case 1:
                 renderTypeOut(i);
                 break;
+
+            case 2:
+                renderClearArea(i);
+                break;
             }
         }
 
@@ -77,6 +81,18 @@ int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, String st
     }
     return taskId;
 }
+int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, int int3, int int4)
+{
+    int taskId = addTask(taskType, simultaneous);
+    if (taskId >= 0)
+    {
+        renderInt[taskId][0] = int1;
+        renderInt[taskId][1] = int2;
+        renderInt[taskId][2] = int3;
+        renderInt[taskId][3] = int4;
+    }
+    return taskId;
+}
 
 void Menu::renderTypeOut(int taskId)
 {
@@ -121,4 +137,22 @@ void Menu::renderTypeOut(int taskId)
             lcd.write((char)32);
         }
     }
+}
+
+void Menu::renderClearArea(int taskId)
+{
+    int x1 = renderInt[taskId][0];
+    int x2 = renderInt[taskId][1];
+    int y1 = renderInt[taskId][2];
+    int y2 = renderInt[taskId][3];
+
+    for (int x = x1; x <= x2; x++)
+    {
+        for (int y = y1; y <= y2; y++)
+        {
+            lcd.setCursor(x, y);
+            lcd.print(" ");
+        }
+    }
+    renderFramesLeft[taskId]--;
 }

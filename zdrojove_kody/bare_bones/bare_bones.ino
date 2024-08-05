@@ -18,11 +18,11 @@ void setup() {
 
   menu.loadChars();
 
-  /* menu.loadingScreen();
-  menu.typeOut(1, 0, "Welcome to:");
-  menu.typeOut(1, 1, "V.corp. shield");
-  delay(600);
-  menu.clearArea();*/
+  menu.loadingScreen();
+  menu.typeOut(1, 0, "Welcome to:", false);
+  menu.typeOut(1, 1, "V.corp. shield", false);
+  //delay(600);
+  menu.clearArea(false);
 }
 
 void handleSerial() {
@@ -42,6 +42,7 @@ void handleSerial() {
       break;
     case 53:  // up
       Serial.println("up");
+      menu.clearArea(0, 15, 0, 0, true);
       break;
     case 114:  // r
       break;
@@ -50,6 +51,9 @@ void handleSerial() {
       break;
     case 100:  // d
       debug = !debug;
+      break;
+    case 109:  // m
+      menu.changeMenu("Main menu", menuItems);
       break;
     default:
       Serial.print("undefined: ");

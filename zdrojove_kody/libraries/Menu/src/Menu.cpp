@@ -34,7 +34,8 @@ void Menu::loadingScreen()
     lcd.print("Vlasta's corp.");
     delay(1500);
 
-    clearArea(0, 15, 1, 1);
+    clearArea(0, 15, 1, 1, true);
+    render();
     lcd.setCursor(3, 1);
     lcd.print("Loading");
 
@@ -47,7 +48,8 @@ void Menu::loadingScreen()
         {
             if (dotCount >= 4)
             {
-                clearArea(10, 12, 1, 1);
+                clearArea(10, 12, 1, 1, true);
+                render();
                 dotCount = 1;
             }
 
@@ -65,21 +67,27 @@ void Menu::loadingScreen()
         delay(50);
     }
 }
-void Menu::clearArea()
+void Menu::clearArea(bool simultaneous)
 {
-    clearArea(0, cols, 0, 1);
+    clearArea(0, cols, 0, 1, simultaneous);
 }
 
-void Menu::clearArea(int x1, int x2, int y1, int y2)
+void Menu::clearArea(int x1, int x2, int y1, int y2, bool simultaneous)
 {
-    for (int x = x1; x <= x2; x++)
+    int taskId = addTask(2, simultaneous, x1, x2, y1, y2);
+    if (taskId >= 0)
     {
-        for (int y = y1; y <= y2; y++)
-        {
-            lcd.setCursor(x, y);
-            lcd.print(" ");
-        }
+        renderInt[taskId][0] = x1;
+        renderInt[taskId][1] = x2;
+        renderInt[taskId][2] = y1;
+        renderInt[taskId][3] = y2;
+
+        renderFramesLeft[taskId] = 1;
+        renderDelay[taskId][0] = 0;
+        renderDelay[taskId][1] = millis();
     }
+
+    renderInt[8][4];
 }
 
 void Menu::centerTypeOut(int row, String msg, bool simultaneous)
@@ -125,8 +133,13 @@ void Menu::error(String msg)
     delay(5000);
 }
 
-void Menu::changeMenu(String menuName, String &menuItems)
+void Menu::changeMenu(String menuName, String menuItems[])
 {
-    clearArea();
+    clearArea(true);
     centerTypeOut(0, menuName, false);
+    for (int i = 0; i < 4; i++)
+    {
+        Serial.println(menuItems[i]);
+    }
 }
+

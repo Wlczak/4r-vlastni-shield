@@ -20,11 +20,11 @@ public:
   void error(String msg);
 
   // execute in single frame - fast enough to use anywhere in code
-  void clearArea();
-  void clearArea(int x1, int x2, int y1, int y2);
+  void clearArea(bool simultaneous);
+  void clearArea(int x1, int x2, int y1, int y2, bool simultaneous);
 
   // execute slowly - stops the whole code from executing
-  void changeMenu(String menuName, String &menuItems);
+  void changeMenu(String menuName, String menuItems[]);
 
   // modular frame by frame sytem
   void centerTypeOut(int row, String msg, bool simultaneous);
@@ -51,13 +51,15 @@ private:
   int renderFramesLeft[8];
   int renderDuration[8];
   long renderDelay[8][2];
-  int renderInt[8][2];
+  int renderInt[8][4];
   String renderString[8][1];
 
   // engine methods
   int addTask(int taskType, bool simultaneous);
   int addTask(int taskType, bool simultaneous, int int1, int int2, String string1);
+  int addTask(int taskType, bool simultaneous, int int1, int int2, int int3, int int4);
   void renderTypeOut(int taskId);
+  void renderClearArea(int taskId);
   int getMaxRenderOrder();
 };
 

@@ -82,11 +82,11 @@ void Menu::clearArea(int x1, int x2, int y1, int y2)
     }
 }
 
-void Menu::centerTypeOut(int row, String msg)
+void Menu::centerTypeOut(int row, String msg, bool simultaneous)
 {
     if (msg.length() <= cols)
     {
-        typeOut(floor((cols - msg.length()) / 2), row, msg);
+        typeOut(floor((cols - msg.length()) / 2), row, msg, simultaneous);
     }
     else
     {
@@ -94,11 +94,11 @@ void Menu::centerTypeOut(int row, String msg)
     }
 }
 
-void Menu::typeOut(int startX, int startY, String msg)
+void Menu::typeOut(int startX, int startY, String msg, bool simultaneous)
 {
     if (msg.length() <= cols - startX)
     {
-        int taskId = addTask(1, startX, startY, msg);
+        int taskId = addTask(1, simultaneous, startX, startY, msg);
         if (taskId >= 0)
         {
             int frameCount = 4 + msg.length(); // 2x on and off + typing out + delete cursor (deletes on last frame)
@@ -128,5 +128,5 @@ void Menu::error(String msg)
 void Menu::changeMenu(String menuName, String &menuItems)
 {
     clearArea();
-    centerTypeOut(0, menuName);
+    centerTypeOut(0, menuName, false);
 }

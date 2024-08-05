@@ -25,12 +25,10 @@ public:
 
   // execute slowly - stops the whole code from executing
   void changeMenu(String menuName, String &menuItems);
-  
+
   // modular frame by frame sytem
-  void centerTypeOut(int row, String msg);
-  void typeOut(int startX, int startY, String msg);
-
-
+  void centerTypeOut(int row, String msg, bool simultaneous);
+  void typeOut(int startX, int startY, String msg, bool simultaneous);
 
   // rendering engine methods
   void render();
@@ -47,6 +45,7 @@ private:
   // engine variables
   int queueSize = 8;
   int renderQueue[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  int renderOrder[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 
   // render parameters
   int renderFramesLeft[8];
@@ -56,9 +55,10 @@ private:
   String renderString[8][1];
 
   // engine methods
-  int addTask(int taskType);
-  int addTask(int taskType, int int1, int int2, String string1);
+  int addTask(int taskType, bool simultaneous);
+  int addTask(int taskType, bool simultaneous, int int1, int int2, String string1);
   void renderTypeOut(int taskId);
+  int getMaxRenderOrder();
 };
 
 #endif

@@ -2,47 +2,73 @@
 
 void Menu::render()
 {
+    bool orderLevelHasMembers = false;
     for (int i = 0; i < queueSize; i++)
     {
+
         // cleans finished tasks
         if (renderFramesLeft[i] == 0)
         {
             renderQueue[i] = 0;
+            renderOrder[i] = 0;
         }
 
-        switch (renderQueue[i])
+        // selects current order level
+        if (renderOrder[i] == 1)
         {
-        case 1:
-            renderTypeOut(i);
-            break;
+            orderLevelHasMembers = true;
+            switch (renderQueue[i])
+            {
+            case 1:
+                renderTypeOut(i);
+                break;
+            }
+        }
+
+        // if current animation order level is empty decrement other levels
+    }
+    if (!orderLevelHasMembers)
+    {
+        for (int i = 0; i < queueSize; i++)
+        {
+            if (renderOrder[i] > 1)
+            {
+                renderOrder[i]--;
+            }
         }
     }
 }
 
-int Menu::addTask(int taskType)
+int Menu::getMaxRenderOrder()
 {
-    int lastIndex = -1;
-    for (int i = queueSize - 1; i >= 0; i--)
+    int maxRenderOrder = 1;
+    for (int orderMember : renderOrder)
     {
-        if (renderQueue[i] != 0)
+        if (orderMember > maxRenderOrder)
         {
-            lastIndex = i;
-            break;
+            maxRenderOrder = orderMember;
         }
     }
-
-    // checks for out of boud errors
-    int taskId = lastIndex + 1 < queueSize ? lastIndex + 1 : -1;
-
-    if (taskId > -1)
-    {
-        renderQueue[taskId] = taskType;
-    }
-    return taskId;
+    return maxRenderOrder;
 }
-int Menu::addTask(int taskType, int int1, int int2, String string1)
+
+int Menu::addTask(int taskType, bool simultaneous)
 {
-    int taskId = addTask(taskType);
+    for (int i = 0; i < queueSize; i++)
+    {
+        if (renderQueue[i] == 0)
+        {
+            renderOrder[i] = simultaneous ? getMaxRenderOrder() : getMaxRenderOrder() + 1;
+            Serial.println(renderOrder[i]);
+            renderQueue[i] = taskType;
+            return i;
+        }
+    }
+    return -1;
+}
+int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, String string1)
+{
+    int taskId = addTask(taskType, simultaneous);
     if (taskId >= 0)
     {
         renderInt[taskId][0] = int1;
@@ -64,7 +90,6 @@ void Menu::renderTypeOut(int taskId)
     int startX = renderInt[taskId][0];
     int startY = renderInt[taskId][1];
     String msg = renderString[taskId][0];
-
 
     if (millis() - lastMillis > delay)
     {

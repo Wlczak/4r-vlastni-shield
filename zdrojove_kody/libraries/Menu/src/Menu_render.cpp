@@ -26,9 +26,12 @@ void Menu::render()
             case 2:
                 renderClearArea(i);
                 break;
+
+            case 3:
+                renderDelay(i);
+                break;
             }
         }
-
         // if current animation order level is empty decrement other levels
     }
     if (!orderLevelHasMembers)
@@ -64,6 +67,7 @@ int Menu::addTask(int taskType, bool simultaneous)
         {
             renderOrder[i] = simultaneous ? getMaxRenderOrder() : getMaxRenderOrder() + 1;
             Serial.println(renderOrder[i]);
+            renderInterval[i][1] = millis();
             renderQueue[i] = taskType;
             return i;
         }
@@ -100,8 +104,8 @@ void Menu::renderTypeOut(int taskId)
     int duration = renderDuration[taskId];
     int currentFrame = duration - framesLeft;
     int charIndex = currentFrame - 4; // -4 == first four frames
-    long &delay = renderDelay[taskId][0];
-    long &lastMillis = renderDelay[taskId][1];
+    long &delay = renderInterval[taskId][0];
+    long &lastMillis = renderInterval[taskId][1];
 
     int startX = renderInt[taskId][0];
     int startY = renderInt[taskId][1];
@@ -155,4 +159,23 @@ void Menu::renderClearArea(int taskId)
         }
     }
     renderFramesLeft[taskId]--;
+}
+
+void Menu::renderDelay(int taskId)
+{
+    long &delay = renderInterval[taskId][0];
+    long &lastMillis = renderInterval[taskId][1];
+
+    if (renderFramesLeft[taskId] > 1)
+    {
+        lastMillis = millis();
+        renderFramesLeft[taskId]--;
+    }
+    else
+    {
+        if (millis() - lastMillis > delay)
+        {
+            renderFramesLeft[taskId]--;
+        }
+    }
 }

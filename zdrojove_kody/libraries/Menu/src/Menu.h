@@ -24,11 +24,12 @@ public:
   void clearArea(int x1, int x2, int y1, int y2, bool simultaneous);
 
   // execute slowly - stops the whole code from executing
-  void changeMenu(String menuName, String menuItems[]);
 
   // modular frame by frame sytem
+  void changeMenu(String menuName, String menuItems[]);
   void centerTypeOut(int row, String msg, bool simultaneous);
   void typeOut(int startX, int startY, String msg, bool simultaneous);
+  void asynchDelay(long time);
 
   // rendering engine methods
   void render();
@@ -49,10 +50,10 @@ private:
 
   // render parameters
   int renderFramesLeft[8];
-  int renderDuration[8];
-  long renderDelay[8][2];
-  int renderInt[8][4];
-  String renderString[8][1];
+  int renderDuration[8];     // optional
+  long renderInterval[8][2];    // [0] = delay in ms [1] = current millis()
+  int renderInt[8][4];       // optional
+  String renderString[8][1]; // optional
 
   // engine methods
   int addTask(int taskType, bool simultaneous);
@@ -60,6 +61,9 @@ private:
   int addTask(int taskType, bool simultaneous, int int1, int int2, int int3, int int4);
   void renderTypeOut(int taskId);
   void renderClearArea(int taskId);
+  void renderDelay(int taskId);
+
+  // other engine methods
   int getMaxRenderOrder();
 };
 

@@ -83,8 +83,7 @@ void Menu::clearArea(int x1, int x2, int y1, int y2, bool simultaneous)
         renderInt[taskId][3] = y2;
 
         renderFramesLeft[taskId] = 1;
-        renderDelay[taskId][0] = 0;
-        renderDelay[taskId][1] = millis();
+        renderInterval[taskId][0] = 0;
     }
 
     renderInt[8][4];
@@ -112,8 +111,7 @@ void Menu::typeOut(int startX, int startY, String msg, bool simultaneous)
             int frameCount = 4 + msg.length(); // 2x on and off + typing out + delete cursor (deletes on last frame)
             renderFramesLeft[taskId] = frameCount;
             renderDuration[taskId] = frameCount;
-            renderDelay[taskId][0] = 333;
-            renderDelay[taskId][1] = millis();
+            renderInterval[taskId][0] = 333;
         }
     }
     else
@@ -143,3 +141,20 @@ void Menu::changeMenu(String menuName, String menuItems[])
     }
 }
 
+void Menu::asynchDelay(long time)
+{
+    int taskId = addTask(3, false);
+
+    if (time >= 0)
+    {
+        if (taskId > -1)
+        {
+            renderFramesLeft[taskId] = 2;
+            renderInterval[taskId][0] = time;
+        }
+    }
+    else
+    {
+        error("no negative time");
+    }
+}

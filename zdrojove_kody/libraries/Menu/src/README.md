@@ -2,3 +2,4 @@
 
 - 1 - typeOut
 - 2 - clearArea
+- 3 - delay

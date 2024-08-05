@@ -18,11 +18,11 @@ void setup() {
 
   menu.loadChars();
 
-  menu.loadingScreen();
+  /*menu.loadingScreen();
   menu.typeOut(1, 0, "Welcome to:", false);
   menu.typeOut(1, 1, "V.corp. shield", false);
   //delay(600);
-  menu.clearArea(false);
+  menu.clearArea(false);*/
 }
 
 void handleSerial() {
@@ -30,14 +30,14 @@ void handleSerial() {
 
   switch (incomingSerial) {
     case 49:  // left
-      menu.typeOut(1, 1, "leftleftleft", true);
+      menu.typeOut(1, 1, "left", true);
       break;
     case 50:  // down
       menu.typeOut(8, 1, "down", true);
       Serial.println("down");
       break;
     case 51:  // right
-      menu.centerTypeOut(0, "rightrightrighto", false);
+      menu.centerTypeOut(0, "right", false);
       Serial.println("right");
       break;
     case 53:  // up
@@ -45,6 +45,7 @@ void handleSerial() {
       menu.clearArea(0, 15, 0, 0, true);
       break;
     case 114:  // r
+      menu.asynchDelay(5000);
       break;
     case 102:  // f
       showFps = !showFps;

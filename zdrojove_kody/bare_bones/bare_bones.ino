@@ -9,6 +9,9 @@ String menuName = "Main menu";
 String menuItems[] = { "thing1", "thing2", "thing3", "thing4" };
 long fpsTime = millis();
 long fpsCounter = 0;
+bool showFps = false;
+
+bool debug = false;
 
 void setup() {
   Serial.begin(9600);
@@ -41,6 +44,9 @@ void handleSerial() {
       break;
     case 114:  // r
       break;
+    case 102:  // f
+      showFps = !showFps;
+      break;
     default:
       Serial.print("undefined: ");
       Serial.println(incomingSerial);
@@ -63,4 +69,7 @@ void loop() {
   }
   menu.render();
   //fps();
+  if (showFps) {
+    fps();
+  }
 }

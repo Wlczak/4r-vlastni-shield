@@ -17,7 +17,7 @@ void setup() {
   Serial.begin(9600);
 
   menu.loadChars();
-  // menu.debug();
+
   /* menu.loadingScreen();
   menu.typeOut(1, 0, "Welcome to:");
   menu.typeOut(1, 1, "V.corp. shield");
@@ -47,6 +47,9 @@ void handleSerial() {
     case 102:  // f
       showFps = !showFps;
       break;
+    case 100:  // d
+      debug = !debug;
+      break;
     default:
       Serial.print("undefined: ");
       Serial.println(incomingSerial);
@@ -71,5 +74,9 @@ void loop() {
   //fps();
   if (showFps) {
     fps();
+  }
+  if (debug) {
+    menu.debug();
+    debug = !debug;
   }
 }

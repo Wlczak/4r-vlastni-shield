@@ -21,15 +21,24 @@ void Menu::render()
 
 int Menu::addTask(int taskType)
 {
-    for (int i = 0; i < queueSize; i++)
+    int lastIndex = -1;
+    for (int i = queueSize - 1; i >= 0; i--)
     {
-        if (renderQueue[i] == 0)
+        if (renderQueue[i] != 0)
         {
-            renderQueue[i] = taskType;
-            return i;
+            lastIndex = i;
+            break;
         }
     }
-    return -1;
+
+    // checks for out of boud errors
+    int taskId = lastIndex + 1 < queueSize ? lastIndex + 1 : -1;
+
+    if (taskId > -1)
+    {
+        renderQueue[taskId] = taskType;
+    }
+    return taskId;
 }
 int Menu::addTask(int taskType, int int1, int int2, String string1)
 {

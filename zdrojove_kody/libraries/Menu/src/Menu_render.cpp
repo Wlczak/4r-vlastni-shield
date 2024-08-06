@@ -211,6 +211,21 @@ void Menu::renderDelay(int taskId)
 
 void Menu::renderMenu(int taskId)
 {
-    // missing continuous menu rendering logic
+    if (selectedItem == 0)
+    {
+        selectedItem = 1;
+        for (int i = 0; i < rows; i++)
+        {
+            int itemIndex = (rows * menuPage) + i;
+            Serial.println(sizeof(menuItemNames));
+            Serial.println(i);
+            Serial.println(itemIndex);
+            if (itemIndex < sizeof(menuItemNames))
+            {
+                lcd.setCursor(0, i);
+                lcd.print(menuItemNames[itemIndex]);
+            }
+        }
+    }
     renderFramesLeft[taskId]--;
 }

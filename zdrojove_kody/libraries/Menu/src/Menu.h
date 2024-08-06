@@ -58,6 +58,8 @@ private:
   // menu structure variables
 
   String menuName = "";
+  int menuPage = 0;
+  int selectedItem = 0;
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];
 

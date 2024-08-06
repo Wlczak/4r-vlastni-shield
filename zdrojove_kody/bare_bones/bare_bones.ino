@@ -54,7 +54,7 @@ void handleSerial() {
       debug = !debug;
       break;
     case 109:  // m
-      menu.changeMenu(1);
+      menu.startMenu(1);
       break;
     default:
       Serial.print("undefined: ");

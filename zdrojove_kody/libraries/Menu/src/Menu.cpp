@@ -131,22 +131,24 @@ void Menu::error(String msg)
     delay(5000);
 }
 
-void Menu::changeMenu(int menuId)
+void Menu::startMenu(int menuId)
 {
-    if (getFreeSlotsCount() >= 4)
+    if (getFreeSlotsCount() >= 6) // check if menu animations fit in buffer
     {
-        addTask()
+        // menu structure set
         setMenuStructure(menuId);
+
+        // menu select animations
 
         clearArea(false);
         centerTypeOut(0, menuName, false);
-        asynchDelay(250);
+        asynchDelay(340);
         clearArea(false);
 
-        // debug
-        for (int i = 0; i < 4; i++)
+        int taskId = addTask(4, false, menuId);
+        if (taskId > -1)
         {
-            Serial.println(menuItems[i]);
+            renderFramesLeft[taskId] = 2;
         }
     }
 }

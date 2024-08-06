@@ -30,6 +30,10 @@ void Menu::render()
             case 3:
                 renderDelay(i);
                 break;
+
+            case 4:
+                renderMenu(i);
+                break;
             }
         }
     }
@@ -87,6 +91,17 @@ int Menu::addTask(int taskType, bool simultaneous)
     }
     return -1;
 }
+
+int Menu::addTask(int taskType, bool simultaneous, int int1)
+{
+    int taskId = addTask(taskType, simultaneous);
+    if (taskId >= 0)
+    {
+        renderInt[taskId][0] = int1;
+    }
+    return taskId;
+}
+
 int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, String string1)
 {
     int taskId = addTask(taskType, simultaneous);
@@ -98,6 +113,7 @@ int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, String st
     }
     return taskId;
 }
+
 int Menu::addTask(int taskType, bool simultaneous, int int1, int int2, int int3, int int4)
 {
     int taskId = addTask(taskType, simultaneous);
@@ -191,4 +207,10 @@ void Menu::renderDelay(int taskId)
             renderFramesLeft[taskId]--;
         }
     }
+}
+
+void Menu::renderMenu(int taskId)
+{
+    // missing continuous menu rendering logic
+    renderFramesLeft[taskId]--;
 }

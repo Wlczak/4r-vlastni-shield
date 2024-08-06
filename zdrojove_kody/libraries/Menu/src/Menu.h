@@ -26,7 +26,7 @@ public:
   // execute slowly - stops the whole code from executing
 
   // modular frame by frame sytem
-  void changeMenu(int menuId);
+  void startMenu(int menuId);
   void centerTypeOut(int row, String msg, bool simultaneous);
   void typeOut(int startX, int startY, String msg, bool simultaneous);
   void asynchDelay(long time);
@@ -51,7 +51,7 @@ private:
   // render parameters
   int renderFramesLeft[8];
   int renderDuration[8];     // optional
-  long renderInterval[8][2]; // [0] = delay in ms [1] = current millis()
+  long renderInterval[8][2]; // [0] = delay in ms [1] = current millis()(set automatically)
   int renderInt[8][4];       // optional
   String renderString[8][1]; // optional
 
@@ -63,6 +63,7 @@ private:
 
   // engine methods
   int addTask(int taskType, bool simultaneous);
+  int addTask(int taskType, bool simultaneous, int int1);
   int addTask(int taskType, bool simultaneous, int int1, int int2, String string1);
   int addTask(int taskType, bool simultaneous, int int1, int int2, int int3, int int4);
   void renderTypeOut(int taskId);

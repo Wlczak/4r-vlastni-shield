@@ -38,7 +38,7 @@ void Menu::setMenuStructure(int menuId)
     }
     }
 
-// debug
+    // debug
     for (int i = 0; i < 4; i++)
     {
         Serial.println(tmp1[i]);
@@ -64,7 +64,9 @@ void Menu::setMenuStructure(int menuId)
         {
             error("menu it.!=lengt");
         }
-    }else{
+    }
+    else
+    {
         error("name too long");
     }
 }

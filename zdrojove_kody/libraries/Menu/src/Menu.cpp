@@ -111,7 +111,7 @@ void Menu::typeOut(int startX, int startY, String msg, bool simultaneous)
             int frameCount = 4 + msg.length(); // 2x on and off + typing out + delete cursor (deletes on last frame)
             renderFramesLeft[taskId] = frameCount;
             renderDuration[taskId] = frameCount;
-            renderInterval[taskId][0] = 333;
+            renderInterval[taskId][0] = 250;
         }
     }
     else
@@ -131,13 +131,23 @@ void Menu::error(String msg)
     delay(5000);
 }
 
-void Menu::changeMenu(String menuName, String menuItems[])
+void Menu::changeMenu(int menuId)
 {
-    clearArea(true);
-    centerTypeOut(0, menuName, false);
-    for (int i = 0; i < 4; i++)
+    if (getFreeSlotsCount() >= 4)
     {
-        Serial.println(menuItems[i]);
+        addTask()
+        setMenuStructure(menuId);
+
+        clearArea(false);
+        centerTypeOut(0, menuName, false);
+        asynchDelay(250);
+        clearArea(false);
+
+        // debug
+        for (int i = 0; i < 4; i++)
+        {
+            Serial.println(menuItems[i]);
+        }
     }
 }
 

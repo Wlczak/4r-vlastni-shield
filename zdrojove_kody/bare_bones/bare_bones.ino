@@ -21,7 +21,7 @@ void setup() {
   /*menu.loadingScreen();
   menu.typeOut(1, 0, "Welcome to:", false);
   menu.typeOut(1, 1, "V.corp. shield", false);
-  //delay(600);
+  menu.asynchDelay(600);
   menu.clearArea(false);*/
 }
 
@@ -54,7 +54,7 @@ void handleSerial() {
       debug = !debug;
       break;
     case 109:  // m
-      menu.changeMenu("Main menu", menuItems);
+      menu.changeMenu(1);
       break;
     default:
       Serial.print("undefined: ");

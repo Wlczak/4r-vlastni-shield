@@ -32,8 +32,8 @@ void Menu::render()
                 break;
             }
         }
-        // if current animation order level is empty decrement other levels
     }
+    // if current animation order level is empty decrement other levels
     if (!orderLevelHasMembers)
     {
         for (int i = 0; i < queueSize; i++)
@@ -57,6 +57,19 @@ int Menu::getMaxRenderOrder()
         }
     }
     return maxRenderOrder;
+}
+
+int Menu::getFreeSlotsCount()
+{
+    int freeSlotsCount = 0;
+    for (int queueMember : renderQueue)
+    {
+        if (queueMember == 0)
+        {
+            freeSlotsCount++;
+        }
+    }
+    return freeSlotsCount;
 }
 
 int Menu::addTask(int taskType, bool simultaneous)

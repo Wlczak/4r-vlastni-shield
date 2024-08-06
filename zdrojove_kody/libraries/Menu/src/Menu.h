@@ -26,7 +26,7 @@ public:
   // execute slowly - stops the whole code from executing
 
   // modular frame by frame sytem
-  void changeMenu(String menuName, String menuItems[]);
+  void changeMenu(int menuId);
   void centerTypeOut(int row, String msg, bool simultaneous);
   void typeOut(int startX, int startY, String msg, bool simultaneous);
   void asynchDelay(long time);
@@ -51,9 +51,15 @@ private:
   // render parameters
   int renderFramesLeft[8];
   int renderDuration[8];     // optional
-  long renderInterval[8][2];    // [0] = delay in ms [1] = current millis()
+  long renderInterval[8][2]; // [0] = delay in ms [1] = current millis()
   int renderInt[8][4];       // optional
   String renderString[8][1]; // optional
+
+  // menu structure variables
+
+  String menuName = "";
+  String *menuItemNames = new String[0];
+  int *menuItemsLinks = new int[0];
 
   // engine methods
   int addTask(int taskType, bool simultaneous);
@@ -62,9 +68,14 @@ private:
   void renderTypeOut(int taskId);
   void renderClearArea(int taskId);
   void renderDelay(int taskId);
+  void renderMenu(int taskId);
 
   // other engine methods
   int getMaxRenderOrder();
+  int getFreeSlotsCount();
+
+  // menu structure setter
+  void setMenuStructure(int menuId);
 };
 
 #endif

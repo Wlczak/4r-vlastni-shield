@@ -83,6 +83,7 @@ int Menu::addTask(int taskType, bool simultaneous)
         if (renderQueue[i] == 0)
         {
             renderOrder[i] = simultaneous ? getMaxRenderOrder() : getMaxRenderOrder() + 1;
+            Serial.print("render order: ");
             Serial.println(renderOrder[i]);
             renderInterval[i][1] = millis();
             renderQueue[i] = taskType;
@@ -211,15 +212,12 @@ void Menu::renderDelay(int taskId)
 
 void Menu::renderMenu(int taskId)
 {
-    if (selectedItem == 0)
+    if (renderList)
     {
-        selectedItem = 1;
+        renderList = false;
         for (int i = 0; i < rows; i++)
         {
             int itemIndex = (rows * menuPage) + i;
-            Serial.println(sizeof(menuItemNames));
-            Serial.println(i);
-            Serial.println(itemIndex);
             if (itemIndex < sizeof(menuItemNames))
             {
                 lcd.setCursor(0, i);

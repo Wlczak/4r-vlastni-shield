@@ -14,16 +14,31 @@ void Menu::setMenuStructure(int menuId)
     case 1:
     {
         name = "Main menu";
-        String tmp01[] = {
+        static String tmp01[] = {
             "test1",
             "test2",
             "test3",
-            "test4",
-        };
-        int tmp02[] = {1, 2, 3, 4, 5};
+            "test4"};
+        static int tmp02[] = {1, 2, 3, 4};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
+
+        break;
+    }
+    case 2:
+    {
+        name = "Second menu";
+        static String tmp01[] = {
+            "randmom1",
+            "haha2",
+            "tsdfsdfadfs3",
+            "sadfnnjk4"};
+        static int tmp02[] = {1, 6515641, 3, 4};
+
+        tmp1 = tmp01;
+        tmp2 = tmp02;
+
         break;
     }
     default:
@@ -36,12 +51,6 @@ void Menu::setMenuStructure(int menuId)
         tmp2 = tmp02;
         break;
     }
-    }
-
-    // debug
-    for (int i = 0; i < 4; i++)
-    {
-        Serial.println(tmp1[i]);
     }
 
     if (name.length() <= cols)

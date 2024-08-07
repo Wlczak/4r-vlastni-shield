@@ -60,7 +60,7 @@ private:
   String menuName = "";
   int menuPage = 0;
   int selectedItem = 0;
-  bool renderList = false;
+  bool renderMenuItems = false;
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];
 

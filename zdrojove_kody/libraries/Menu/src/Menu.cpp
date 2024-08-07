@@ -149,7 +149,7 @@ void Menu::startMenu(int menuId)
         if (taskId > -1)
         {
             renderFramesLeft[taskId] = 2;
-            renderList = true;
+            renderMenuItems = true;
         }
     }
 }

@@ -212,12 +212,20 @@ void Menu::renderDelay(int taskId)
 
 void Menu::renderMenu(int taskId)
 {
-    if (renderList)
+
+    int cursorIndexY = selectedItem % rows;
+    int &framesLeft = renderFramesLeft[taskId];
+    long &lastMillis = renderInterval[taskId][1];
+
+    if (renderMenuItems)
     {
-        renderList = false;
+        renderMenuItems = false;
         for (int i = 0; i < rows; i++)
         {
             int itemIndex = (rows * menuPage) + i;
+
+            selectedItem = 0;
+
             if (itemIndex < sizeof(menuItemNames))
             {
                 lcd.setCursor(0, i);
@@ -225,5 +233,22 @@ void Menu::renderMenu(int taskId)
             }
         }
     }
-    renderFramesLeft[taskId]--;
+
+    if (millis() - lastMillis > 690)
+    {
+        lastMillis = millis();
+        int cursorIndexX = menuItemNames[selectedItem].length() + 1;
+        if (framesLeft % 2 == 0)
+        {
+            lcd.setCursor(cursorIndexX, cursorIndexY);
+            lcd.write(byte(0));
+            framesLeft--;
+        }
+        else
+        {
+            lcd.setCursor(cursorIndexX, cursorIndexY);
+            lcd.write(byte(1));
+            framesLeft++;
+        }
+    }
 }

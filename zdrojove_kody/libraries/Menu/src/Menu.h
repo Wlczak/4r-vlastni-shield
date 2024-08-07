@@ -80,6 +80,16 @@ private:
 
   // menu structure setter
   void setMenuStructure(int menuId);
+
+  // input variables
+  int inputBuffer = 0;
+
+public:
+  // input methods
+  void inputUp();
+  void inputDown();
+  void inputEnter();
+  void inputBack();
 };
 
 #endif

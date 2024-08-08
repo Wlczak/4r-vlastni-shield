@@ -31,9 +31,9 @@ void Menu::setMenuStructure(int menuId)
         name = "Second menu";
         static String tmp01[] = {
             "randmom1",
-            "haha2",
-            "tsdfsdfadfs3",
-            "sadfnnjk4"};
+            "short2",
+            "veeery long3",
+            "ha4"};
         static int tmp02[] = {1, 6515641, 3, 4};
 
         tmp1 = tmp01;

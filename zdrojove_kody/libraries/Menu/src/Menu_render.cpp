@@ -221,12 +221,12 @@ void Menu::renderMenu(int taskId)
     if (renderMenuItems)
     {
         renderMenuItems = false;
+
         for (int i = 0; i < rows; i++)
         {
-            int itemIndex = (rows * menuPage) + i;
+            int itemIndex = menuScroll + i;
 
-            selectedItem = 0;
-
+            synchClearArea(0, cols - 1, i, i);
             if (itemIndex < sizeof(menuItemNames))
             {
                 lcd.setCursor(0, i);
@@ -262,15 +262,26 @@ void Menu::renderMenu(int taskId)
                 lcd.setCursor(cursorIndexX, cursorIndexY);
                 lcd.print(" ");
                 selectedItem--;
+                if (selectedItem == menuScroll-1 && menuScroll != 0)
+                {
+                    menuScroll--;
+                    renderMenuItems = true;
+                }
             }
             break;
 
         case 2:
-            if (selectedItem < sizeof(menuItemNames))
+            if (selectedItem < sizeof(menuItemNames) - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
             {
+                Serial.println("down");
                 lcd.setCursor(cursorIndexX, cursorIndexY);
                 lcd.print(" ");
                 selectedItem++;
+                if (selectedItem > menuScroll + rows - 1)
+                {
+                    menuScroll++;
+                    renderMenuItems = true;
+                }
             }
             break;
         }

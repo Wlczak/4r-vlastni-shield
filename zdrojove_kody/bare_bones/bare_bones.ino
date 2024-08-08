@@ -23,6 +23,7 @@ void setup() {
   menu.typeOut(1, 1, "V.corp. shield", false);
   menu.asynchDelay(600);
   menu.clearArea(false);*/
+  menu.startMenu(2);
 }
 
 void handleSerial() {

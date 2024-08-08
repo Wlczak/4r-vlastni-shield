@@ -256,7 +256,7 @@ void Menu::renderMenu(int taskId)
     // input controlls
     if (inputBuffer != 0)
     {
-        
+
         lastMillis = millis() + 1000;
         switch (inputBuffer)
         {
@@ -281,7 +281,7 @@ void Menu::renderMenu(int taskId)
         case 2:
             if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
             {
-                
+
                 lcd.setCursor(cursorIndexX, cursorIndexY);
                 lcd.print(" ");
                 selectedItem++;
@@ -298,12 +298,40 @@ void Menu::renderMenu(int taskId)
             break;
 
         case 3:
+            bool historySaved;
+            historySaved = false;
+
+            for (int i = 0; i < 16; i++)
+            {
+
+                if (menuHistory[i] == 0)
+                {
+                    historySaved = true;
+                    menuHistory[i] = renderInt[taskId][0];
+                    break;
+                }
+            }
+            if(!historySaved){
+                error("history !saved");
+            }
             framesLeft = 0;
-            int menuId = menuItemsLinks[selectedItem];
 
-            startMenu(menuId);
+            startMenu(menuItemsLinks[selectedItem]);
+            break;
+
+        case 4:
+            for (int i = 15; i >= 0; i--)
+            {
+                if (menuHistory[i] != 0)
+                {
+                    framesLeft = 0;
+                    startMenu(menuHistory[i]);
+                    menuHistory[i] = 0;
+                    break;
+                }
+            }
+            break;
         }
-
         inputBuffer = 0;
     }
 }

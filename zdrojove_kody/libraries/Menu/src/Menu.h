@@ -67,6 +67,7 @@ private:
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];
   int menuItemsLength = 0;
+  int menuHistory[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
   // engine methods
   int addTask(int taskType, bool simultaneous);

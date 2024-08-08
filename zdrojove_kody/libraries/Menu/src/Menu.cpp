@@ -155,7 +155,6 @@ void Menu::startMenu(int menuId)
 
             if (menuScroll + 1 >= menuItemsLength)
             {
-                Serial.println("sdfjhsdjkflsdfhdsjf");
                 menuScroll = menuItemsLength - rows;
             }
             if (menuItemsLength <= rows - 1)

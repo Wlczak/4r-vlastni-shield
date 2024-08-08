@@ -252,9 +252,12 @@ void Menu::renderMenu(int taskId)
             framesLeft++;
         }
     }
+
+    // input controlls
     if (inputBuffer != 0)
     {
-        lastMillis = millis()+1000;
+        
+        lastMillis = millis() + 1000;
         switch (inputBuffer)
         {
         case 1:
@@ -278,7 +281,7 @@ void Menu::renderMenu(int taskId)
         case 2:
             if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
             {
-                Serial.println("down");
+                
                 lcd.setCursor(cursorIndexX, cursorIndexY);
                 lcd.print(" ");
                 selectedItem++;
@@ -293,7 +296,14 @@ void Menu::renderMenu(int taskId)
                 }
             }
             break;
+
+        case 3:
+            framesLeft = 0;
+            int menuId = menuItemsLinks[selectedItem];
+
+            startMenu(menuId);
         }
+
         inputBuffer = 0;
     }
 }

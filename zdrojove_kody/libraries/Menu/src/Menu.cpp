@@ -150,6 +150,20 @@ void Menu::startMenu(int menuId)
         {
             renderFramesLeft[taskId] = 2;
             renderMenuItems = true;
+
+            // checks if cursor is out of bounds
+
+            if (menuScroll + 1 >= menuItemsLength)
+            {
+                Serial.println("sdfjhsdjkflsdfhdsjf");
+                menuScroll = menuItemsLength - rows;
+            }
+            if (menuItemsLength <= rows - 1)
+            {
+                menuCursorScroll = menuItemsLength - 1;
+                menuScroll = menuItemsLength - (rows - 1);
+            }
+            selectedItem = menuScroll + menuCursorScroll;
         }
     }
 }

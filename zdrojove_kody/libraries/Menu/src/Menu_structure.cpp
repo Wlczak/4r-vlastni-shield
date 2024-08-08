@@ -41,7 +41,7 @@ void Menu::setMenuStructure(int menuId)
             "ha4",
             "yo5",
             "hello kelo to6"};
-        static int tmp02[] = {1, 6515641, 3, 4, 5, 6};
+        static int tmp02[] = {1, 6515641, 3, 4, 5, 1};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -52,12 +52,16 @@ void Menu::setMenuStructure(int menuId)
     }
     default:
     {
-        String tmp01[] = {
-            ""};
-        int tmp02[] = {0};
+        name = "Default";
+        static String tmp01[] = {
+            "Main menu"};
+        static int tmp02[] = {1};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
+
         break;
     }
     }

@@ -24,7 +24,7 @@ public:
   void clearArea(int x1, int x2, int y1, int y2, bool simultaneous);
 
   void synchClearArea(int x1, int x2, int y1, int y2);
-  
+
   // execute slowly - stops the whole code from executing
 
   // modular frame by frame sytem
@@ -61,6 +61,7 @@ private:
 
   String menuName = "";
   int menuScroll = 0;
+  int menuCursorScroll = 0;
   int selectedItem = 0;
   bool renderMenuItems = false;
   String *menuItemNames = new String[0];

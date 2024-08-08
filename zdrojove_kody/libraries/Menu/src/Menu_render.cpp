@@ -214,7 +214,7 @@ void Menu::renderMenu(int taskId)
 {
 
     int cursorIndexX = menuItemNames[selectedItem].length() + 1;
-    int cursorIndexY = selectedItem % rows;
+    int cursorIndexY = menuCursorScroll;
     int &framesLeft = renderFramesLeft[taskId];
     long &lastMillis = renderInterval[taskId][1];
 
@@ -262,10 +262,14 @@ void Menu::renderMenu(int taskId)
                 lcd.setCursor(cursorIndexX, cursorIndexY);
                 lcd.print(" ");
                 selectedItem--;
-                if (selectedItem == menuScroll-1 && menuScroll != 0)
+                if (selectedItem == menuScroll - 1 && menuScroll != 0)
                 {
                     menuScroll--;
                     renderMenuItems = true;
+                }
+                else
+                {
+                    menuCursorScroll--;
                 }
             }
             break;
@@ -281,6 +285,10 @@ void Menu::renderMenu(int taskId)
                 {
                     menuScroll++;
                     renderMenuItems = true;
+                }
+                else
+                {
+                    menuCursorScroll++;
                 }
             }
             break;

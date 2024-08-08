@@ -227,7 +227,7 @@ void Menu::renderMenu(int taskId)
             int itemIndex = menuScroll + i;
 
             synchClearArea(0, cols - 1, i, i);
-            if (itemIndex < sizeof(menuItemNames))
+            if (itemIndex < menuItemsLength)
             {
                 lcd.setCursor(0, i);
                 lcd.print(menuItemNames[itemIndex]);
@@ -254,6 +254,7 @@ void Menu::renderMenu(int taskId)
     }
     if (inputBuffer != 0)
     {
+        lastMillis = millis()+1000;
         switch (inputBuffer)
         {
         case 1:
@@ -275,7 +276,7 @@ void Menu::renderMenu(int taskId)
             break;
 
         case 2:
-            if (selectedItem < sizeof(menuItemNames) - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
+            if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
             {
                 Serial.println("down");
                 lcd.setCursor(cursorIndexX, cursorIndexY);

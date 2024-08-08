@@ -66,6 +66,7 @@ private:
   bool renderMenuItems = false;
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];
+  int menuItemsLength = 0;
 
   // engine methods
   int addTask(int taskType, bool simultaneous);

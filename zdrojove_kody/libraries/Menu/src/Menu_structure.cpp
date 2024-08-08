@@ -5,6 +5,8 @@ void Menu::setMenuStructure(int menuId)
     String name;
     String *tmp1;
     int *tmp2;
+    int size1;
+    int size2;
 
     delete[] menuItemNames;
     delete[] menuItemsLinks;
@@ -18,11 +20,14 @@ void Menu::setMenuStructure(int menuId)
             "test1",
             "test2",
             "test3",
-            "test4"};
-        static int tmp02[] = {1, 2, 3, 4};
+            "test4",
+            "test5"};
+        static int tmp02[] = {1, 2, 3, 4, 5};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
 
         break;
     }
@@ -33,11 +38,15 @@ void Menu::setMenuStructure(int menuId)
             "randmom1",
             "short2",
             "veeery long3",
-            "ha4"};
-        static int tmp02[] = {1, 6515641, 3, 4};
+            "ha4",
+            "yo5",
+            "hello kelo to6"};
+        static int tmp02[] = {1, 6515641, 3, 4, 5, 6};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
 
         break;
     }
@@ -53,13 +62,23 @@ void Menu::setMenuStructure(int menuId)
     }
     }
 
+    for (int i = 0; i < size1; i++)
+    {
+        if (tmp1[i].length() > cols - 2)
+        {
+            error("menu it. t.long");
+        }
+    }
+
     if (name.length() <= cols)
     {
-        if (sizeof(tmp1) == sizeof(tmp2))
+
+        if (size1 == size2)
         {
-            int size = sizeof(tmp1);
+            int size = size1;
             menuItemNames = new String[size];
             menuItemsLinks = new int[size];
+            menuItemsLength = size;
 
             menuName = name;
 

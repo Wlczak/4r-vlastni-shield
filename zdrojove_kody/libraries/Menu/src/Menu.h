@@ -46,18 +46,20 @@ private:
   int rows = 2;
 
   // engine variables
-  int queueSize = 8;
-  int renderQueue[8] = {0, 0, 0, 0, 0, 0, 0, 0};
-  int renderOrder[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+  int queueSize = 16;
+  int renderQueue[16] = {0};
+  int renderOrder[16] = {0};
 
   // render parameters
-  int renderFramesLeft[8];
-  int renderDuration[8];     // optional
-  long renderInterval[8][2]; // [0] = delay in ms [1] = current millis()(set automatically)
-  int renderInt[8][4];       // optional
-  String renderString[8][1]; // optional
+  int renderFramesLeft[16];
+  int renderDuration[16];     // optional
+  long renderInterval[16][2]; // [0] = delay in ms [1] = current millis()(set automatically)
+  int renderInt[16][4];       // optional
+  String renderString[16][1]; // optional
 
   // menu structure variables
+
+  int programType = 0;
 
   String menuName = "";
   int menuScroll = 0;
@@ -67,7 +69,7 @@ private:
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];
   int menuItemsLength = 0;
-  int menuHistory[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  int menuHistory[16] = {0};
 
   // engine methods
   int addTask(int taskType, bool simultaneous);

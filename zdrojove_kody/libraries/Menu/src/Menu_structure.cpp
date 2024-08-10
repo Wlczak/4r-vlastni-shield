@@ -7,6 +7,7 @@ void Menu::setMenuStructure(int menuId)
     int *tmp2;
     int size1;
     int size2;
+    programType = 0;
 
     delete[] menuItemNames;
     delete[] menuItemsLinks;
@@ -17,12 +18,12 @@ void Menu::setMenuStructure(int menuId)
     {
         name = "Main menu";
         static String tmp01[] = {
-            "test1",
-            "test2",
-            "test3",
+            "Temperature",
+            "Light measure",
+            "Settings",
             "test4",
             "test5"};
-        static int tmp02[] = {1, 2, 3, 4, 5};
+        static int tmp02[] = {2, 3, 4, 4, 5};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -31,9 +32,9 @@ void Menu::setMenuStructure(int menuId)
 
         break;
     }
-    case 2:
+    case 4:
     {
-        name = "Second menu";
+        name = "Settings";
         static String tmp01[] = {
             "randmom1",
             "short2",

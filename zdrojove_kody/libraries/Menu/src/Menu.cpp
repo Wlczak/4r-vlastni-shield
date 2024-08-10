@@ -133,7 +133,7 @@ void Menu::error(String msg)
 
 void Menu::startMenu(int menuId)
 {
-    if (getFreeSlotsCount() >= 6) // check if menu animations fit in buffer
+    if (getFreeSlotsCount() >= 4) // check if menu animations fit in buffer
     {
         // menu structure set
         setMenuStructure(menuId);

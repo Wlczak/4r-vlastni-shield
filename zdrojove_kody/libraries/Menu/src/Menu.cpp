@@ -138,16 +138,14 @@ void Menu::startMenu(int menuId)
     {
         // menu structure set
         setMenuStructure(menuId);
-
         // menu select animations
 
         clearArea(false);
-        centerTypeOut(0, menuName, false);
-        asynchDelay(340);
-        clearArea(false);
+        /*  centerTypeOut(0, menuName, false);
+          asynchDelay(340);
+          clearArea(false);*/
 
         // selects propper execution based on menu type
-
         switch (menuType)
         {
         case 1: // basic menu

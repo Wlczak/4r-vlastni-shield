@@ -26,7 +26,6 @@ String Menu::readDeviceInput(int deviceId)
         output += (char) 0b10100000;
         output += (char) 223;
         output += "C";
-        Serial.println(output);
         break;
 
     default:

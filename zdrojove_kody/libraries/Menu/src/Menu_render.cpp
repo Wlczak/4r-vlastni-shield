@@ -83,8 +83,7 @@ int Menu::addTask(int taskType, bool simultaneous)
         if (renderQueue[i] == 0)
         {
             renderOrder[i] = simultaneous ? getMaxRenderOrder() : getMaxRenderOrder() + 1;
-            Serial.print("render order: ");
-            Serial.println(renderOrder[i]);
+
             renderInterval[i][1] = millis();
             renderQueue[i] = taskType;
             return i;
@@ -263,7 +262,7 @@ void Menu::renderMenu(int taskId)
     case 2: // menu type 2
         if (millis() - lastMillis > 3000)
         {
-           synchClearArea(0,0,0,0);
+            synchClearArea(0, 0, 0, 0);
             lcd.setCursor(0, 0);
             lcd.print(readDeviceInput(1));
 
@@ -340,10 +339,12 @@ void Menu::renderMenu(int taskId)
             break;
 
         case 4:
-            for (int i = 15; i >= 0; i--)
+            for (int i = queueSize - 1; i >= 0; i--)
             {
+                
                 if (menuHistory[i] != 0)
                 {
+                    Serial.println(menuHistory[i]);
                     framesLeft = 0;
                     startMenu(menuHistory[i]);
                     menuHistory[i] = 0;

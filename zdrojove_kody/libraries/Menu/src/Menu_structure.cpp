@@ -2,6 +2,8 @@
 
 void Menu::setMenuStructure(int menuId)
 {
+    Serial.print("menuId = ");
+    Serial.println(menuId);
     String name;
     int type;
     String *tmp1;
@@ -9,10 +11,13 @@ void Menu::setMenuStructure(int menuId)
     int size1;
     int size2;
     programType = 0;
-
-    delete[] menuItemNames;
-    delete[] menuItemsLinks;
-
+    if (menuItemNames != nullptr && menuItemsLinks != nullptr)
+    {
+        delete[] menuItemNames;
+        delete[] menuItemsLinks;
+        menuItemNames = nullptr;
+        menuItemsLinks = nullptr;
+    }
     switch (menuId)
     {
     case 1:
@@ -77,6 +82,7 @@ void Menu::setMenuStructure(int menuId)
     default:
     {
         name = "Default";
+        type = 1;
         static String tmp01[] = {
             "Main menu"};
         static int tmp02[] = {1};

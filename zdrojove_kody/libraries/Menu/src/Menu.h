@@ -23,7 +23,10 @@ public:
   void clearArea(bool simultaneous);
   void clearArea(int x1, int x2, int y1, int y2, bool simultaneous);
 
+  // simple lcd print helper methods
   void synchClearArea(int x1, int x2, int y1, int y2);
+  void printMsg(int x, int y, String msg);
+  void centerPrintMsg(int x, int y, String msg);
 
   // execute slowly - stops the whole code from executing
 
@@ -62,6 +65,7 @@ private:
   int programType = 0;
 
   String menuName = "";
+  int menuType = 0;
   int menuScroll = 0;
   int menuCursorScroll = 0;
   int selectedItem = 0;
@@ -97,6 +101,9 @@ public:
   void inputDown();
   void inputEnter();
   void inputBack();
+
+private:
+  String readDeviceInput(int deviceId);
 };
 
 #endif

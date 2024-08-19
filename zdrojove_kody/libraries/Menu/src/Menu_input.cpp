@@ -16,3 +16,21 @@ void Menu::inputBack()
 {
     inputBuffer = 4;
 }
+String Menu::readDeviceInput(int deviceId)
+{
+    String output = "";
+    switch (deviceId)
+    {
+    case 1:;
+        output = (String) random(13, 69);
+        output += (char) 0b10100000;
+        output += (char) 223;
+        output += "C";
+        Serial.println(output);
+        break;
+
+    default:
+        output = "NaN";
+    }
+    return output;
+}

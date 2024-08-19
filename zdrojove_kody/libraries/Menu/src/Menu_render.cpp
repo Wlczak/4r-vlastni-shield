@@ -212,45 +212,64 @@ void Menu::renderDelay(int taskId)
 
 void Menu::renderMenu(int taskId)
 {
-
-    int cursorIndexX = menuItemNames[selectedItem].length() + 1;
-    int cursorIndexY = menuCursorScroll;
+    // variable declaration
+    int cursorIndexX;
+    int cursorIndexY;
     int &framesLeft = renderFramesLeft[taskId];
     long &lastMillis = renderInterval[taskId][1];
-
-    if (renderMenuItems)
+    // changes menu rendering based on menu type
+    switch (menuType)
     {
-        renderMenuItems = false;
+    case 1:
+        cursorIndexX = menuItemNames[selectedItem].length() + 1;
+        cursorIndexY = menuCursorScroll;
 
-        for (int i = 0; i < rows; i++)
+        if (renderMenuItems)
         {
-            int itemIndex = menuScroll + i;
+            renderMenuItems = false;
 
-            synchClearArea(0, cols - 1, i, i);
-            if (itemIndex < menuItemsLength)
+            for (int i = 0; i < rows; i++)
             {
-                lcd.setCursor(0, i);
-                lcd.print(menuItemNames[itemIndex]);
+                int itemIndex = menuScroll + i;
+
+                synchClearArea(0, cols - 1, i, i);
+                if (itemIndex < menuItemsLength)
+                {
+                    lcd.setCursor(0, i);
+                    lcd.print(menuItemNames[itemIndex]);
+                }
             }
         }
-    }
 
-    if (millis() - lastMillis > 690)
-    {
-        lastMillis = millis();
+        if (millis() - lastMillis > 690)
+        {
+            lastMillis = millis();
 
-        if (framesLeft % 2 == 0)
-        {
-            lcd.setCursor(cursorIndexX, cursorIndexY);
-            lcd.write(byte(0));
-            framesLeft--;
+            if (framesLeft % 2 == 0)
+            {
+                lcd.setCursor(cursorIndexX, cursorIndexY);
+                lcd.write(byte(0));
+                framesLeft--;
+            }
+            else
+            {
+                lcd.setCursor(cursorIndexX, cursorIndexY);
+                lcd.write(byte(1));
+                framesLeft++;
+            }
         }
-        else
+        break;
+
+    case 2: // menu type 2
+        if (millis() - lastMillis > 3000)
         {
-            lcd.setCursor(cursorIndexX, cursorIndexY);
-            lcd.write(byte(1));
-            framesLeft++;
+           synchClearArea(0,0,0,0);
+            lcd.setCursor(0, 0);
+            lcd.print(readDeviceInput(1));
+
+            lastMillis = millis();
         }
+        break;
     }
 
     // input controlls
@@ -311,7 +330,8 @@ void Menu::renderMenu(int taskId)
                     break;
                 }
             }
-            if(!historySaved){
+            if (!historySaved)
+            {
                 error("history !saved");
             }
             framesLeft = 0;

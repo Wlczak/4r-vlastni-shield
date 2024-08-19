@@ -133,6 +133,7 @@ void Menu::error(String msg)
 
 void Menu::startMenu(int menuId)
 {
+    int taskId;
     if (getFreeSlotsCount() >= 4) // check if menu animations fit in buffer
     {
         // menu structure set
@@ -145,24 +146,45 @@ void Menu::startMenu(int menuId)
         asynchDelay(340);
         clearArea(false);
 
-        int taskId = addTask(4, false, menuId);
-        if (taskId > -1)
+        // selects propper execution based on menu type
+
+        switch (menuType)
         {
-            renderFramesLeft[taskId] = 2;
-            renderMenuItems = true;
-
-            // checks if cursor is out of bounds
-
-            if (menuScroll + 1 >= menuItemsLength)
+        case 1: // basic menu
+            taskId = addTask(4, false, menuId);
+            if (taskId > -1)
             {
-                menuScroll = menuItemsLength - rows;
+                renderFramesLeft[taskId] = 2;
+                renderMenuItems = true;
+
+                // reset scrolling for another menu
+
+                menuScroll = 0;
+                menuCursorScroll = 0;
+                selectedItem = 0;
+
+                // checks if cursor is out of bounds
+
+                if (menuScroll + 1 >= menuItemsLength)
+                {
+                    menuScroll = menuItemsLength - rows;
+                }
+                if (menuItemsLength <= rows - 1)
+                {
+                    menuCursorScroll = menuItemsLength - 1;
+                    menuScroll = menuItemsLength - (rows - 1);
+                }
+                selectedItem = menuScroll + menuCursorScroll;
             }
-            if (menuItemsLength <= rows - 1)
+            break;
+        case 2: // sensor readout
+            taskId = addTask(4, false, menuId);
+            if (taskId > -1)
             {
-                menuCursorScroll = menuItemsLength - 1;
-                menuScroll = menuItemsLength - (rows - 1);
+                renderFramesLeft[taskId] = 1;
+                // stuff after succesfully adding new task here:
             }
-            selectedItem = menuScroll + menuCursorScroll;
+            break;
         }
     }
 }
@@ -195,4 +217,11 @@ void Menu::synchClearArea(int x1, int x2, int y1, int y2)
             lcd.print(" ");
         }
     }
+}
+
+void Menu::printMsg(int x, int y, String msg)
+{
+}
+void Menu::centerPrintMsg(int x, int y, String msg)
+{
 }

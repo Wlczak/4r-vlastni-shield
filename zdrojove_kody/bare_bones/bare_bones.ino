@@ -18,11 +18,11 @@ void setup() {
 
   menu.loadChars();
 
-  menu.loadingScreen();
+  /*menu.loadingScreen();
   menu.typeOut(1, 0, "Welcome to:", false);
   menu.typeOut(1, 1, "V.corp. shield", false);
   menu.asynchDelay(600);
-  menu.clearArea(false);
+  menu.clearArea(false);*/
   menu.startMenu(1);
 }
 

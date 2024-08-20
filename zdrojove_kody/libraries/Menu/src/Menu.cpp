@@ -179,7 +179,7 @@ void Menu::startMenu(int menuId)
             taskId = addTask(4, false, menuId);
             if (taskId > -1)
             {
-                renderFramesLeft[taskId] = 1;
+                renderFramesLeft[taskId] = 2;
                 // stuff after succesfully adding new task here:
             }
             break;
@@ -219,7 +219,33 @@ void Menu::synchClearArea(int x1, int x2, int y1, int y2)
 
 void Menu::printMsg(int x, int y, String msg)
 {
+    if (x < cols && y < rows)
+    {
+        lcd.setCursor(x, y);
+        Serial.print(msg.length());
+        Serial.print(x);
+        if (msg.length() <= cols - x)
+        {
+            lcd.print(msg);
+        }
+        else
+        {
+            error("msg too long .-)");
+        }
+    }
+    else
+    {
+        error("bad prt coords");
+    }
 }
-void Menu::centerPrintMsg(int x, int y, String msg)
+void Menu::centerPrintMsg(int y, String msg)
 {
+    if (msg.length() <= cols)
+    {
+        printMsg(floor((cols - msg.length()) / 2), y, msg);
+    }
+    else
+    {
+        error("msg too long");
+    }
 }

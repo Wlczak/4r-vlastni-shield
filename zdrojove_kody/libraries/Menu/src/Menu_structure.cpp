@@ -40,8 +40,16 @@ void Menu::setMenuStructure(int menuId)
     }
     case 2:
     {
-        name = "Temperature";
+        name = "DS18B20";
         type = 2;
+        deviceId = 1;
+        break;
+    }
+    case 3:
+    {
+        name = "photo";
+        type = 2;
+        deviceId = 2;
         break;
     }
     case 4:

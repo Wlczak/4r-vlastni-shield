@@ -216,6 +216,8 @@ void Menu::renderMenu(int taskId)
     int cursorIndexY;
     int &framesLeft = renderFramesLeft[taskId];
     long &lastMillis = renderInterval[taskId][1];
+    int &lastDataLength = renderInt[taskId][0];
+    String data;
     // changes menu rendering based on menu type
     switch (menuType)
     {
@@ -259,13 +261,29 @@ void Menu::renderMenu(int taskId)
         }
         break;
 
-    case 2: // menu type 2
+    case 2: // menu type 2 - sensor readout
+        if (framesLeft == 2)
+        {
+            synchClearArea(0, cols - 1, 0, rows - 1);
+            centerPrintMsg(0, menuName);
+            framesLeft--;
+            lastMillis += 3000;
+        }
+
         if (millis() - lastMillis > 3000)
         {
-            synchClearArea(0, 0, 0, 0);
-            lcd.setCursor(0, 0);
-            lcd.print(readDeviceInput(1));
+            data = readDeviceInput(deviceId);
 
+            // checks to delete any characters that are not automatically overflowing
+            if (data.length() != lastDataLength)
+            {
+                synchClearArea(lastDataLength - data.length(), lastDataLength, 1, 1);
+            }
+
+            lcd.setCursor(0, 1);
+
+            lcd.print(data);
+            lastDataLength = data.length();
             lastMillis = millis();
         }
         break;
@@ -341,7 +359,7 @@ void Menu::renderMenu(int taskId)
         case 4:
             for (int i = queueSize - 1; i >= 0; i--)
             {
-                
+
                 if (menuHistory[i] != 0)
                 {
                     Serial.println(menuHistory[i]);

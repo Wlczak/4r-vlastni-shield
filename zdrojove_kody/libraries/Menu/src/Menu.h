@@ -26,7 +26,7 @@ public:
   // simple lcd print helper methods
   void synchClearArea(int x1, int x2, int y1, int y2);
   void printMsg(int x, int y, String msg);
-  void centerPrintMsg(int x, int y, String msg);
+  void centerPrintMsg(int y, String msg);
 
   // execute slowly - stops the whole code from executing
 
@@ -63,6 +63,7 @@ private:
   // menu structure variables
 
   int programType = 0;
+  int deviceId = 0;
 
   String menuName = "";
   int menuType = 0;

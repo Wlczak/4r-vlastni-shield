@@ -21,15 +21,19 @@ String Menu::readDeviceInput(int deviceId)
     String output = "";
     switch (deviceId)
     {
-    case 1:;
-        output = (String) random(13, 69);
-        output += (char) 0b10100000;
-        output += (char) 223;
+    case 1:
+        output = (String)(random(1, 20));
+        output += (char)0b10100000;
+        output += (char)223;
         output += "C";
         break;
-
+    case 2:
+        output = (String)(random(1, 20));
+        output += (char)0b10100000;
+        output += "(char)223;";
+        break;
     default:
-        output = "NaN";
+        output = "inval dev id";
     }
     return output;
 }

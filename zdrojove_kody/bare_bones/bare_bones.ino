@@ -2,11 +2,7 @@
 
 Menu menu;
 
-int menuId = 0;
-bool needToChangeMenu = true;
 int incomingSerial;
-String menuName = "Main menu";
-String menuItems[] = { "thing1", "thing2", "thing3", "thing4" };
 long fpsTime = millis();
 long fpsCounter = 0;
 bool showFps = false;

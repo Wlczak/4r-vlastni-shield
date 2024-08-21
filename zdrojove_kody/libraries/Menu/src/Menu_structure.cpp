@@ -10,6 +10,8 @@ void Menu::setMenuStructure(int menuId)
     int *tmp2;
     int size1;
     int size2;
+    bool isRange = false;
+
     programType = 0;
     if (menuItemNames != nullptr && menuItemsLinks != nullptr)
     {
@@ -57,8 +59,8 @@ void Menu::setMenuStructure(int menuId)
         name = "Settings";
         type = 1;
         static String tmp01[] = {
-            "Placeholder"};
-        static int tmp02[] = {15};
+            "Cursor", "range test"};
+        static int tmp02[] = {41, 42};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -67,9 +69,36 @@ void Menu::setMenuStructure(int menuId)
 
         break;
     }
+
+    case 41:
+        name = "Cursor";
+        type = 3; // select menu
+        isRange = false;
+
+        static String tmp01[] = {
+            "on", "off", "on", "off", "on", "off", "on", "off", "on", "off", "on", "off", "on", "off"};
+        static int tmp02[] = {1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2};
+
+        tmp1 = tmp01;
+        tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
+
+        break;
+
+    case 42:
+        name = "Range";
+        type = 3; // select menu
+        isRange = true;
+
+        // range size
+        size1 = 0;
+        size2 = 200;
+
+        break;
     case 5:
     {
-        name = "Debug";
+        name = "Debug menu";
         type = 1;
         static String tmp01[] = {
             "Main menu",
@@ -109,7 +138,7 @@ void Menu::setMenuStructure(int menuId)
         menuName = name;
         menuType = type;
 
-        if (type == 1) // perform checks only for standard menu
+        if (type == 1 || type == 3) // perform checks only for standard menu and setting select
         {
             for (int i = 0; i < size1; i++)
             {

@@ -19,6 +19,7 @@ void Menu::inputBack()
 String Menu::readDeviceInput(int deviceId)
 {
     String output = "";
+    String test = "1";
     switch (deviceId)
     {
     case 1:
@@ -27,11 +28,16 @@ String Menu::readDeviceInput(int deviceId)
         output += (char)223;
         output += "C";
         break;
-    case 2:
+    case 3:
         output = (String)(random(1, 20));
         output += (char)0b10100000;
         output += "(char)223;";
         break;
+
+    case 2:
+        output = test.length();
+        break;
+
     default:
         output = "inval dev id";
     }

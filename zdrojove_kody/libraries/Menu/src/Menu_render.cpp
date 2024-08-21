@@ -259,6 +259,91 @@ void Menu::renderMenu(int taskId)
                 framesLeft++;
             }
         }
+
+        // input controlls
+        if (inputBuffer != 0)
+        {
+
+            lastMillis = millis() + 1000;
+            switch (inputBuffer)
+            {
+            case 1:
+                if (selectedItem - 1 >= 0)
+                {
+                    lcd.setCursor(cursorIndexX, cursorIndexY);
+                    lcd.print(" ");
+                    selectedItem--;
+                    if (selectedItem == menuScroll - 1 && menuScroll != 0)
+                    {
+                        menuScroll--;
+                        renderMenuItems = true;
+                    }
+                    else
+                    {
+                        menuCursorScroll--;
+                    }
+                }
+                break;
+
+            case 2:
+                if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
+                {
+
+                    lcd.setCursor(cursorIndexX, cursorIndexY);
+                    lcd.print(" ");
+                    selectedItem++;
+                    if (selectedItem > menuScroll + rows - 1)
+                    {
+                        menuScroll++;
+                        renderMenuItems = true;
+                    }
+                    else
+                    {
+                        menuCursorScroll++;
+                    }
+                }
+                break;
+
+            case 3:
+                bool historySaved;
+                historySaved = false;
+
+                for (int i = 0; i < 16; i++)
+                {
+
+                    if (menuHistory[i] == 0)
+                    {
+                        historySaved = true;
+                        menuHistory[i] = renderInt[taskId][0];
+                        break;
+                    }
+                }
+                if (!historySaved)
+                {
+                    error("history !saved");
+                }
+                framesLeft = 0;
+
+                startMenu(menuItemsLinks[selectedItem]);
+                break;
+
+            case 4:
+                for (int i = queueSize - 1; i >= 0; i--)
+                {
+
+                    if (menuHistory[i] != 0)
+                    {
+                        Serial.println(menuHistory[i]);
+                        framesLeft = 0;
+                        startMenu(menuHistory[i]);
+                        menuHistory[i] = 0;
+                        break;
+                    }
+                }
+                break;
+            }
+            inputBuffer = 0;
+        }
         break;
 
     case 2: // menu type 2 - sensor readout
@@ -286,91 +371,148 @@ void Menu::renderMenu(int taskId)
             lastDataLength = data.length();
             lastMillis = millis();
         }
-        break;
-    }
 
-    // input controlls
-    if (inputBuffer != 0)
-    {
-
-        lastMillis = millis() + 1000;
-        switch (inputBuffer)
+        // input controlls
+        if (inputBuffer != 0)
         {
-        case 1:
-            if (selectedItem - 1 >= 0)
+
+            lastMillis = millis() + 1000;
+            switch (inputBuffer)
             {
-                lcd.setCursor(cursorIndexX, cursorIndexY);
-                lcd.print(" ");
-                selectedItem--;
-                if (selectedItem == menuScroll - 1 && menuScroll != 0)
+            case 4:
+                for (int i = queueSize - 1; i >= 0; i--)
+                {
+
+                    if (menuHistory[i] != 0)
+                    {
+                        Serial.println(menuHistory[i]);
+                        framesLeft = 0;
+                        startMenu(menuHistory[i]);
+                        menuHistory[i] = 0;
+                        break;
+                    }
+                }
+                break;
+            }
+            inputBuffer = 0;
+        }
+        break;
+
+    case 3:
+        if (framesLeft == 2)
+        {
+            synchClearArea(0, cols - 1, 0, rows - 1);
+            centerPrintMsg(0, menuName);
+            renderMenuItems = true;
+            framesLeft--;
+        }
+        if (millis() - lastMillis > 1000 / 60)
+        {
+            if (selectedItem != menuScroll || renderMenuItems)
+            {
+                synchClearArea(0, cols - 1, 1, rows - 1);
+
+                String selectedItemName = menuItemNames[menuScroll];
+                int centerStart = floor((cols - selectedItemName.length()) / 2);
+                String output = " ";
+                bool repeat = true;
+                Serial.println(" ");
+                menuScroll = 7;
+
+                for (int i = 0; i < cols; i++)
+                {
+                    Serial.print("i: ");
+                    Serial.print(i);
+                    Serial.print("\t");
+                    int cumulativeLength = 0;
+                    int indexOffset = 0;
+                    Serial.print("if: ");
+                    if (i < centerStart)
+                    {
+                        Serial.print("1");
+                        indexOffset--;
+
+                        while (repeat)
+                        {
+                            if (selectedItem - indexOffset <= 0)
+                            {
+                                break;
+                            }
+                            String currentItem = menuItemNames[menuScroll + indexOffset];
+                            if (currentItem.length() > centerStart - i - 2)
+                            {
+
+                                output = currentItem.charAt(currentItem.length() - 1 - centerStart + 2 + i);
+                                repeat = false;
+                            }
+                            else
+                            {
+                                cumulativeLength += currentItem.length();
+                                indexOffset--;
+                            }
+                        }
+                    }
+                    else if (i >= centerStart && i <= centerStart + selectedItemName.length() - 1)
+                    {
+                        Serial.print("2");
+                    }
+                    else
+                    {
+                        Serial.print("3");
+                    }
+                    Serial.print("\t");
+                    Serial.print("output: ");
+                    Serial.println(output);
+
+                    lcd.setCursor(i, 1);
+                    lcd.print(output);
+                }
+
+                lcd.print("s;tt |haha| tt;s");
+
+                lastMillis = millis();
+                renderMenuItems = false;
+                selectedItem = menuScroll;
+            }
+        }
+
+        // input controlls
+        if (inputBuffer != 0)
+        {
+
+            lastMillis = millis() + 1000;
+            switch (inputBuffer)
+            {
+            case 1:
+                if (menuScroll > 0)
                 {
                     menuScroll--;
-                    renderMenuItems = true;
                 }
-                else
-                {
-                    menuCursorScroll--;
-                }
-            }
-            break;
-
-        case 2:
-            if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
-            {
-
-                lcd.setCursor(cursorIndexX, cursorIndexY);
-                lcd.print(" ");
-                selectedItem++;
-                if (selectedItem > menuScroll + rows - 1)
+                break;
+            case 2:
+                if (menuScroll < menuItemsLength - 1)
                 {
                     menuScroll++;
-                    renderMenuItems = true;
                 }
-                else
+                break;
+            case 4:
+                for (int i = queueSize - 1; i >= 0; i--)
                 {
-                    menuCursorScroll++;
+
+                    if (menuHistory[i] != 0)
+                    {
+                        Serial.println(menuHistory[i]);
+                        framesLeft = 0;
+                        startMenu(menuHistory[i]);
+                        menuHistory[i] = 0;
+                        break;
+                    }
                 }
+                break;
             }
-            break;
-
-        case 3:
-            bool historySaved;
-            historySaved = false;
-
-            for (int i = 0; i < 16; i++)
-            {
-
-                if (menuHistory[i] == 0)
-                {
-                    historySaved = true;
-                    menuHistory[i] = renderInt[taskId][0];
-                    break;
-                }
-            }
-            if (!historySaved)
-            {
-                error("history !saved");
-            }
-            framesLeft = 0;
-
-            startMenu(menuItemsLinks[selectedItem]);
-            break;
-
-        case 4:
-            for (int i = queueSize - 1; i >= 0; i--)
-            {
-
-                if (menuHistory[i] != 0)
-                {
-                    Serial.println(menuHistory[i]);
-                    framesLeft = 0;
-                    startMenu(menuHistory[i]);
-                    menuHistory[i] = 0;
-                    break;
-                }
-            }
-            break;
+            inputBuffer = 0;
         }
-        inputBuffer = 0;
+
+        break;
     }
 }

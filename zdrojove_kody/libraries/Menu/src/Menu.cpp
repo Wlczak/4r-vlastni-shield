@@ -183,6 +183,14 @@ void Menu::startMenu(int menuId)
                 // stuff after succesfully adding new task here:
             }
             break;
+
+        case 3:
+            taskId = addTask(4, false, menuId);
+            {
+                renderFramesLeft[taskId] = 2;
+                // stuff after succesfully adding new task here:
+            }
+            break;
         }
     }
 }

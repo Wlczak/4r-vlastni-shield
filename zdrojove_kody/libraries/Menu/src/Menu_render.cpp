@@ -505,7 +505,7 @@ void Menu::renderMenu(int taskId)
                                         }
                                         else
                                         {
-                                            output = ";";
+                                            output = menuScroll + indexOffset != menuItemsLength-1 ? ";" : " ";
                                         }
                                         repeat = false;
                                     }
@@ -530,11 +530,11 @@ void Menu::renderMenu(int taskId)
             }
         }
 
-        // input controlls
+        // input controlls for type 3
         if (inputBuffer != 0)
         {
 
-            lastMillis = millis() + 1000;
+            // lastMillis = millis() + 1000;
             switch (inputBuffer)
             {
             case 1:

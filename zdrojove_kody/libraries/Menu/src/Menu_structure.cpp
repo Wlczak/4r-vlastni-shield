@@ -76,7 +76,7 @@ void Menu::setMenuStructure(int menuId)
         isRange = false;
 
         static String tmp01[] = {
-            "on", "off", "on", "off", "on", "off", "on", "off", "on", "off", "on", "off", "on", "off"};
+            "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567891", "12345678912", "123456789123", "1234567891234", "12345678912345"};
         static int tmp02[] = {1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2};
 
         tmp1 = tmp01;

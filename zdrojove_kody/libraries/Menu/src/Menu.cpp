@@ -188,6 +188,7 @@ void Menu::startMenu(int menuId)
             taskId = addTask(4, false, menuId);
             {
                 renderFramesLeft[taskId] = 2;
+                //menuScroll = 1;
                 // stuff after succesfully adding new task here:
             }
             break;

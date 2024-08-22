@@ -333,7 +333,6 @@ void Menu::renderMenu(int taskId)
 
                     if (menuHistory[i] != 0)
                     {
-                        Serial.println(menuHistory[i]);
                         framesLeft = 0;
                         startMenu(menuHistory[i]);
                         menuHistory[i] = 0;
@@ -385,7 +384,6 @@ void Menu::renderMenu(int taskId)
 
                     if (menuHistory[i] != 0)
                     {
-                        Serial.println(menuHistory[i]);
                         framesLeft = 0;
                         startMenu(menuHistory[i]);
                         menuHistory[i] = 0;
@@ -408,35 +406,47 @@ void Menu::renderMenu(int taskId)
         }
         if (millis() - lastMillis > 1000 / 60)
         {
+
             if (selectedItem != menuScroll || renderMenuItems)
             {
                 synchClearArea(0, cols - 1, 1, rows - 1);
 
                 String selectedItemName = menuItemNames[menuScroll];
                 int centerStart = floor((cols - selectedItemName.length()) / 2);
-                String output = " ";
-                bool repeat = true;
-                Serial.println(" ");
-                menuScroll = 7;
 
                 for (int i = 0; i < cols; i++)
                 {
-                    Serial.print("i: ");
-                    Serial.print(i);
-                    Serial.print("\t");
+                    String output = " ";
+                    bool repeat = true;
                     int cumulativeLength = 0;
                     int indexOffset = 0;
-                    Serial.print("if: ");
-                    if (i < centerStart)
+
+                    if (i >= centerStart && i <= centerStart + selectedItemName.length() - 1)
                     {
-                        Serial.print("1");
+
+                        output = selectedItemName.charAt(i - centerStart);
+                    }
+                    else if (i - centerStart + 2 >= 0 && centerStart + selectedItemName.length() + 2 > i)
+                    {
+                        if (i < centerStart) // bf selected string
+                        {
+                            output = i == centerStart - 1 ? "|" : " ";
+                        }
+                        else
+                        {
+                            output = i == centerStart + selectedItemName.length() ? "|" : " ";
+                        }
+                    }
+                    else if (i < centerStart)
+                    {
+
                         indexOffset--;
 
-                        while (repeat)
+                        /*while (repeat)
                         {
-                            if (selectedItem - indexOffset <= 0)
+                            if (menuItemsLength + indexOffset <= 0)
                             {
-                                break;
+                                repeat = false;
                             }
                             String currentItem = menuItemNames[menuScroll + indexOffset];
                             if (currentItem.length() > centerStart - i - 2)
@@ -450,19 +460,14 @@ void Menu::renderMenu(int taskId)
                                 cumulativeLength += currentItem.length();
                                 indexOffset--;
                             }
-                        }
+                        }*/
+                        output = "/";
                     }
-                    else if (i >= centerStart && i <= centerStart + selectedItemName.length() - 1)
-                    {
-                        Serial.print("2");
-                    }
+
                     else
                     {
-                        Serial.print("3");
+                        output = ":";
                     }
-                    Serial.print("\t");
-                    Serial.print("output: ");
-                    Serial.println(output);
 
                     lcd.setCursor(i, 1);
                     lcd.print(output);
@@ -501,7 +506,6 @@ void Menu::renderMenu(int taskId)
 
                     if (menuHistory[i] != 0)
                     {
-                        Serial.println(menuHistory[i]);
                         framesLeft = 0;
                         startMenu(menuHistory[i]);
                         menuHistory[i] = 0;

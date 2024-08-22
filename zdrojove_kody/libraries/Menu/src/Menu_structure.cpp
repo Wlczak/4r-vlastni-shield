@@ -91,7 +91,7 @@ void Menu::setMenuStructure(int menuId)
 
         // range size
         size1 = 0;
-        size2 = 200;
+        size2 = 100;
 
         break;
     case 5:
@@ -138,30 +138,50 @@ void Menu::setMenuStructure(int menuId)
 
         if (type == 1 || type == 3) // perform checks only for standard menu and setting select
         {
-            for (int i = 0; i < size1; i++)
+            if (!isRange)
             {
-                if (tmp1[i].length() > cols - 2)
+                for (int i = 0; i < size1; i++)
                 {
-                    error("menu it. t.long");
+                    if (tmp1[i].length() > cols - 2)
+                    {
+                        error("menu" + (String)i + "it. t.long");
+                    }
+                }
+                if (size1 == size2)
+                {
+                    int size = size1;
+                    menuItemNames = new String[size];
+                    menuItemsLinks = new int[size];
+                    menuItemsLength = size;
+
+                    for (int i = 0; i < size; i++)
+                    {
+                        menuItemNames[i] = tmp1[i];
+                        menuItemsLinks[i] = tmp2[i];
+                    }
+                }
+                else
+                {
+                    error("menu it.!=lengt");
                 }
             }
-
-            if (size1 == size2)
+            else if (size1 < size2)
             {
-                int size = size1;
+                int size = size2 - size1 + 1;
                 menuItemNames = new String[size];
-                menuItemsLinks = new int[size];
                 menuItemsLength = size;
 
-                for (int i = 0; i < size; i++)
+                // menuItemsLinks = new int[size]; // probly won't need this
+                int index = 0;
+                for (int i = size1; i <= size2; i++)
                 {
-                    menuItemNames[i] = tmp1[i];
-                    menuItemsLinks[i] = tmp2[i];
+                    menuItemNames[index] = (String)i;
+                    index++;
                 }
             }
             else
             {
-                error("menu it.!=lengt");
+                error("range invalid");
             }
         }
     }

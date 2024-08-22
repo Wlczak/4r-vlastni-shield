@@ -416,7 +416,7 @@ void Menu::renderMenu(int taskId)
 
                 for (int i = 0; i < cols; i++)
                 {
-                    String output = " ";
+                    String output = "";
                     bool repeat = true;
                     int cumulativeLength = 0;
                     int indexOffset = 0;
@@ -439,36 +439,45 @@ void Menu::renderMenu(int taskId)
                     }
                     else if (i < centerStart)
                     {
-
                         indexOffset--;
-
-                        /*while (repeat)
-                        {
-                            if (menuItemsLength + indexOffset <= 0)
-                            {
-                                repeat = false;
-                            }
-                            String currentItem = menuItemNames[menuScroll + indexOffset];
-                            if (currentItem.length() > centerStart - i - 2)
-                            {
-
-                                output = currentItem.charAt(currentItem.length() - 1 - centerStart + 2 + i);
-                                repeat = false;
-                            }
-                            else
-                            {
-                                cumulativeLength += currentItem.length();
-                                indexOffset--;
-                            }
-                        }*/
                         output = "/";
                     }
 
                     else
                     {
-                        output = ":";
-                    }
+                        indexOffset++;
+                        int secondStart = centerStart + selectedItemName.length() + 2;
+                        int relativeIndex = i - secondStart;
+                        while (repeat)
+                        {
+                            if (menuScroll + indexOffset <= 0 || menuScroll + indexOffset > menuItemsLength)
+                            {
+                                repeat = false;
+                            }
+                            else
+                            {
+                                String currentItem = menuItemNames[menuScroll + indexOffset];
 
+                                if (relativeIndex > cumulativeLength + currentItem.length())
+                                {
+                                    indexOffset++;
+                                    cumulativeLength += currentItem.length() + 1;
+                                }
+                                else
+                                {
+                                    if (relativeIndex - cumulativeLength < currentItem.length())
+                                    {
+                                        output = (String)currentItem.charAt(relativeIndex - cumulativeLength);
+                                    }
+                                    else
+                                    {
+                                        output = "|";
+                                    }
+                                    repeat = false;
+                                }
+                            }
+                        }
+                    }
                     lcd.setCursor(i, 1);
                     lcd.print(output);
                 }

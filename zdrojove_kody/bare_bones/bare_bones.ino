@@ -10,7 +10,7 @@ bool showFps = false;
 bool debug = false;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   menu.loadChars();
 

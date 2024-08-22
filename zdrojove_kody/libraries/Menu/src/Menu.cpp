@@ -231,8 +231,6 @@ void Menu::printMsg(int x, int y, String msg)
     if (x < cols && y < rows)
     {
         lcd.setCursor(x, y);
-        Serial.print(msg.length());
-        Serial.print(x);
         if (msg.length() <= cols - x)
         {
             lcd.print(msg);

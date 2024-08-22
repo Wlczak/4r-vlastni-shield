@@ -2,8 +2,6 @@
 
 void Menu::setMenuStructure(int menuId)
 {
-    Serial.print("menuId = ");
-    Serial.println(menuId);
     String name;
     int type;
     String *tmp1;

@@ -222,7 +222,7 @@ void Menu::renderMenu(int taskId)
     switch (menuType)
     {
     case 1:
-        cursorIndexX = menuItemNames[selectedItem].length() + 1;
+        cursorIndexX = menuItemNames[selectedItemIndex].length() + 1;
         cursorIndexY = menuCursorScroll;
 
         if (renderMenuItems)
@@ -268,12 +268,12 @@ void Menu::renderMenu(int taskId)
             switch (inputBuffer)
             {
             case 1:
-                if (selectedItem - 1 >= 0)
+                if (selectedItemIndex - 1 >= 0)
                 {
                     lcd.setCursor(cursorIndexX, cursorIndexY);
                     lcd.print(" ");
-                    selectedItem--;
-                    if (selectedItem == menuScroll - 1 && menuScroll != 0)
+                    selectedItemIndex--;
+                    if (selectedItemIndex == menuScroll - 1 && menuScroll != 0)
                     {
                         menuScroll--;
                         renderMenuItems = true;
@@ -286,13 +286,13 @@ void Menu::renderMenu(int taskId)
                 break;
 
             case 2:
-                if (selectedItem < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItem starts at 0
+                if (selectedItemIndex < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItemIndex starts at 0
                 {
 
                     lcd.setCursor(cursorIndexX, cursorIndexY);
                     lcd.print(" ");
-                    selectedItem++;
-                    if (selectedItem > menuScroll + rows - 1)
+                    selectedItemIndex++;
+                    if (selectedItemIndex > menuScroll + rows - 1)
                     {
                         menuScroll++;
                         renderMenuItems = true;
@@ -324,7 +324,7 @@ void Menu::renderMenu(int taskId)
                 }
                 framesLeft = 0;
 
-                startMenu(menuItemsLinks[selectedItem]);
+                startMenu(menuItemsLinks[selectedItemIndex]);
                 break;
 
             case 4:
@@ -407,13 +407,12 @@ void Menu::renderMenu(int taskId)
         if (millis() - lastMillis > 1000 / 60)
         {
 
-            if (selectedItem != menuScroll || renderMenuItems)
+            if (selectedItemIndex != menuScroll || renderMenuItems)
             {
                 synchClearArea(0, cols - 1, 1, rows - 1);
 
                 String selectedItemName = menuItemNames[menuScroll];
                 int centerStart = floor((cols - selectedItemName.length()) / 2);
-
                 for (int i = 0; i < cols; i++)
                 {
                     String output = "";
@@ -440,7 +439,39 @@ void Menu::renderMenu(int taskId)
                     else if (i < centerStart)
                     {
                         indexOffset--;
-                        output = "/";
+                        int relativeIndex = i;
+                        int reversedIndex = centerStart - 3 - i;
+
+                        while (repeat)
+                        {
+                            if (menuScroll + indexOffset < 0)
+                            {
+                                repeat = false;
+                                output = "";
+                            }
+
+                            else
+                            {
+                                String currentItem = menuItemNames[menuScroll + indexOffset];
+                                if (reversedIndex > currentItem.length() - 1 + cumulativeLength)
+                                {
+                                    indexOffset--;
+                                    cumulativeLength += currentItem.length() + 1;
+                                }
+                                else
+                                {
+                                    if (cumulativeLength == reversedIndex + 1)
+                                    {
+                                        output = ";";
+                                    }
+                                    else
+                                    {
+                                        output = currentItem.charAt(currentItem.length() - 1 - reversedIndex + cumulativeLength);
+                                    }
+                                    repeat = false;
+                                }
+                            }
+                        }
                     }
 
                     else
@@ -495,7 +526,7 @@ void Menu::renderMenu(int taskId)
 
                 lastMillis = millis();
                 renderMenuItems = false;
-                selectedItem = menuScroll;
+                selectedItemIndex = menuScroll;
             }
         }
 

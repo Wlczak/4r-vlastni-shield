@@ -159,7 +159,7 @@ void Menu::startMenu(int menuId)
 
                 menuScroll = 0;
                 menuCursorScroll = 0;
-                selectedItem = 0;
+                selectedItemIndex = 0;
 
                 // checks if cursor is out of bounds
 
@@ -172,7 +172,7 @@ void Menu::startMenu(int menuId)
                     menuCursorScroll = menuItemsLength - 1;
                     menuScroll = menuItemsLength - (rows - 1);
                 }
-                selectedItem = menuScroll + menuCursorScroll;
+                selectedItemIndex = menuScroll + menuCursorScroll;
             }
             break;
         case 2: // sensor readout

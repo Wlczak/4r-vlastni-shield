@@ -10,7 +10,8 @@ bool showFps = false;
 bool debug = false;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(230400);
+  Serial.println("");
 
   menu.loadChars();
 
@@ -19,7 +20,7 @@ void setup() {
   menu.typeOut(1, 1, "V.corp. shield", false);
   menu.asynchDelay(600);
   menu.clearArea(false);*/
-  menu.startMenu(42);
+  menu.startMenu(1);
 }
 
 void handleSerial() {

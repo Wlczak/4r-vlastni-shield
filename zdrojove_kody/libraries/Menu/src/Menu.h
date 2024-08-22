@@ -69,7 +69,7 @@ private:
   int menuType = 0;
   int menuScroll = 0;
   int menuCursorScroll = 0;
-  int selectedItem = 0;
+  int selectedItemIndex = 0;
   bool renderMenuItems = false;
   String *menuItemNames = new String[0];
   int *menuItemsLinks = new int[0];

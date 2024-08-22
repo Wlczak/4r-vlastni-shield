@@ -91,7 +91,7 @@ void Menu::setMenuStructure(int menuId)
 
         // range size
         size1 = 0;
-        size2 = 100;
+        size2 = 10;
 
         break;
     case 5:

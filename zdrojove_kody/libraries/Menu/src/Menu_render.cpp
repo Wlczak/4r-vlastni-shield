@@ -448,6 +448,7 @@ void Menu::renderMenu(int taskId)
                         indexOffset++;
                         int secondStart = centerStart + selectedItemName.length() + 2;
                         int relativeIndex = i - secondStart;
+
                         while (repeat)
                         {
                             if (menuScroll + indexOffset <= 0 || menuScroll + indexOffset > menuItemsLength)
@@ -458,21 +459,29 @@ void Menu::renderMenu(int taskId)
                             {
                                 String currentItem = menuItemNames[menuScroll + indexOffset];
 
-                                if (relativeIndex > cumulativeLength + currentItem.length())
+                                if (menuScroll + indexOffset <= menuItemsLength - 1)
                                 {
-                                    indexOffset++;
-                                    cumulativeLength += currentItem.length() + 1;
-                                }
-                                else
-                                {
-                                    if (relativeIndex - cumulativeLength < currentItem.length())
+                                    if (relativeIndex > cumulativeLength + currentItem.length())
                                     {
-                                        output = (String)currentItem.charAt(relativeIndex - cumulativeLength);
+                                        indexOffset++;
+                                        cumulativeLength += currentItem.length() + 1;
                                     }
                                     else
                                     {
-                                        output = "|";
+                                        if (relativeIndex - cumulativeLength < currentItem.length())
+                                        {
+                                            output = (String)currentItem.charAt(relativeIndex - cumulativeLength);
+                                        }
+                                        else
+                                        {
+                                            output = ";";
+                                        }
+                                        repeat = false;
                                     }
+                                }
+                                else
+                                {
+                                    output = " ";
                                     repeat = false;
                                 }
                             }

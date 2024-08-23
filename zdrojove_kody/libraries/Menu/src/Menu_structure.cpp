@@ -10,7 +10,7 @@ void Menu::setMenuStructure(int menuId)
     int size2;
     bool isRange = false;
 
-    programType = 0;
+    programType = S_DEFAULT;
     if (menuItemNames != nullptr)
     {
         delete[] menuItemNames;
@@ -27,7 +27,7 @@ void Menu::setMenuStructure(int menuId)
     case 1:
     {
         name = "Main menu";
-        type = 1;
+        type = S_NAVIGATION_MENU;
         static String tmp01[] = {
             "Temperature",
             "Light",
@@ -45,21 +45,21 @@ void Menu::setMenuStructure(int menuId)
     case 2:
     {
         name = "DS18B20";
-        type = 2;
+        type = S_SENSOR_READOUT;
         deviceId = 1;
         break;
     }
     case 3:
     {
         name = "photo";
-        type = 2;
+        type = S_SENSOR_READOUT;
         deviceId = 2;
         break;
     }
     case 4:
     {
         name = "Settings";
-        type = 1;
+        type = S_NAVIGATION_MENU;
         static String tmp01[] = {
             "Cursor", "range test", "lenght test"};
         static int tmp02[] = {43, 42, 41};
@@ -75,7 +75,7 @@ void Menu::setMenuStructure(int menuId)
     case 41:
     {
         name = "Length test";
-        type = 3; // select menu
+        type = S_SETTINGS; // select menu
         isRange = false;
 
         static String tmp01[] = {
@@ -88,7 +88,7 @@ void Menu::setMenuStructure(int menuId)
     }
     case 42:
         name = "Range";
-        type = 3; // select menu
+        type = S_SETTINGS; // select menu
         isRange = true;
 
         // range size
@@ -99,7 +99,7 @@ void Menu::setMenuStructure(int menuId)
     case 43:
     {
         name = "Cursor";
-        type = 3; // select menu
+        type = S_SETTINGS; // select menu
         isRange = false;
 
         static String tmp01[] = {
@@ -113,7 +113,7 @@ void Menu::setMenuStructure(int menuId)
     case 5:
     {
         name = "Debug menu";
-        type = 1;
+        type = S_NAVIGATION_MENU;
         static String tmp01[] = {
             "Main menu",
             "short2",
@@ -133,7 +133,7 @@ void Menu::setMenuStructure(int menuId)
     default:
     {
         name = "Default";
-        type = 1;
+        type = S_NAVIGATION_MENU;
         static String tmp01[] = {
             "Main menu"};
         static int tmp02[] = {1};

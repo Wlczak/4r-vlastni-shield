@@ -242,7 +242,7 @@ void Menu::renderMenu(int taskId)
             }
         }
 
-        if (millis() - lastMillis > 690)
+        if (millis() - lastMillis > 690 && settings[SET_SHOW_CURSOR] == 0)
         {
             lastMillis = millis();
 
@@ -548,6 +548,7 @@ void Menu::renderMenu(int taskId)
                 }
                 break;
             case IN_ENTER:
+                settings[currentSettingIndex] = selectedItemIndex;
 
             case IN_BACK:
                 for (int i = queueSize - 1; i >= 0; i--)

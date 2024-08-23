@@ -6,6 +6,10 @@ Menu::Menu() : lcd(0x27, cols, 2), lcdChars(lcd)
     lcd.setCursor(0, 0);
     lcd.backlight();
     lcd.clear();
+
+    // default settings
+
+    settings[0] = 0;
 }
 void Menu::loadChars()
 {
@@ -138,8 +142,8 @@ void Menu::startMenu(int menuId)
     {
         // menu structure set
         setMenuStructure(menuId);
-        // menu select animations
 
+        // menu select animations
         clearArea(false);
         /*  centerTypeOut(0, menuName, false);
           asynchDelay(340);
@@ -188,8 +192,8 @@ void Menu::startMenu(int menuId)
             taskId = addTask(R_RENDER_MENU, false, menuId);
             {
                 renderFramesLeft[taskId] = 2;
-                //menuScroll = 1;
-                // stuff after succesfully adding new task here:
+                menuScroll = settings[currentSettingIndex];
+                selectedItemIndex = 0;
             }
             break;
         }

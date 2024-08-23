@@ -8,6 +8,7 @@ void Menu::setMenuStructure(int menuId)
     int *tmp2;
     int size1;
     int size2;
+    int settingIndex = -1;
     bool isRange = false;
 
     programType = S_DEFAULT;
@@ -77,6 +78,7 @@ void Menu::setMenuStructure(int menuId)
         name = "Length test";
         type = S_SETTINGS; // select menu
         isRange = false;
+        settingIndex = 2;
 
         static String tmp01[] = {
             "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567891", "12345678912", "123456789123", "1234567891234", "12345678912345"};
@@ -90,6 +92,7 @@ void Menu::setMenuStructure(int menuId)
         name = "Range";
         type = S_SETTINGS; // select menu
         isRange = true;
+        settingIndex = 1;
 
         // range size
         size1 = 0;
@@ -101,6 +104,7 @@ void Menu::setMenuStructure(int menuId)
         name = "Cursor";
         type = S_SETTINGS; // select menu
         isRange = false;
+        settingIndex = SET_SHOW_CURSOR;
 
         static String tmp01[] = {
             "on", "off"};
@@ -186,6 +190,18 @@ void Menu::setMenuStructure(int menuId)
             }
             break;
         case S_SETTINGS:
+            if (settingIndex < 0)
+            {
+                error("set index !set");
+            }
+            else if (settingIndex > settingSlots)
+            {
+                error("invalid set id");
+            }
+            else
+            {
+                currentSettingIndex = settingIndex;
+            }
             if (isRange)
             {
                 if (size1 < size2)

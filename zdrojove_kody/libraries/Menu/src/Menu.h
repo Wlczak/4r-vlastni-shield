@@ -103,6 +103,11 @@ private:
   int menuItemsLength = 0;
   int menuHistory[16] = {0};
 
+  // settings variables
+  int currentSettingIndex = -1;
+  int settingSlots = 16;
+  int settings[16];
+
   // engine methods
   int addTask(int taskType, bool simultaneous);
   int addTask(int taskType, bool simultaneous, int int1);

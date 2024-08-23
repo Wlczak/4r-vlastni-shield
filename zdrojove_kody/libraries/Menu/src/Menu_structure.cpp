@@ -152,14 +152,14 @@ void Menu::setMenuStructure(int menuId)
         menuName = name;
         menuType = type;
 
-        if (type != 3) // reset currentSettingsIndex if not in context of settings menu
+        if (type != S_SETTINGS) // reset currentSettingsIndex if not in context of settings menu
         {
             currentSettingIndex = -1;
         }
 
         switch (type)
         {
-        case 1:
+        case S_NAVIGATION_MENU:
             for (int i = 0; i < size1; i++)
             {
                 if (tmp1[i].length() > cols - 2)
@@ -185,7 +185,7 @@ void Menu::setMenuStructure(int menuId)
                 error("menu it.!=lengt");
             }
             break;
-        case 3:
+        case S_SETTINGS:
             if (isRange)
             {
                 if (size1 < size2)
@@ -226,9 +226,6 @@ void Menu::setMenuStructure(int menuId)
                 }
             }
             break;
-        }
-        if (type == 1 || type == 3) // perform checks only for standard menu and setting select
-        {
         }
     }
     else

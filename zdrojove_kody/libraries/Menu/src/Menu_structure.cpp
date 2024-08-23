@@ -11,13 +11,17 @@ void Menu::setMenuStructure(int menuId)
     bool isRange = false;
 
     programType = 0;
-    if (menuItemNames != nullptr && menuItemsLinks != nullptr)
+    if (menuItemNames != nullptr)
     {
         delete[] menuItemNames;
-        delete[] menuItemsLinks;
         menuItemNames = nullptr;
+    }
+    if (menuItemsLinks != nullptr)
+    {
+        delete[] menuItemsLinks;
         menuItemsLinks = nullptr;
     }
+
     switch (menuId)
     {
     case 1:
@@ -57,8 +61,8 @@ void Menu::setMenuStructure(int menuId)
         name = "Settings";
         type = 1;
         static String tmp01[] = {
-            "Cursor", "range test"};
-        static int tmp02[] = {41, 42};
+            "Cursor", "range test", "lenght test"};
+        static int tmp02[] = {43, 42, 41};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -69,21 +73,19 @@ void Menu::setMenuStructure(int menuId)
     }
 
     case 41:
-        name = "Cursor";
+    {
+        name = "Length test";
         type = 3; // select menu
         isRange = false;
 
         static String tmp01[] = {
             "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567891", "12345678912", "123456789123", "1234567891234", "12345678912345"};
-        static int tmp02[] = {1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2};
 
         tmp1 = tmp01;
-        tmp2 = tmp02;
         size1 = sizeof(tmp01) / sizeof(tmp01[0]);
-        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
 
         break;
-
+    }
     case 42:
         name = "Range";
         type = 3; // select menu
@@ -94,6 +96,20 @@ void Menu::setMenuStructure(int menuId)
         size2 = 10;
 
         break;
+    case 43:
+    {
+        name = "Cursor";
+        type = 3; // select menu
+        isRange = false;
+
+        static String tmp01[] = {
+            "on", "off"};
+
+        tmp1 = tmp01;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+
+        break;
+    }
     case 5:
     {
         name = "Debug menu";
@@ -136,9 +152,62 @@ void Menu::setMenuStructure(int menuId)
         menuName = name;
         menuType = type;
 
-        if (type == 1 || type == 3) // perform checks only for standard menu and setting select
+        if (type != 3) // reset currentSettingsIndex if not in context of settings menu
         {
-            if (!isRange)
+            currentSettingIndex = -1;
+        }
+
+        switch (type)
+        {
+        case 1:
+            for (int i = 0; i < size1; i++)
+            {
+                if (tmp1[i].length() > cols - 2)
+                {
+                    error("menu" + (String)i + "it. t.long");
+                }
+            }
+            if (size1 == size2)
+            {
+                int size = size1;
+                menuItemNames = new String[size];
+                menuItemsLinks = new int[size];
+                menuItemsLength = size;
+
+                for (int i = 0; i < size; i++)
+                {
+                    menuItemNames[i] = tmp1[i];
+                    menuItemsLinks[i] = tmp2[i];
+                }
+            }
+            else
+            {
+                error("menu it.!=lengt");
+            }
+            break;
+        case 3:
+            if (isRange)
+            {
+                if (size1 < size2)
+                {
+                    int size = size2 - size1 + 1;
+                    menuItemNames = new String[size];
+                    menuItemsLength = size;
+
+                    int index = 0;
+
+                    for (int i = size1; i <= size2; i++)
+                    {
+                        menuItemNames[index] = (String)i;
+                        index++;
+                    }
+                }
+                else
+                {
+                    error("range invalid");
+                }
+            }
+            else
             {
                 for (int i = 0; i < size1; i++)
                 {
@@ -147,42 +216,19 @@ void Menu::setMenuStructure(int menuId)
                         error("menu" + (String)i + "it. t.long");
                     }
                 }
-                if (size1 == size2)
-                {
-                    int size = size1;
-                    menuItemNames = new String[size];
-                    menuItemsLinks = new int[size];
-                    menuItemsLength = size;
 
-                    for (int i = 0; i < size; i++)
-                    {
-                        menuItemNames[i] = tmp1[i];
-                        menuItemsLinks[i] = tmp2[i];
-                    }
-                }
-                else
-                {
-                    error("menu it.!=lengt");
-                }
-            }
-            else if (size1 < size2)
-            {
-                int size = size2 - size1 + 1;
-                menuItemNames = new String[size];
-                menuItemsLength = size;
+                menuItemNames = new String[size1];
+                menuItemsLength = size1;
 
-                // menuItemsLinks = new int[size]; // probly won't need this
-                int index = 0;
-                for (int i = size1; i <= size2; i++)
+                for (int i = 0; i < size1; i++)
                 {
-                    menuItemNames[index] = (String)i;
-                    index++;
+                    menuItemNames[i] = tmp1[i];
                 }
             }
-            else
-            {
-                error("range invalid");
-            }
+            break;
+        }
+        if (type == 1 || type == 3) // perform checks only for standard menu and setting select
+        {
         }
     }
     else

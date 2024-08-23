@@ -8,6 +8,32 @@
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 
+// define preprocessor macros
+
+// for render function types
+
+#define R_TYPE_OUT 1
+#define R_CLEAR_AREA 2
+#define R_DELAY 3
+#define R_RENDER_MENU 4
+
+// for structure types
+
+#define S_NAVIGATION_MENU 1
+#define S_SENSOR_READOUT 2
+#define S_SETTINGS 3
+
+// for settings id
+
+#define SET_SHOW_CURSOR 1
+
+// for input tags
+
+#define IN_UP 1
+#define IN_DOWN 2
+#define IN_ENTER 3
+#define IN_BACK 4
+
 class Menu
 {
 public:

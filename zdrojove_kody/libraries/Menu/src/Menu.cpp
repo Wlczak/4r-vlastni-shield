@@ -74,7 +74,7 @@ void Menu::clearArea(bool simultaneous)
 
 void Menu::clearArea(int x1, int x2, int y1, int y2, bool simultaneous)
 {
-    int taskId = addTask(2, simultaneous, x1, x2, y1, y2);
+    int taskId = addTask(R_CLEAR_AREA, simultaneous, x1, x2, y1, y2);
     if (taskId >= 0)
     {
         renderInt[taskId][0] = x1;
@@ -105,7 +105,7 @@ void Menu::typeOut(int startX, int startY, String msg, bool simultaneous)
 {
     if (msg.length() <= cols - startX)
     {
-        int taskId = addTask(1, simultaneous, startX, startY, msg);
+        int taskId = addTask(R_TYPE_OUT, simultaneous, startX, startY, msg);
         if (taskId >= 0)
         {
             int frameCount = 4 + msg.length(); // 2x on and off + typing out + delete cursor (deletes on last frame)
@@ -148,8 +148,8 @@ void Menu::startMenu(int menuId)
         // selects propper execution based on menu type
         switch (menuType)
         {
-        case 1: // basic menu
-            taskId = addTask(4, false, menuId);
+        case S_NAVIGATION_MENU: // basic menu
+            taskId = addTask(R_RENDER_MENU, false, menuId);
             if (taskId > -1)
             {
                 renderFramesLeft[taskId] = 2;
@@ -175,8 +175,8 @@ void Menu::startMenu(int menuId)
                 selectedItemIndex = menuScroll + menuCursorScroll;
             }
             break;
-        case 2: // sensor readout
-            taskId = addTask(4, false, menuId);
+        case S_SENSOR_READOUT: // sensor readout
+            taskId = addTask(R_RENDER_MENU, false, menuId);
             if (taskId > -1)
             {
                 renderFramesLeft[taskId] = 2;
@@ -184,8 +184,8 @@ void Menu::startMenu(int menuId)
             }
             break;
 
-        case 3:
-            taskId = addTask(4, false, menuId);
+        case S_SETTINGS:
+            taskId = addTask(R_RENDER_MENU, false, menuId);
             {
                 renderFramesLeft[taskId] = 2;
                 //menuScroll = 1;
@@ -198,7 +198,7 @@ void Menu::startMenu(int menuId)
 
 void Menu::asynchDelay(long time)
 {
-    int taskId = addTask(3, false);
+    int taskId = addTask(R_DELAY, false);
 
     if (time >= 0)
     {

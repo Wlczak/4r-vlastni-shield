@@ -19,19 +19,19 @@ void Menu::render()
             orderLevelHasMembers = true;
             switch (renderQueue[i])
             {
-            case 1:
+            case R_TYPE_OUT:
                 renderTypeOut(i);
                 break;
 
-            case 2:
+            case R_CLEAR_AREA:
                 renderClearArea(i);
                 break;
 
-            case 3:
+            case R_DELAY:
                 renderDelay(i);
                 break;
 
-            case 4:
+            case R_RENDER_MENU:
                 renderMenu(i);
                 break;
             }
@@ -221,7 +221,7 @@ void Menu::renderMenu(int taskId)
     // changes menu rendering based on menu type
     switch (menuType)
     {
-    case 1:
+    case S_NAVIGATION_MENU:
         cursorIndexX = menuItemNames[selectedItemIndex].length() + 1;
         cursorIndexY = menuCursorScroll;
 
@@ -267,7 +267,7 @@ void Menu::renderMenu(int taskId)
             lastMillis = millis() + 1000;
             switch (inputBuffer)
             {
-            case 1:
+            case IN_UP:
                 if (selectedItemIndex - 1 >= 0)
                 {
                     lcd.setCursor(cursorIndexX, cursorIndexY);
@@ -285,7 +285,7 @@ void Menu::renderMenu(int taskId)
                 }
                 break;
 
-            case 2:
+            case IN_DOWN:
                 if (selectedItemIndex < menuItemsLength - 1) // -1 because of the difference sizeof starts at 1 while selectedItemIndex starts at 0
                 {
 
@@ -304,7 +304,7 @@ void Menu::renderMenu(int taskId)
                 }
                 break;
 
-            case 3:
+            case IN_ENTER:
                 bool historySaved;
                 historySaved = false;
 
@@ -327,7 +327,7 @@ void Menu::renderMenu(int taskId)
                 startMenu(menuItemsLinks[selectedItemIndex]);
                 break;
 
-            case 4:
+            case IN_BACK:
                 for (int i = queueSize - 1; i >= 0; i--)
                 {
 
@@ -345,7 +345,7 @@ void Menu::renderMenu(int taskId)
         }
         break;
 
-    case 2: // menu type 2 - sensor readout
+    case S_SENSOR_READOUT: // menu type 2 - sensor readout
         if (framesLeft == 2)
         {
             synchClearArea(0, cols - 1, 0, rows - 1);
@@ -378,7 +378,7 @@ void Menu::renderMenu(int taskId)
             lastMillis = millis() + 1000;
             switch (inputBuffer)
             {
-            case 4:
+            case IN_BACK:
                 for (int i = queueSize - 1; i >= 0; i--)
                 {
 
@@ -396,7 +396,7 @@ void Menu::renderMenu(int taskId)
         }
         break;
 
-    case 3:
+    case S_SETTINGS:
         if (framesLeft == 2)
         {
             synchClearArea(0, cols - 1, 0, rows - 1);
@@ -505,7 +505,7 @@ void Menu::renderMenu(int taskId)
                                         }
                                         else
                                         {
-                                            output = menuScroll + indexOffset != menuItemsLength-1 ? ";" : " ";
+                                            output = menuScroll + indexOffset != menuItemsLength - 1 ? ";" : " ";
                                         }
                                         repeat = false;
                                     }
@@ -533,23 +533,23 @@ void Menu::renderMenu(int taskId)
         // input controlls for type 3
         if (inputBuffer != 0)
         {
-
-            // lastMillis = millis() + 1000;
             switch (inputBuffer)
             {
-            case 1:
+            case IN_UP:
                 if (menuScroll > 0)
                 {
                     menuScroll--;
                 }
                 break;
-            case 2:
+            case IN_DOWN:
                 if (menuScroll < menuItemsLength - 1)
                 {
                     menuScroll++;
                 }
                 break;
-            case 4:
+            case IN_ENTER:
+
+            case IN_BACK:
                 for (int i = queueSize - 1; i >= 0; i--)
                 {
 

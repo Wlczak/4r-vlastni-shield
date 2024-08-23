@@ -2,19 +2,19 @@
 
 void Menu::inputUp()
 {
-    inputBuffer = 1;
+    inputBuffer = IN_UP;
 }
 void Menu::inputDown()
 {
-    inputBuffer = 2;
+    inputBuffer = IN_DOWN;
 }
 void Menu::inputEnter()
 {
-    inputBuffer = 3;
+    inputBuffer = IN_ENTER;
 }
 void Menu::inputBack()
 {
-    inputBuffer = 4;
+    inputBuffer = IN_BACK;
 }
 String Menu::readDeviceInput(int deviceId)
 {

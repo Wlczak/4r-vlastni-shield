@@ -19,13 +19,14 @@
 
 // for structure types
 
+#define S_DEFAULT 0;
 #define S_NAVIGATION_MENU 1
 #define S_SENSOR_READOUT 2
 #define S_SETTINGS 3
 
 // for settings id
 
-#define SET_SHOW_CURSOR 1
+#define SET_SHOW_CURSOR 0
 
 // for input tags
 

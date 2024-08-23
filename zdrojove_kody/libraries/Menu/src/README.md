@@ -9,6 +9,7 @@
 
 ## Structure types (S_###)
 
+- 0 - default
 - 1 - menu
 - 2 - sensor data readout
 - 3 - settings select

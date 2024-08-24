@@ -522,8 +522,6 @@ void Menu::renderMenu(int taskId)
                     lcd.print(output);
                 }
 
-                lcd.print("s;tt |haha| tt;s");
-
                 lastMillis = millis();
                 renderMenuItems = false;
                 selectedItemIndex = menuScroll;

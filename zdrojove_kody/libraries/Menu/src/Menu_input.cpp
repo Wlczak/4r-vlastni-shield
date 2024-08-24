@@ -35,7 +35,7 @@ String Menu::readDeviceInput(int deviceId)
         break;
 
     case 2:
-        output = test.length();
+        output = (String)analogRead(A0);
         break;
 
     default:

@@ -548,8 +548,17 @@ void Menu::renderMenu(int taskId)
                 }
                 break;
             case IN_ENTER:
+            {
+                String selectedItemName = menuItemNames[menuScroll];
+                int centerStart = floor((cols - selectedItemName.length()) / 2);
+                int secondStart = centerStart + selectedItemName.length() + 2;
+
                 settings[currentSettingIndex] = selectedItemIndex;
 
+                synchClearArea(0, centerStart - 2, 1, 1);
+                synchClearArea(secondStart, cols - 1, 1, 1);
+                asynchDelay(1000);
+            }
             case IN_BACK:
                 for (int i = queueSize - 1; i >= 0; i--)
                 {

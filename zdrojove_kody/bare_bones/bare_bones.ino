@@ -13,6 +13,8 @@ void setup() {
   Serial.begin(230400);
   Serial.println("");
 
+  pinMode(A0, INPUT);
+
   menu.loadChars();
 
   /*menu.loadingScreen();

@@ -1,7 +1,11 @@
 #include "Menu.h"
 
-Menu::Menu() : lcd(0x27, cols, 2), lcdChars(lcd)
+Menu::Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : lcd(lcd_Addr, lcd_cols, lcd_rows), lcdChars(lcd)
 {
+    // display resolution
+    cols = lcd_cols;
+    rows = lcd_rows;
+
     lcd.init();
     lcd.setCursor(0, 0);
     lcd.backlight();

@@ -38,7 +38,7 @@
 class Menu
 {
 public:
-  Menu();
+  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows);
 
   // execute slowly, works like intended
   void loadChars();
@@ -72,8 +72,8 @@ private:
   LiquidCrystal_I2C lcd;
 
   // default settings
-  int cols = 16;
-  int rows = 2;
+  int cols;
+  int rows;
 
   // engine variables
   int queueSize = 16;

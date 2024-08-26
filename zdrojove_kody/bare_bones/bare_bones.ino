@@ -1,6 +1,6 @@
 #include <Menu.h>
 
-Menu menu;
+Menu menu(0x27, 16, 2);
 
 int incomingSerial;
 long fpsTime = millis();
@@ -10,7 +10,7 @@ bool showFps = false;
 bool debug = false;
 
 void setup() {
-  Serial.begin(230400);
+  Serial.begin(9600);
   Serial.println("");
 
   pinMode(A0, INPUT);

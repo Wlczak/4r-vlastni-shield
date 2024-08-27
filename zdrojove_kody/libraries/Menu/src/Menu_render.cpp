@@ -354,7 +354,7 @@ void Menu::renderMenu(int taskId)
             lastMillis += 3000;
         }
 
-        if (millis() - lastMillis > 3000)
+        if (millis() - lastMillis > 100)
         {
             data = readDeviceInput(deviceId);
 

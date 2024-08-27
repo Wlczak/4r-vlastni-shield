@@ -1,7 +1,8 @@
 #include "Menu.h"
 
-Menu::Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows) : lcd(lcd_Addr, lcd_cols, lcd_rows), lcdChars(lcd)
+Menu::Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin) : lcd(lcd_Addr, lcd_cols, lcd_rows), lcdChars(lcd), oneWire(oneWirePin), sensors(&oneWire)
 {
+    sensors.begin();
     // display resolution
     cols = lcd_cols;
     rows = lcd_rows;

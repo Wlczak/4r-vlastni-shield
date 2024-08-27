@@ -7,6 +7,8 @@
 
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 // define preprocessor macros
 
@@ -38,7 +40,7 @@
 class Menu
 {
 public:
-  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows);
+  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin);
 
   // execute slowly, works like intended
   void loadChars();
@@ -70,6 +72,8 @@ private:
   // object declaration
   LCDChars lcdChars;
   LiquidCrystal_I2C lcd;
+  OneWire oneWire;
+  DallasTemperature sensors;
 
   // default settings
   int cols;

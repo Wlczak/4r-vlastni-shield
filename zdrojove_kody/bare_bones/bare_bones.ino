@@ -4,7 +4,9 @@
 #define re_dt D6
 #define re_clk D7
 
-Menu menu(0x27, 16, 2);
+#define one_w_temp D4
+
+Menu menu(0x27, 16, 2, one_w_temp);
 
 int incomingSerial;
 long fpsTime = millis();
@@ -13,6 +15,7 @@ bool showFps = false;
 
 bool lastDt = digitalRead(re_dt);
 bool lastClk = digitalRead(re_clk);
+long debounceTime = millis();
 
 bool debug = false;
 
@@ -43,8 +46,9 @@ void IRAM_ATTR handleSw() {
   if (digitalRead(re_sw) == HIGH) {
     menu.inputEnter();
     Serial.println("sw is HIGH");
+  } else {
+    Serial.println("sw is LOW");
   }
-  Serial.println("sw");
 }
 
 void setup() {

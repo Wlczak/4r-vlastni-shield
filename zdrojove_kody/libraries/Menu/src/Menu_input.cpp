@@ -23,7 +23,9 @@ String Menu::readDeviceInput(int deviceId)
     switch (deviceId)
     {
     case 1:
-        output = (String)(random(1, 20));
+        sensors.setWaitForConversion(false);
+        sensors.requestTemperatures();
+        output = (String)sensors.getTempCByIndex(0);
         output += (char)0b10100000;
         output += (char)223;
         output += "C";

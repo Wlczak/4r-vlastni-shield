@@ -1,5 +1,9 @@
 #include <Menu.h>
 
+#define re_sw D5
+#define re_dt D6
+#define re_clk D7
+
 Menu menu(0x27, 16, 2);
 
 int incomingSerial;
@@ -7,13 +11,49 @@ long fpsTime = millis();
 long fpsCounter = 0;
 bool showFps = false;
 
+bool lastDt = digitalRead(re_dt);
+bool lastClk = digitalRead(re_clk);
+
 bool debug = false;
+
+void IRAM_ATTR handleRotation() {
+  bool dt = digitalRead(re_dt);
+  bool clk = digitalRead(re_clk);
+
+  if (digitalRead(re_sw) == HIGH && millis() - debounceTime > 10) {
+    debounceTime = millis();
+
+    bool dt = digitalRead(re_dt);
+    bool clk = digitalRead(re_clk);
+
+    if (dt == clk && lastDt == lastClk || dt == lastDt && clk != lastClk) {
+      menu.inputUp();
+      lastDt = digitalRead(re_dt);
+      lastClk = digitalRead(re_clk);
+    }
+    if (dt != clk && lastDt != lastClk || dt == lastDt && clk != lastClk) {
+      menu.inputDown();
+      lastDt = digitalRead(re_dt);
+      lastClk = digitalRead(re_clk);
+    }
+  }
+}
+
+void IRAM_ATTR handleSw() {
+  if (digitalRead(re_sw) == HIGH) {
+    menu.inputEnter();
+    Serial.println("sw is HIGH");
+  }
+  Serial.println("sw");
+}
 
 void setup() {
   Serial.begin(9600);
   Serial.println("");
 
-  pinMode(A0, INPUT);
+  pinMode(re_sw, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(re_sw), handleSw, CHANGE);
 
   menu.loadChars();
 

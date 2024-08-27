@@ -16,6 +16,9 @@ bool showFps = false;
 bool lastDt = digitalRead(re_dt);
 bool lastClk = digitalRead(re_clk);
 long debounceTime = millis();
+long lastSwPress = millis();
+long switchHold = -1;
+
 
 bool debug = false;
 
@@ -43,11 +46,21 @@ void IRAM_ATTR handleRotation() {
 }
 
 void IRAM_ATTR handleSw() {
-  if (digitalRead(re_sw) == HIGH) {
-    menu.inputEnter();
-    Serial.println("sw is HIGH");
-  } else {
-    Serial.println("sw is LOW");
+  if (millis() - lastSwPress > 500) {
+    if (digitalRead(re_sw) == HIGH) {
+      if (millis() - switchHold < 300 || switchHold == -1) {
+        menu.inputEnter();
+        Serial.println("sw is HIGH");
+
+      } else {
+        menu.inputBack();
+      }
+      switchHold = -1;
+
+    } else {
+      Serial.println("sw is LOW");
+      switchHold = millis();
+    }
   }
 }
 

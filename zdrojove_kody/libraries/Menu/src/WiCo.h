@@ -10,10 +10,18 @@
 class WiCo
 {
 public:
+    // initialization
     WiCo();
+
+    // AP methods
     void startAP();
     void stopAP();
     String getAPIP();
+
+    // webserver methods
+    void startWebServer();
+    void stopWebServer();
+    void handleWebServer();
 
 private:
     // settings setting methods
@@ -28,6 +36,12 @@ private:
     String ap_psk;
     int ap_ch;
     bool ap_hide_ssid;
+
+    // web server
+    ESP8266WebServer *server;
+
+public:
+    bool isWebserverRunning = false;
 };
 
 #endif

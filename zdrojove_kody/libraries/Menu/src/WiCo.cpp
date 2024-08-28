@@ -22,6 +22,7 @@ void WiCo::stopAP()
         isAPActive = false;
     }
 }
-String WiCo::getAPIP(){
+String WiCo::getAPIP()
+{
     return WiFi.softAPIP().toString();
 }

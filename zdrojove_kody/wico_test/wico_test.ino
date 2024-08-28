@@ -7,20 +7,17 @@
 WiCo wico;
 //WiFiEventHandler wifiEventHandler;
 
-
-
-
 void setup() {
   // put your setup code here, to run once:
 
-  Serial.begin(300);
+  Serial.begin(115200);
   wico.startAP();
-
-
+  wico.startWebServer();
   //wifiEventHandler = WiFi.onSoftAPModeStationConnected(wico.test);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  //Serial.println(wico.getAPIP());
+  if (wico.isWebserverRunning) {
+    wico.handleWebServer();
+  }
 }

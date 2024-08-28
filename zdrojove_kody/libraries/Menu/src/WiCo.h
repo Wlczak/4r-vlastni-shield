@@ -22,6 +22,7 @@ public:
     void startWebServer();
     void stopWebServer();
     void handleWebServer();
+    void setWebStructure();
 
 private:
     // settings setting methods

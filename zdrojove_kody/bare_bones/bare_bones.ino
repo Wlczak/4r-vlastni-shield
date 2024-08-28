@@ -1,4 +1,5 @@
 #include <Menu.h>
+#include <WiCo.h>
 
 #define re_sw D5
 #define re_dt D6
@@ -7,6 +8,7 @@
 #define one_w_temp D4
 
 Menu menu(0x27, 16, 2, one_w_temp);
+WiCo WiCo();
 
 int incomingSerial;
 long fpsTime = millis();

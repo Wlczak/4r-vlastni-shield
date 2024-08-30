@@ -9,9 +9,8 @@ WiCo wico;
 
 void setup() {
   // put your setup code here, to run once:
-
   Serial.begin(115200);
-  wico.startAP();
+  wico.connectSTA();
   wico.startWebServer();
   wico.setWebStructure();
   //wifiEventHandler = WiFi.onSoftAPModeStationConnected(wico.test);

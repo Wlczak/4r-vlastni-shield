@@ -2,8 +2,11 @@
 #define WiCo_h
 
 #include <Arduino.h>
+#include <string>
+#include <vector>
 
 #include <ESP8266WiFi.h>
+#include <ESP8266WiFiMulti.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 
@@ -18,6 +21,11 @@ public:
     void stopAP();
     String getAPIP();
 
+    // STA connect methods
+    void connectSTA();
+    void disconnectSTA();
+    void setSTAsettings();
+
     // webserver methods
     void startWebServer();
     void stopWebServer();
@@ -30,7 +38,12 @@ private:
 
     // checking variables
     bool isAPActive = false;
+    bool isSTAActive = false;
 
+public:
+    bool isWebserverRunning = false;
+
+private:
     // AP settings
     int ap_max_devices;
     String ap_ssid;
@@ -38,11 +51,16 @@ private:
     int ap_ch;
     bool ap_hide_ssid;
 
+    // STA settings
+    int sta_timeout;
+    std::vector<const char *> sta_ssid;
+    std::vector<const char *> sta_psk;
+
+    // STA class
+    ESP8266WiFiMulti wifiMulti;
+
     // web server
     ESP8266WebServer *server;
-
-public:
-    bool isWebserverRunning = false;
 };
 
 #endif

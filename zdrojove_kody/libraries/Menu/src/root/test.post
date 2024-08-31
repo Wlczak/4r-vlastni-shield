@@ -1,0 +1,3 @@
+post variables : $idk_name $test1 $test2 $test3;
+
+output = server->arg("idk_name");

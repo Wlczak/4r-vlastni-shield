@@ -1,0 +1,14 @@
+D0 - led 1
+D1 - SCL
+D2 - SDA
+D3 - led 2
+D4 - DALAS
+D5 - EN_SW
+D6 - EN_DT
+D7 - EN_CLK
+D8 - Neopixel
+
+TX
+RX
+
+A0 - PHOTO

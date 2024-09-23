@@ -19,9 +19,13 @@ void setup() {
   Serial.begin(9600);
   attachInterrupt(digitalPinToInterrupt(D6), pain, CHANGE);
   attachInterrupt(digitalPinToInterrupt(D5), pain2, CHANGE);
-  //digitalWrite(D0, HIGH);
+  digitalWrite(D0, HIGH);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  digitalWrite(D3, LOW);
+  delay(500);
+  digitalWrite(D3, HIGH);
+  delay(500);
 }

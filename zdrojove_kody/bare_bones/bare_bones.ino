@@ -1,5 +1,6 @@
 #include <Menu.h>
 #include <WiCo.h>
+#include <RGB.h>
 
 #define re_sw D5
 #define re_dt D6
@@ -9,6 +10,8 @@
 
 Menu menu(0x27, 16, 2, one_w_temp);
 WiCo WiCo();
+RGB strip(8, D8);
+
 
 int incomingSerial;
 long fpsTime = millis();
@@ -70,17 +73,19 @@ void setup() {
   Serial.begin(9600);
   Serial.println("");
 
+  strip.light();
+
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
   attachInterrupt(digitalPinToInterrupt(re_sw), handleSw, CHANGE);
 
   menu.loadChars();
 
-  menu.loadingScreen();
+  /* menu.loadingScreen();
   menu.centerTypeOut(0, "V.corp. shield", false);
   menu.centerTypeOut(1, "v1.0.0", false);
   menu.asynchDelay(1000);
-  menu.clearArea(false);
+  menu.clearArea(false);*/
 
   menu.startMenu(1);
 }

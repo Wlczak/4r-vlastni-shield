@@ -73,7 +73,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("");
 
-  strip.light();
+  strip.rainbow(10);
 
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);

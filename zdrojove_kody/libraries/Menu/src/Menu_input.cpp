@@ -20,15 +20,26 @@ String Menu::readDeviceInput(int deviceId)
 {
     String output = "";
     String test = "1";
+    float temp;
     switch (deviceId)
     {
     case 1:
+
         sensors.setWaitForConversion(false);
         sensors.requestTemperatures();
-        output = (String)sensors.getTempCByIndex(0);
-        output += (char)0b10100000;
-        output += (char)223;
-        output += "C";
+        temp = sensors.getTempCByIndex(0);
+        if (temp != DEVICE_DISCONNECTED_C)
+        {
+            output = (String)temp;
+            output += (char)0b10100000;
+            output += (char)223;
+            output += "C";
+        }
+        else
+        {
+            output = "DISCONNECTED";
+        }
+
         break;
     case 3:
         output = (String)(random(1, 20));

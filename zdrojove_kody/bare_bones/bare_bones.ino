@@ -73,7 +73,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("");
 
-  strip.rainbow(10);
+  strip.light();
 
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
@@ -81,11 +81,11 @@ void setup() {
 
   menu.loadChars();
 
-  /* menu.loadingScreen();
+  menu.loadingScreen();
   menu.centerTypeOut(0, "V.corp. shield", false);
   menu.centerTypeOut(1, "v1.0.0", false);
   menu.asynchDelay(1000);
-  menu.clearArea(false);*/
+  menu.clearArea(false);
 
   menu.startMenu(1);
 }

@@ -5,14 +5,15 @@
 
 #include <Arduino.h>
 
-class RGB {
+class RGB
+{
 public:
     RGB(int rgb_pixels, int rgb_pin);
-    void rainbow(uint8_t wait);
+    void light();
 
 private:
+    int pixels;
     Adafruit_NeoPixel neofruit;
-    uint32_t Wheel(byte WheelPos);
 };
 
 #endif

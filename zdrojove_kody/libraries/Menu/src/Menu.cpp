@@ -35,6 +35,8 @@ void Menu::loadingScreen()
     long mainTime;
     long time;
 
+    digitalWrite(LED_B, HIGH);
+
     lcd.setCursor(6, 0);
     lcd.write(2);
     lcd.write(3);
@@ -44,22 +46,30 @@ void Menu::loadingScreen()
     delay(1500);
 
     clearArea(0, 15, 1, 1, true);
+    digitalWrite(LED_B, LOW);
     render();
+    delay(100);
+    digitalWrite(LED_B, HIGH);
     lcd.setCursor(3, 1);
     lcd.print("Loading");
 
     time = millis();
     mainTime = millis();
-
+    digitalWrite(LED_B, LOW);
+    delay(50);
     while (!finished)
     {
         if (millis() - time > 300)
         {
+            digitalWrite(LED_B, LOW);
             if (dotCount >= 4)
             {
                 clearArea(10, 12, 1, 1, true);
                 render();
                 dotCount = 1;
+                digitalWrite(LED_B, HIGH);
+                delay(50);
+                digitalWrite(LED_B, LOW);
             }
 
             lcd.setCursor((9 + dotCount), 1);
@@ -72,8 +82,10 @@ void Menu::loadingScreen()
         {
             finished = true;
             lcd.clear();
+            digitalWrite(LED_B, HIGH);
         }
         delay(50);
+        digitalWrite(LED_B, LOW);
     }
 }
 void Menu::clearArea(bool simultaneous)
@@ -130,6 +142,7 @@ void Menu::typeOut(int startX, int startY, String msg, bool simultaneous)
 }
 void Menu::error(String msg)
 {
+    digitalWrite(LED_R, HIGH);
     lcd.clear();
     lcd.backlight();
     lcd.setCursor(5, 0);
@@ -138,6 +151,7 @@ void Menu::error(String msg)
     lcd.setCursor(0, 1);
     lcd.print(msg);
     delay(5000);
+    digitalWrite(LED_R, LOW);
 }
 
 void Menu::startMenu(int menuId)

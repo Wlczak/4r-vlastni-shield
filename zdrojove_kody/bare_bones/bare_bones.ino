@@ -83,7 +83,7 @@ void setup() {
 
   menu.loadingScreen();
   menu.centerTypeOut(0, "V.corp. shield", false);
-  menu.centerTypeOut(1, "v1.0.0", false);
+  menu.centerTypeOut(1, "v1.0.1", true);
   menu.asynchDelay(1000);
   menu.clearArea(false);
 

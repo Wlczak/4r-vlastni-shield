@@ -12,6 +12,8 @@ void RGB::light()
 {
     for (int i = 0; i < pixels; i++)
     {
+        neofruit.setBrightness(1);
         neofruit.setPixelColor(i, neofruit.Color(255, 255, 255));
+        neofruit.show();
     }
 }

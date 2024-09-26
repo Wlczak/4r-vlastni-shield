@@ -5,14 +5,13 @@ RGB::RGB(int rgb_pixels, int rgb_pin)
 {
     pixels = rgb_pixels;
     neofruit.begin();            // Initialize the NeoPixel strip
-    neofruit.setBrightness(100); // Optional: Set brightness (0-255)
+    neofruit.setBrightness(1); // Optional: Set brightness (0-255)
 }
 
 void RGB::light()
 {
     for (int i = 0; i < pixels; i++)
     {
-        neofruit.setBrightness(1);
         neofruit.setPixelColor(i, neofruit.Color(255, 255, 255));
         neofruit.show();
     }

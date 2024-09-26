@@ -34,12 +34,7 @@ bool isSwitchPressed = false;
 
 bool debug = false;
 
-void wake_up(void) {
-  wifi_fpm_close();  // Disable forced sleep function
-  wifi_set_opmode(STATION_MODE);
-  ESP.wdtEnable(5000);
-  Serial.println("Woken up from Light-sleep!");
-}
+
 
 void IRAM_ATTR handleRotation() {
   bool dt = digitalRead(re_dt);
@@ -138,22 +133,8 @@ void handleSerial() {
       menu.startMenu(1);
       break;
     case 110:
-      wifi_station_disconnect();   // n           //menu.startMenu(2);
-      wifi_set_opmode(NULL_MODE);  // Set Wi-Fi mode to NULL (Wi-Fi off)
-
-      gpio_pin_wakeup_enable(GPIO_ID_PIN(re_sw), GPIO_PIN_INTR_HILEVEL);
-
-      wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);  // Set Light-sleep mode
-      wifi_fpm_open();                         // Enable force sleep
-
-      wifi_fpm_set_wakeup_cb(wake_up);
-
-
-      Serial.println("slleep");
-      ESP.wdtDisable();
-      wifi_fpm_do_sleep(100 * 1000);
-
-      ESP.wdtEnable(5000);
+      ESP.deepSleep(1);  // Sleep for 10 seconds (in microseconds) // n           //menu.startMenu(2);
+      menu.startMenu(1);
       break;
     default:
       Serial.print("undefined: ");

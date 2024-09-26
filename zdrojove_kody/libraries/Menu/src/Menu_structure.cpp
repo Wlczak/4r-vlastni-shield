@@ -62,8 +62,8 @@ void Menu::setMenuStructure(int menuId)
         name = "Settings";
         type = S_NAVIGATION_MENU;
         static String tmp01[] = {
-            "Cursor", "range test", "lenght test"};
-        static int tmp02[] = {43, 42, 41};
+            "LEDs", "Cursor"};
+        static int tmp02[] = {44, 43};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -72,33 +72,6 @@ void Menu::setMenuStructure(int menuId)
 
         break;
     }
-
-    case 41:
-    {
-        name = "Length test";
-        type = S_SETTINGS; // select menu
-        isRange = false;
-        settingIndex = 2;
-
-        static String tmp01[] = {
-            "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567891", "12345678912", "123456789123", "1234567891234", "12345678912345"};
-
-        tmp1 = tmp01;
-        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
-
-        break;
-    }
-    case 42:
-        name = "Range";
-        type = S_SETTINGS; // select menu
-        isRange = true;
-        settingIndex = 1;
-
-        // range size
-        size1 = 0;
-        size2 = 10;
-
-        break;
     case 43:
     {
         name = "Cursor";
@@ -114,18 +87,82 @@ void Menu::setMenuStructure(int menuId)
 
         break;
     }
+    case 44:
+    {
+        name = "Led";
+        type = S_SETTINGS; // select menu
+        isRange = false;
+        settingIndex = SET_DEBUG_LED;
+
+        static String tmp01[] = {
+            "off", "blue", "red", "both"};
+
+        tmp1 = tmp01;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+
+        break;
+    }
     case 5:
     {
         name = "Debug menu";
         type = S_NAVIGATION_MENU;
         static String tmp01[] = {
             "Main menu",
-            "short2",
-            "veeery long3",
-            "ha4",
-            "yo5",
-            "hello kelo to6"};
-        static int tmp02[] = {1, 6515641, 34, 420, 59, 17};
+            "Length test",
+            "Range test", 
+            "Trigger errors", 
+            "Short2",
+            "Veeery long3",
+            "Ha4",
+            "Yo5",
+            "Hello kelo to6"};
+        static int tmp02[] = {1, 51, 52, 53, 6515641, 34, 420, 59, 17};
+
+        tmp1 = tmp01;
+        tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
+
+        break;
+    }
+
+    case 51:
+    {
+        name = "Length test";
+        type = S_SETTINGS; // select menu
+        isRange = false;
+        settingIndex = 2;
+
+        static String tmp01[] = {
+            "1", "12", "123", "1234", "12345", "123456", "1234567", "12345678", "123456789", "1234567891", "12345678912", "123456789123", "1234567891234", "12345678912345"};
+
+        tmp1 = tmp01;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+
+        break;
+    }
+
+    case 52:
+        name = "Range";
+        type = S_SETTINGS; // select menu
+        isRange = true;
+        settingIndex = 1;
+
+        // range size
+        size1 = 0;
+        size2 = 10;
+
+        break;
+
+    case 53:
+    {
+        name = "Break stuff";
+        type = S_NAVIGATION_MENU;
+        static String tmp01[] = {
+            "Main menu",
+            "Length test12132212323123231132 this is too long on purpose :-)",
+            "Range test"};
+        static int tmp02[] = {1, 51, 52, 6515641, 34, 420, 59, 17};
 
         tmp1 = tmp01;
         tmp2 = tmp02;

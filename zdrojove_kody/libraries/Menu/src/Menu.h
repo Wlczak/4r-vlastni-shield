@@ -29,6 +29,7 @@
 // for settings id
 
 #define SET_SHOW_CURSOR 0
+#define SET_DEBUG_LED 1
 
 // for input tags
 
@@ -36,6 +37,11 @@
 #define IN_DOWN 2
 #define IN_ENTER 3
 #define IN_BACK 4
+
+// debug leds
+
+#define LED_B D0
+#define LED_R D3
 
 class Menu
 {
@@ -131,6 +137,8 @@ private:
 
   // input variables
   int inputBuffer = 0;
+
+  long led_millis;
 
 public:
   // input methods

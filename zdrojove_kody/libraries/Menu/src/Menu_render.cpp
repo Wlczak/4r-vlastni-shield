@@ -37,6 +37,29 @@ void Menu::render()
             }
         }
     }
+
+    if (millis() - led_millis > 1000)
+    {
+        led_millis = millis();
+        switch (settings[SET_DEBUG_LED])
+        {
+        case 1:
+            digitalWrite(D0, HIGH);
+            digitalWrite(D3, LOW);
+            break;
+        case 2:
+            digitalWrite(D0, LOW);
+            digitalWrite(D3, HIGH);
+            break;
+        case 3:
+            digitalWrite(D0, HIGH);
+            digitalWrite(D3, HIGH);
+            break;
+        default:
+            break;
+        }
+    }
+
     // if current animation order level is empty decrement other levels
     if (!orderLevelHasMembers)
     {

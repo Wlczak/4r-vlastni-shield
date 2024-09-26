@@ -6,7 +6,13 @@
 #define re_dt D6
 #define re_clk D7
 
+#define led_r D3
+#define led_b D0
+
+
 #define one_w_temp D4
+
+#define FPM_SLEEP_MAX_TIME 0xFFFFFFF
 
 Menu menu(0x27, 16, 2, one_w_temp);
 WiCo WiCo();
@@ -23,9 +29,17 @@ bool lastClk = digitalRead(re_clk);
 long debounceTime = millis();
 long lastSwPress = millis();
 long switchHold = -1;
+bool isSwitchPressed = false;
 
 
 bool debug = false;
+
+void wake_up(void) {
+  wifi_fpm_close();  // Disable forced sleep function
+  wifi_set_opmode(STATION_MODE);
+  ESP.wdtEnable(5000);
+  Serial.println("Woken up from Light-sleep!");
+}
 
 void IRAM_ATTR handleRotation() {
   bool dt = digitalRead(re_dt);
@@ -53,24 +67,25 @@ void IRAM_ATTR handleRotation() {
 void IRAM_ATTR handleSw() {
   if (millis() - lastSwPress > 500) {
     if (digitalRead(re_sw) == HIGH) {
-      if (millis() - switchHold < 300 || switchHold == -1) {
+
+      if (millis() - switchHold < 300) {
         menu.inputEnter();
-        Serial.println("sw is HIGH");
 
       } else {
         menu.inputBack();
       }
       switchHold = -1;
-
+      digitalWrite(led_b, LOW);
+      isSwitchPressed = false;
     } else {
-      Serial.println("sw is LOW");
       switchHold = millis();
+      isSwitchPressed = true;
     }
   }
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println("");
 
   Neopixel.light();
@@ -78,6 +93,9 @@ void setup() {
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
   attachInterrupt(digitalPinToInterrupt(re_sw), handleSw, CHANGE);
+
+  pinMode(led_r, OUTPUT);
+  pinMode(led_b, OUTPUT);
 
   menu.loadChars();
 
@@ -88,6 +106,7 @@ void setup() {
   menu.clearArea(false);
 
   menu.startMenu(1);
+  digitalWrite(led_b, LOW);
 }
 
 void handleSerial() {
@@ -107,7 +126,7 @@ void handleSerial() {
       menu.inputUp();
       break;
     case 114:  // r
-      menu.asynchDelay(5000);
+      //menu.asynchDelay(5000);
       break;
     case 102:  // f
       showFps = !showFps;
@@ -118,8 +137,23 @@ void handleSerial() {
     case 109:  // m
       menu.startMenu(1);
       break;
-    case 110:  // n
-      menu.startMenu(2);
+    case 110:
+      wifi_station_disconnect();   // n           //menu.startMenu(2);
+      wifi_set_opmode(NULL_MODE);  // Set Wi-Fi mode to NULL (Wi-Fi off)
+
+      gpio_pin_wakeup_enable(GPIO_ID_PIN(re_sw), GPIO_PIN_INTR_HILEVEL);
+
+      wifi_fpm_set_sleep_type(LIGHT_SLEEP_T);  // Set Light-sleep mode
+      wifi_fpm_open();                         // Enable force sleep
+
+      wifi_fpm_set_wakeup_cb(wake_up);
+
+
+      Serial.println("slleep");
+      ESP.wdtDisable();
+      wifi_fpm_do_sleep(100 * 1000);
+
+      ESP.wdtEnable(5000);
       break;
     default:
       Serial.print("undefined: ");
@@ -148,5 +182,15 @@ void loop() {
   if (debug) {
     menu.debug();
     debug = !debug;
+  }
+  if (isSwitchPressed) {
+    if (millis() - switchHold > 300) {
+      analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));
+    }
+    if (millis() - switchHold > 3000) {
+      isSwitchPressed = false;
+      digitalWrite(led_b, LOW);
+      switchHold = -1;
+    }
   }
 }

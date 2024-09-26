@@ -10,7 +10,7 @@
 
 Menu menu(0x27, 16, 2, one_w_temp);
 WiCo WiCo();
-RGB strip(8, D8);
+RGB Neopixel(8, D8);
 
 
 int incomingSerial;
@@ -73,7 +73,7 @@ void setup() {
   Serial.begin(9600);
   Serial.println("");
 
-  strip.light();
+  Neopixel.light();
 
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);

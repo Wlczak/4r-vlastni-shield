@@ -282,6 +282,7 @@ void Menu::centerPrintMsg(int y, String msg)
 
 void Menu::sleep()
 {
+    neopixel.blank();
     lcd.noBacklight();
 }
 void Menu::wakeUp()

@@ -12,7 +12,6 @@ RGB::RGB(int rgb_pixels, int rgb_pin)
 
 void RGB::render(int effectId, int brightness)
 {
-    Serial.println(brightness);
     neofruit.setBrightness(brightness);
     switch (effectId)
     {

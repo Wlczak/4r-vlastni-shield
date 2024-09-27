@@ -8,7 +8,7 @@ void Menu::setMenuStructure(int menuId)
     int *tmp2;
     int size1;
     int size2;
-    //int incrementBy;
+    int incrementBy = -1;
     int settingIndex = -1;
     bool isRange = false;
 
@@ -196,7 +196,7 @@ void Menu::setMenuStructure(int menuId)
         settingIndex = SET_NEOPIXEL_EFFECT;
 
         static String tmp01[] = {
-            "blank", "rainbow"};
+            "blank", "white"};
 
         tmp1 = tmp01;
         size1 = sizeof(tmp01) / sizeof(tmp01[0]);
@@ -212,6 +212,7 @@ void Menu::setMenuStructure(int menuId)
         // range size
         size1 = 0;
         size2 = 255;
+        incrementBy = 10;
 
         break;
     default:
@@ -286,16 +287,37 @@ void Menu::setMenuStructure(int menuId)
             {
                 if (size1 < size2)
                 {
-                    int size = size2 - size1 + 1;
-                    menuItemNames = new String[size];
-                    menuItemsLength = size;
-
-                    int index = 0;
-
-                    for (int i = size1; i <= size2; i++)
+                    if (incrementBy <= 0)
                     {
-                        menuItemNames[index] = (String)i;
-                        index++;
+                        int size = size2 - size1 + 1;
+                        menuItemNames = new String[size];
+                        menuItemsLength = size;
+
+                        int index = 0;
+
+                        for (int i = size1; i <= size2; i++)
+                        {
+                            menuItemNames[index] = (String)i;
+                            index++;
+                        }
+                    }
+                    else
+                    {
+                        int size = size2 - size1 + 1;
+                        menuItemsLength = (int)floor(size / incrementBy) + 2;
+
+                        menuItemNames = new String[menuItemsLength];
+
+                        int index = 0;
+
+                        for (int i = size1; i < size2; i += incrementBy)
+                        {
+                            menuItemNames[index] = (String)(size1 + (index * incrementBy));
+                            Serial.println((String)(size1 + (index * incrementBy)));
+
+                            index++;
+                        }
+                        menuItemNames[index] = (String)size2;
                     }
                 }
                 else

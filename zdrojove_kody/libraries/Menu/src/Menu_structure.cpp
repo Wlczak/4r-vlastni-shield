@@ -8,6 +8,7 @@ void Menu::setMenuStructure(int menuId)
     int *tmp2;
     int size1;
     int size2;
+    //int incrementBy;
     int settingIndex = -1;
     bool isRange = false;
 
@@ -62,8 +63,8 @@ void Menu::setMenuStructure(int menuId)
         name = "Settings";
         type = S_NAVIGATION_MENU;
         static String tmp01[] = {
-            "LEDs", "Cursor"};
-        static int tmp02[] = {44, 43};
+            "Neopixel", "Debug LEDs", "Cursor"};
+        static int tmp02[] = {6, 44, 43};
 
         tmp1 = tmp01;
         tmp2 = tmp02;
@@ -89,7 +90,7 @@ void Menu::setMenuStructure(int menuId)
     }
     case 44:
     {
-        name = "Led";
+        name = "Debug LEDs";
         type = S_SETTINGS; // select menu
         isRange = false;
         settingIndex = SET_DEBUG_LED;
@@ -109,8 +110,8 @@ void Menu::setMenuStructure(int menuId)
         static String tmp01[] = {
             "Main menu",
             "Length test",
-            "Range test", 
-            "Trigger errors", 
+            "Range test",
+            "Trigger errors",
             "Short2",
             "Veeery long3",
             "Ha4",
@@ -150,7 +151,7 @@ void Menu::setMenuStructure(int menuId)
 
         // range size
         size1 = 0;
-        size2 = 10;
+        size2 = 10000;
 
         break;
 
@@ -171,6 +172,48 @@ void Menu::setMenuStructure(int menuId)
 
         break;
     }
+    case 6:
+    {
+        name = "Neopixel";
+        type = S_NAVIGATION_MENU;
+        static String tmp01[] = {
+            "Effects",
+            "Brightness"};
+        static int tmp02[] = {61, 62};
+
+        tmp1 = tmp01;
+        tmp2 = tmp02;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+        size2 = sizeof(tmp02) / sizeof(tmp02[0]);
+
+        break;
+    }
+    case 61:
+    {
+        name = "Effects";
+        type = S_SETTINGS; // select menu
+        isRange = false;
+        settingIndex = SET_NEOPIXEL_EFFECT;
+
+        static String tmp01[] = {
+            "blank", "rainbow"};
+
+        tmp1 = tmp01;
+        size1 = sizeof(tmp01) / sizeof(tmp01[0]);
+
+        break;
+    }
+    case 62:
+        name = "Brightness";
+        type = S_SETTINGS; // select menu
+        isRange = true;
+        settingIndex = SET_NEOPIXEL_BRIGHTNESS;
+
+        // range size
+        size1 = 0;
+        size2 = 255;
+
+        break;
     default:
     {
         name = "Default";

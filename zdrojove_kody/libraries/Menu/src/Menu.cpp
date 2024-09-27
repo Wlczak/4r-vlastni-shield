@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-Menu::Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin) : lcd(lcd_Addr, lcd_cols, lcd_rows), lcdChars(lcd), oneWire(oneWirePin), sensors(&oneWire)
+Menu::Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin, uint8_t neopixelPin, uint8_t neopixelCount) : lcd(lcd_Addr, lcd_cols, lcd_rows), lcdChars(lcd), oneWire(oneWirePin), sensors(&oneWire), neopixel(neopixelCount, neopixelPin)
 {
     sensors.begin();
     // display resolution
@@ -278,4 +278,13 @@ void Menu::centerPrintMsg(int y, String msg)
     {
         error("msg too long");
     }
+}
+
+void Menu::sleep()
+{
+    lcd.noBacklight();
+}
+void Menu::wakeUp()
+{
+    lcd.backlight();
 }

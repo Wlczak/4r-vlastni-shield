@@ -9,6 +9,7 @@
 #include <LiquidCrystal_I2C.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include <RGB.h>
 
 // define preprocessor macros
 
@@ -30,6 +31,8 @@
 
 #define SET_SHOW_CURSOR 0
 #define SET_DEBUG_LED 1
+#define SET_NEOPIXEL_EFFECT 2
+#define SET_NEOPIXEL_BRIGHTNESS 3
 
 // for input tags
 
@@ -46,7 +49,7 @@
 class Menu
 {
 public:
-  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin);
+  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin, uint8_t neopixelPin, uint8_t neopixelCount);
 
   // execute slowly, works like intended
   void loadChars();
@@ -74,12 +77,17 @@ public:
   // rendering engine methods
   void render();
 
+  // puts the display to sleep mode
+  void sleep();
+  void wakeUp();
+
 private:
   // object declaration
   LCDChars lcdChars;
   LiquidCrystal_I2C lcd;
   OneWire oneWire;
   DallasTemperature sensors;
+  RGB neopixel;
 
   // default settings
   int cols;

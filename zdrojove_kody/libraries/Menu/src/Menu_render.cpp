@@ -58,6 +58,7 @@ void Menu::render()
         default:
             break;
         }
+        neopixel.render(settings[SET_NEOPIXEL_EFFECT], settings[SET_NEOPIXEL_BRIGHTNESS]);
     }
 
     // if current animation order level is empty decrement other levels

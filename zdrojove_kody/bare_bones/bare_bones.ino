@@ -1,6 +1,5 @@
 #include <Menu.h>
 #include <WiCo.h>
-#include <RGB.h>
 
 #define re_sw D5
 #define re_dt D6
@@ -11,12 +10,14 @@
 
 
 #define one_w_temp D4
+#define neopixelPin D8
+#define neopixelLeds 8
 
-#define FPM_SLEEP_MAX_TIME 0xFFFFFFF
+#define sleepAfterS 120
 
-Menu menu(0x27, 16, 2, one_w_temp);
+
+Menu menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
 WiCo WiCo();
-RGB Neopixel(8, D8);
 
 
 int incomingSerial;
@@ -30,13 +31,21 @@ long debounceTime = millis();
 long lastSwPress = millis();
 long switchHold = -1;
 bool isSwitchPressed = false;
-
+long lastActive = millis();
+bool sleeping = false;
 
 bool debug = false;
 
-
+void wake_up() {
+  lastActive = millis();
+  if (sleeping) {
+    menu.wakeUp();
+    sleeping = false;
+  }
+}
 
 void IRAM_ATTR handleRotation() {
+  wake_up();
   bool dt = digitalRead(re_dt);
   bool clk = digitalRead(re_clk);
 
@@ -60,6 +69,7 @@ void IRAM_ATTR handleRotation() {
 }
 
 void IRAM_ATTR handleSw() {
+  wake_up();
   if (millis() - lastSwPress > 500) {
     if (digitalRead(re_sw) == HIGH) {
 
@@ -82,8 +92,6 @@ void IRAM_ATTR handleSw() {
 void setup() {
   Serial.begin(115200);
   Serial.println("");
-
-  Neopixel.light();
 
   pinMode(re_sw, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
@@ -132,9 +140,9 @@ void handleSerial() {
     case 109:  // m
       menu.startMenu(1);
       break;
-    case 110:
-      ESP.deepSleep(1);  // Sleep for 10 seconds (in microseconds) // n           //menu.startMenu(2);
-      menu.startMenu(1);
+    case 110:  // n
+      menu.sleep();
+      sleeping = true;
       break;
     default:
       Serial.print("undefined: ");
@@ -153,25 +161,33 @@ void fps() {
 }
 
 void loop() {
-  if (Serial.available() > 0) {
-    handleSerial();
-  }
-  menu.render();
-  if (showFps) {
-    fps();
-  }
-  if (debug) {
-    menu.debug();
-    debug = !debug;
-  }
-  if (isSwitchPressed) {
-    if (millis() - switchHold > 300) {
-      analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));
+  if (sleeping) {
+    yield();
+  } else {
+    if (Serial.available() > 0) {
+      handleSerial();
     }
-    if (millis() - switchHold > 3000) {
-      isSwitchPressed = false;
-      digitalWrite(led_b, LOW);
-      switchHold = -1;
+    menu.render();
+    if (showFps) {
+      fps();
+    }
+    if (debug) {
+      menu.debug();
+      debug = !debug;
+    }
+    if (isSwitchPressed) {
+      if (millis() - switchHold > 300) {
+        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));
+      }
+      if (millis() - switchHold > 3000) {
+        isSwitchPressed = false;
+        digitalWrite(led_b, LOW);
+        switchHold = -1;
+      }
+    }
+    if (millis() - lastActive > sleepAfterS * 1000) {
+      menu.sleep();
+      sleeping = true;
     }
   }
 }

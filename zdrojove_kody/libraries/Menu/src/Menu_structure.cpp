@@ -271,6 +271,7 @@ void Menu::setMenuStructure(int menuId)
             }
             break;
         case S_SETTINGS:
+            menuIncrement = -1;
             if (settingIndex < 0)
             {
                 error("set index !set");
@@ -306,7 +307,12 @@ void Menu::setMenuStructure(int menuId)
                         int size = size2 - size1 + 1;
                         menuItemsLength = (int)floor(size / incrementBy) + 2;
 
+                        menuFirstValue = size1;
+                        menuLastValue = size2;
+                        menuIncrement = incrementBy;
+
                         menuItemNames = new String[menuItemsLength];
+                        menuItemsLinks = new int[menuItemsLength];
 
                         int index = 0;
 

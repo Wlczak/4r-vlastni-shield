@@ -549,6 +549,7 @@ void Menu::renderMenu(int taskId)
                 lastMillis = millis();
                 renderMenuItems = false;
                 selectedItemIndex = menuScroll;
+                Serial.println(selectedItemIndex);
             }
         }
 
@@ -575,7 +576,14 @@ void Menu::renderMenu(int taskId)
                 int centerStart = floor((cols - selectedItemName.length()) / 2);
                 int secondStart = centerStart + selectedItemName.length() + 2;
 
-                settings[currentSettingIndex] = selectedItemIndex;
+                if (menuIncrement > 0)
+                {
+                    settings[currentSettingIndex] = menuFirstValue + (selectedItemIndex * menuIncrement);
+                }
+                else
+                {
+                    settings[currentSettingIndex] = selectedItemIndex;
+                }
 
                 synchClearArea(0, centerStart - 2, 1, 1);
                 synchClearArea(secondStart, cols - 1, 1, 1);

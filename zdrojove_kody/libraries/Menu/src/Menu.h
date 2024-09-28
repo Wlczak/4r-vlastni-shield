@@ -120,6 +120,9 @@ private:
   int *menuItemsLinks = new int[0];
   int menuItemsLength = 0;
   int menuHistory[16] = {0};
+  int menuFirstValue = -1;
+  int menuLastValue = -1;
+  int menuIncrement = -1;
 
   // settings variables
   int currentSettingIndex = -1;

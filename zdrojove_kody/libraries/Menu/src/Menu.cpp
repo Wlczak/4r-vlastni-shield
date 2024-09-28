@@ -211,7 +211,17 @@ void Menu::startMenu(int menuId)
             taskId = addTask(R_RENDER_MENU, false, menuId);
             {
                 renderFramesLeft[taskId] = 2;
-                menuScroll = settings[currentSettingIndex];
+                if (menuIncrement > 0)
+                {
+                    menuScroll = (settings[currentSettingIndex]-menuFirstValue)/ menuIncrement;
+                    Serial.println("menuScroll");
+                    Serial.println(menuScroll);
+                }
+                else
+                {
+                    menuScroll = settings[currentSettingIndex];
+                }
+
                 selectedItemIndex = 0;
             }
             break;

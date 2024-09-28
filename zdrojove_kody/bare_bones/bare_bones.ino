@@ -13,7 +13,7 @@
 #define neopixelPin D8
 #define neopixelLeds 8
 
-#define sleepAfterS 120
+#define sleepAfterS 20
 
 
 Menu menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);

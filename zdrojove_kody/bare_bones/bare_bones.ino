@@ -45,11 +45,12 @@ void wake_up() {
 }
 
 void IRAM_ATTR handleRotation() {
-  wake_up();
+
   bool dt = digitalRead(re_dt);
   bool clk = digitalRead(re_clk);
 
   if (digitalRead(re_sw) == HIGH && millis() - debounceTime > 10) {
+    wake_up();
     debounceTime = millis();
 
     bool dt = digitalRead(re_dt);
@@ -69,8 +70,8 @@ void IRAM_ATTR handleRotation() {
 }
 
 void IRAM_ATTR handleSw() {
-  wake_up();
   if (millis() - lastSwPress > 500) {
+    wake_up();
     if (digitalRead(re_sw) == HIGH) {
 
       if (millis() - switchHold < 300) {

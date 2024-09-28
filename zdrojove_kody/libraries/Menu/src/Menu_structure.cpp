@@ -319,7 +319,6 @@ void Menu::setMenuStructure(int menuId)
                         for (int i = size1; i < size2; i += incrementBy)
                         {
                             menuItemNames[index] = (String)(size1 + (index * incrementBy));
-                            Serial.println((String)(size1 + (index * incrementBy)));
 
                             index++;
                         }

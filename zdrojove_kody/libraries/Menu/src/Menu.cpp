@@ -213,9 +213,25 @@ void Menu::startMenu(int menuId)
                 renderFramesLeft[taskId] = 2;
                 if (menuIncrement > 0)
                 {
-                    menuScroll = (settings[currentSettingIndex]-menuFirstValue)/ menuIncrement;
-                    Serial.println("menuScroll");
-                    Serial.println(menuScroll);
+                    int currentValue = (settings[currentSettingIndex] - menuFirstValue) / menuIncrement;
+                    if (settings[currentSettingIndex] == menuLastValue)
+                    {
+menuScroll = currentValue+1;
+                    }
+else{
+    menuScroll = currentValue;
+}
+                    /*int ceilValue = ceil(menuLastValue / menuIncrement) + 1;
+
+                    if (currentValue < ceilValue)
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                        menuScroll = ceilValue;
+                    }*/
                 }
                 else
                 {

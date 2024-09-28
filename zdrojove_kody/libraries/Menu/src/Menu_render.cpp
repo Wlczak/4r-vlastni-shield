@@ -549,7 +549,6 @@ void Menu::renderMenu(int taskId)
                 lastMillis = millis();
                 renderMenuItems = false;
                 selectedItemIndex = menuScroll;
-                Serial.println(selectedItemIndex);
             }
         }
 
@@ -578,7 +577,16 @@ void Menu::renderMenu(int taskId)
 
                 if (menuIncrement > 0)
                 {
-                    settings[currentSettingIndex] = menuFirstValue + (selectedItemIndex * menuIncrement);
+                    int currentValue = menuFirstValue + (selectedItemIndex * menuIncrement);
+
+                    if (currentValue > menuLastValue)
+                    {
+                        settings[currentSettingIndex] = menuLastValue;
+                    }
+                    else
+                    {
+                        settings[currentSettingIndex] = currentValue;
+                    }
                 }
                 else
                 {

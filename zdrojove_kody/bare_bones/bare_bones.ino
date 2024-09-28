@@ -30,6 +30,7 @@ bool lastClk = digitalRead(re_clk);
 long debounceTime = millis();
 long lastSwPress = millis();
 long switchHold = -1;
+long switchHoldTime = 500;
 bool isSwitchPressed = false;
 long lastActive = millis();
 bool sleeping = false;
@@ -74,7 +75,7 @@ void IRAM_ATTR handleSw() {
     wake_up();
     if (digitalRead(re_sw) == HIGH) {
 
-      if (millis() - switchHold < 300) {
+      if (millis() - switchHold < switchHoldTime) {
         menu.inputEnter();
 
       } else {
@@ -177,7 +178,7 @@ void loop() {
       debug = !debug;
     }
     if (isSwitchPressed) {
-      if (millis() - switchHold > 300) {
+      if (millis() - switchHold > switchHoldTime) {
         analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));
       }
       if (millis() - switchHold > 3000) {

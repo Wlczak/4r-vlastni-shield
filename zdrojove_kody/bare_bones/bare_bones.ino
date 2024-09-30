@@ -17,7 +17,7 @@
 #define neopixelLeds 8
 
 // automatic sleep timeout
-#define sleepAfterS 20
+#define sleepAfterS 120
 
 // initialization of Menu object
 Menu Menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);

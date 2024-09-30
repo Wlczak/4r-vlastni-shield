@@ -1,30 +1,40 @@
 #include <Menu.h>
 #include <WiCo.h>
 
+// rotation encoder pins
 #define re_sw D5
 #define re_dt D6
 #define re_clk D7
 
+// debug leds pins
 #define led_r D3
 #define led_b D0
 
-
+// Dallas instrument pin
 #define one_w_temp D4
+
+// Neopixel variables
 #define neopixelPin D8
 #define neopixelLeds 8
 
+// automatic sleep timeout
 #define sleepAfterS 20
 
+// initialization of Menu object
+Menu Menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
 
-Menu menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
+// initialization of WiCo object
 WiCo WiCo();
 
-
+// stores incoming serial input
 int incomingSerial;
+
+// fps counter releated variables
 long fpsTime = millis();
 long fpsCounter = 0;
 bool showFps = false;
 
+// rotary encoder related variables
 bool lastDt = digitalRead(re_dt);
 bool lastClk = digitalRead(re_clk);
 long debounceTime = millis();
@@ -35,16 +45,19 @@ bool isSwitchPressed = false;
 long lastActive = millis();
 bool sleeping = false;
 
+// custom LCD characters debug screen
 bool debug = false;
 
+// method for handling screen wake up
 void wake_up() {
   lastActive = millis();
   if (sleeping) {
-    menu.wakeUp();
+    Menu.wakeUp();
     sleeping = false;
   }
 }
 
+// handles rotary encoder rotation
 void IRAM_ATTR handleRotation() {
 
   bool dt = digitalRead(re_dt);
@@ -58,28 +71,29 @@ void IRAM_ATTR handleRotation() {
     bool clk = digitalRead(re_clk);
 
     if (dt == clk && lastDt == lastClk || dt == lastDt && clk != lastClk) {
-      menu.inputUp();
+      Menu.inputUp();
       lastDt = digitalRead(re_dt);
       lastClk = digitalRead(re_clk);
     }
     if (dt != clk && lastDt != lastClk || dt == lastDt && clk != lastClk) {
-      menu.inputDown();
+      Menu.inputDown();
       lastDt = digitalRead(re_dt);
       lastClk = digitalRead(re_clk);
     }
   }
 }
 
+// handles rotary encoder switch
 void IRAM_ATTR handleSw() {
   if (millis() - lastSwPress > 500) {
     wake_up();
     if (digitalRead(re_sw) == HIGH) {
 
       if (millis() - switchHold < switchHoldTime) {
-        menu.inputEnter();
+        Menu.inputEnter();
 
       } else {
-        menu.inputBack();
+        Menu.inputBack();
       }
       switchHold = -1;
       digitalWrite(led_b, LOW);
@@ -102,36 +116,37 @@ void setup() {
   pinMode(led_r, OUTPUT);
   pinMode(led_b, OUTPUT);
 
-  menu.loadChars();
+  Menu.loadChars();
 
-  menu.loadingScreen();
-  menu.centerTypeOut(0, "V.corp. shield", false);
-  menu.centerTypeOut(1, "v1.0.1", true);
-  menu.asynchDelay(1000);
-  menu.clearArea(false);
+  Menu.loadingScreen();
+  Menu.centerTypeOut(0, "V.corp. shield", false);
+  Menu.centerTypeOut(1, "v1.0.1", true);
+  Menu.asynchDelay(1000);
+  Menu.clearArea(false);
 
-  menu.startMenu(1);
+  Menu.startMenu(1);
   digitalWrite(led_b, LOW);
 }
 
+// handling of serial input for debugging purposes
 void handleSerial() {
   incomingSerial = Serial.read();
 
   switch (incomingSerial) {
     case 49:  // left
-      menu.inputBack();
+      Menu.inputBack();
       break;
     case 50:  // down
-      menu.inputDown();
+      Menu.inputDown();
       break;
     case 51:  // right
-      menu.inputEnter();
+      Menu.inputEnter();
       break;
     case 53:  // up
-      menu.inputUp();
+      Menu.inputUp();
       break;
     case 114:  // r
-      //menu.asynchDelay(5000);
+      //Menu.asynchDelay(5000);
       break;
     case 102:  // f
       showFps = !showFps;
@@ -140,10 +155,10 @@ void handleSerial() {
       debug = !debug;
       break;
     case 109:  // m
-      menu.startMenu(1);
+      Menu.startMenu(1);
       break;
     case 110:  // n
-      menu.sleep();
+      Menu.sleep();
       sleeping = true;
       break;
     default:
@@ -152,6 +167,7 @@ void handleSerial() {
   }
 }
 
+// fps counter
 void fps() {
   fpsCounter++;
   if (millis() - fpsTime > 1000) {
@@ -164,22 +180,22 @@ void fps() {
 
 void loop() {
   if (sleeping) {
-    yield();
+    yield();  // gives time to process backend processes like Wi-Fi connections
   } else {
     if (Serial.available() > 0) {
       handleSerial();
     }
-    menu.render();
+    Menu.render(); // main rendering method, handles everything on the LCD
     if (showFps) {
-      fps();
+      fps(); // returns fps count with serial
     }
-    if (debug) {
-      menu.debug();
+    if (debug) { // prints LCD custom characters debug screen
+      Menu.debug();
       debug = !debug;
     }
     if (isSwitchPressed) {
       if (millis() - switchHold > switchHoldTime) {
-        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));
+        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255)); // lights up blue LED if switch pressed for hold time
       }
       if (millis() - switchHold > 3000) {
         isSwitchPressed = false;
@@ -187,8 +203,8 @@ void loop() {
         switchHold = -1;
       }
     }
-    if (millis() - lastActive > sleepAfterS * 1000) {
-      menu.sleep();
+    if (millis() - lastActive > sleepAfterS * 1000) { // starts sleep mode if inactive
+      Menu.sleep();
       sleeping = true;
     }
   }

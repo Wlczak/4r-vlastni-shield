@@ -1,5 +1,4 @@
 #include <Menu.h>
-#include <WiCo.h>
 
 // rotation encoder pins
 #define re_sw D5
@@ -22,9 +21,6 @@
 
 // initialization of Menu object
 Menu Menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
-
-// initialization of WiCo object
-WiCo WiCo();
 
 // stores incoming serial input
 int incomingSerial;

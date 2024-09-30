@@ -3,27 +3,22 @@
 
 #include <Adafruit_NeoPixel.h>
 
-#include <Arduino.h>
+#include <Arduino.h> // imports arduino stadard lib
 
 class RGB
 {
 public:
     RGB(int rgb_pixels, int rgb_pin);
-    // renders
+    // renders rgb strip effects
     void render(int effectId, int brightness);
 
+    // effects methods
     void blank();
     void light();
 
-    enum class Types : int
-    {
-        Blank = 0,
-        Rainbow = 1
-    };
-
 private:
-    int pixels;
     Adafruit_NeoPixel neofruit;
+    int pixels;
 };
 
 #endif

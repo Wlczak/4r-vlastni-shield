@@ -216,20 +216,21 @@ void Menu::startMenu(int menuId)
                     int currentValue = (settings[currentSettingIndex] - menuFirstValue) / menuIncrement;
                     if (settings[currentSettingIndex] == menuLastValue)
                     {
-menuScroll = currentValue+1;
+                        menuScroll = currentValue + 1;
                     }
-else{
-    menuScroll = currentValue;
-}
+                    else
+                    {
+                        menuScroll = currentValue;
+                    }
                     /*int ceilValue = ceil(menuLastValue / menuIncrement) + 1;
 
                     if (currentValue < ceilValue)
                     {
-                        
+
                     }
                     else
                     {
-                        
+
                         menuScroll = ceilValue;
                     }*/
                 }

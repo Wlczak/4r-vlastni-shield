@@ -15,6 +15,7 @@ void RGB::render(int effectId, int brightness)
     neofruit.setBrightness(brightness);
     switch (effectId)
     {
+        // renders correct effect
     case EFFECT_BLANK:
         blank();
         break;

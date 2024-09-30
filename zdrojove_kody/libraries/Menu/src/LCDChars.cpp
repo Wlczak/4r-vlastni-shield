@@ -2,9 +2,8 @@
 
 LCDChars::LCDChars(LiquidCrystal_I2C &lcd) : lcd(lcd)
 {
-  //Serial.begin(9600); //debugging only
+  // Serial.begin(9600); //debugging only
 }
-
 
 void LCDChars::loadChars()
 {
@@ -20,7 +19,7 @@ void LCDChars::loadChars()
     }
     lcd.createChar(i, charMap);
   }
-  lcd.setCursor(0,0);
+  lcd.setCursor(0, 0);
 }
 void LCDChars::writeAllChars()
 {

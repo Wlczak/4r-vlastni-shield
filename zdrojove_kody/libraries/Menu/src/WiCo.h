@@ -1,7 +1,7 @@
 #ifndef WiCo_h
 #define WiCo_h
 
-#include <Arduino.h>
+#include <Arduino.h> // imports arduino stadard lib
 #include <string>
 #include <vector>
 

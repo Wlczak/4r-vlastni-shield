@@ -3,9 +3,9 @@
 
 #include "LCDChars.h"
 
-#include <cmath>
+#include <cmath> // i dont think this needs to be here but am afraid that if I touch anything it will just fall like a house of cars -_-
 
-#include <Arduino.h>
+#include <Arduino.h> // imports arduino stadard lib
 #include <LiquidCrystal_I2C.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
@@ -49,37 +49,37 @@
 class Menu
 {
 public:
-  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin, uint8_t neopixelPin, uint8_t neopixelCount);
+  Menu(uint8_t lcd_Addr, uint8_t lcd_cols, uint8_t lcd_rows, uint8_t oneWirePin, uint8_t neopixelPin, uint8_t neopixelCount); // counstructor that assigns all class level objects
 
   // execute slowly, works like intended
-  void loadChars();
-  void debug();
-  void loadingScreen();
-  void error(String msg);
+  void loadChars();       // loads custom characters
+  void debug();           // shows custChar debug screen
+  void loadingScreen();   // shows animated loading screen
+  void error(String msg); // prints error with red led flash
 
   // execute in single frame - fast enough to use anywhere in code
-  void clearArea(bool simultaneous);
-  void clearArea(int x1, int x2, int y1, int y2, bool simultaneous);
+  void clearArea(bool simultaneous);                                 // clears whole screen
+  void clearArea(int x1, int x2, int y1, int y2, bool simultaneous); // clears specified area & queued
 
   // simple lcd print helper methods
-  void synchClearArea(int x1, int x2, int y1, int y2);
-  void printMsg(int x, int y, String msg);
-  void centerPrintMsg(int y, String msg);
+  void synchClearArea(int x1, int x2, int y1, int y2); // clears specified area
+  void printMsg(int x, int y, String msg);             // prints msg on specific coords & checks if can be printed
+  void centerPrintMsg(int y, String msg);              // prints centered msg on specific coords & checks if can be printed
 
-  // execute slowly - stops the whole code from executing
+  // execute slowly - stops the whole code from executing // Wrong turn? You look lost, stranger.
 
   // modular frame by frame sytem
-  void startMenu(int menuId);
-  void centerTypeOut(int row, String msg, bool simultaneous);
-  void typeOut(int startX, int startY, String msg, bool simultaneous);
-  void asynchDelay(long time);
+  void startMenu(int menuId);                                          // starts menu process by id
+  void centerTypeOut(int row, String msg, bool simultaneous);          // centered type out animation
+  void typeOut(int startX, int startY, String msg, bool simultaneous); // type out animation
+  void asynchDelay(long time);                                         // adds delay as a queueble item
 
   // rendering engine methods
-  void render();
+  void render(); // render every render task
 
   // puts the display to sleep mode
-  void sleep();
-  void wakeUp();
+  void sleep();  // sleep
+  void wakeUp(); // wake up
 
 private:
   // object declaration

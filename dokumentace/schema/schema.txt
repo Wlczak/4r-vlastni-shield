@@ -8,7 +8,4 @@ D6 - EN_DT
 D7 - EN_CLK
 D8 - Neopixel
 
-TX
-RX
-
 A0 - PHOTO

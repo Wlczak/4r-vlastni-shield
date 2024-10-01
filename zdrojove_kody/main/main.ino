@@ -1,86 +1,207 @@
-#include <LCDI2C_Katakana_Symbols.h>
+#include <Menu.h>
 
-#include <LiquidCrystal_I2C.h>
+// rotation encoder pins
+#define re_sw D5
+#define re_dt D6
+#define re_clk D7
 
-//LiquidCrystal_I2C lcd(0x27, 16, 2);
-LCDI2C_Katakana_Symbols lcd2(0x27, 16, 2);
-char array1[] = "デモネエニホンゴガデキル　";      // první řádek displeje (26 znaků!)
-char array2[] = "ﾃﾞﾓ ﾈｴ ﾆﾎﾝｺﾞ ｶﾞ ﾃﾞｷﾙ          ";  // druhý řádek displeje (26 znaků!)
-int tim = 500;                                     //délka pauzy
-// inicializace knihovny displej
+// debug leds pins
+#define led_r D3
+#define led_b D0
 
-unsigned long etime;
-unsigned long etime2;
-int counter;
-int counter2;
-byte smiley[8] = {
-  B00000,
-  B01010,
-  B00000,
-  B00000,
-  B10001,
-  B01110,
-  B00000
-};
-byte test[8] = {
-  B00000,
-  B11111,
-  B00100,
-  B00100,
-  B00100,
-  B00100,
-  B00100
-};
-byte test2[8] = {
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B00000,
-  B11111,
-  B00000
-};
+// Dallas instrument pin
+#define one_w_temp D4
+
+// Neopixel variables
+#define neopixelPin D8
+#define neopixelLeds 8
+
+// automatic sleep timeout
+#define sleepAfterS 120
+
+// initialization of Menu object
+Menu Menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
+
+// stores incoming serial input
+int incomingSerial;
+
+// fps counter releated variables
+long fpsTime = millis();
+long fpsCounter = 0;
+bool showFps = false;
+
+// rotary encoder related variables
+bool lastDt = digitalRead(re_dt);
+bool lastClk = digitalRead(re_clk);
+long debounceTime = millis();
+long lastSwPress = millis();
+long switchHold = -1;
+long switchHoldTime = 400;
+bool isSwitchPressed = false;
+long lastActive = millis();
+bool sleeping = false;
+
+// custom LCD characters debug screen
+bool debug = false;
+
+// method for handling screen wake up
+void wake_up() {
+  lastActive = millis();
+  if (sleeping) {
+    Menu.wakeUp();
+    sleeping = false;
+  }
+}
+
+// handles rotary encoder rotation
+void IRAM_ATTR handleRotation() {
+
+  bool dt = digitalRead(re_dt);
+  bool clk = digitalRead(re_clk);
+
+  if (digitalRead(re_sw) == HIGH && millis() - debounceTime > 10) {
+    wake_up();
+    debounceTime = millis();
+
+    bool dt = digitalRead(re_dt);
+    bool clk = digitalRead(re_clk);
+
+    if (dt == clk && lastDt == lastClk || dt == lastDt && clk != lastClk) {
+      Menu.inputUp();
+      lastDt = digitalRead(re_dt);
+      lastClk = digitalRead(re_clk);
+    }
+    if (dt != clk && lastDt != lastClk || dt == lastDt && clk != lastClk) {
+      Menu.inputDown();
+      lastDt = digitalRead(re_dt);
+      lastClk = digitalRead(re_clk);
+    }
+  }
+}
+
+// handles rotary encoder switch
+void IRAM_ATTR handleSw() {
+  if (millis() - lastSwPress > 500) {
+    wake_up();
+    if (digitalRead(re_sw) == HIGH) {
+
+      if (millis() - switchHold < switchHoldTime) {
+        Menu.inputEnter();
+
+      } else {
+        Menu.inputBack();
+      }
+      switchHold = -1;
+      digitalWrite(led_b, LOW);
+      isSwitchPressed = false;
+    } else {
+      switchHold = millis();
+      isSwitchPressed = true;
+    }
+  }
+}
+
 void setup() {
-  lcd2.init();
-  etime = millis();
-  etime2 = millis();
-  counter = 0;
-  counter2 = 0;
-  lcd2.backlight();
-  lcd2.clear();
-  lcd2.createChar(0, smiley);
-  lcd2.createChar(1, test);
-  lcd2.createChar(2, test2);
+  Serial.begin(115200);
+  Serial.println("");
 
-  // Display the custom character
-  lcd2.setCursor(0, 0);
-  lcd2.print("Smiley: ");
+  pinMode(re_sw, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(re_clk), handleRotation, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(re_sw), handleSw, CHANGE);
 
-  lcd2.write(byte(1));
-  lcd2.write(byte(2));
-  lcd2.write(byte(1));
+  pinMode(led_r, OUTPUT);
+  pinMode(led_b, OUTPUT);
+
+  Menu.loadChars();
+
+  Menu.loadingScreen();
+  Menu.centerTypeOut(0, "V.corp. shield", false);
+  Menu.centerTypeOut(1, "v1.0.1", true);
+  Menu.asynchDelay(1000);
+  Menu.clearArea(false);
+
+  Menu.startMenu(1);
+  digitalWrite(led_b, LOW);
+}
+
+// handling of serial input for debugging purposes
+void handleSerial() {
+  incomingSerial = Serial.read();
+
+  switch (incomingSerial) {
+    case 49:  // left
+      Menu.inputBack();
+      break;
+    case 50:  // down
+      Menu.inputDown();
+      break;
+    case 51:  // right
+      Menu.inputEnter();
+      break;
+    case 53:  // up
+      Menu.inputUp();
+      break;
+    case 114:  // r
+      //Menu.asynchDelay(5000);
+      break;
+    case 102:  // f
+      showFps = !showFps;
+      break;
+    case 100:  // d
+      debug = !debug;
+      break;
+    case 109:  // m
+      Menu.startMenu(1);
+      break;
+    case 110:  // n
+      Menu.sleep();
+      sleeping = true;
+      break;
+    default:
+      Serial.print("undefined: ");
+      Serial.println(incomingSerial);
+  }
+}
+
+// fps counter
+void fps() {
+  fpsCounter++;
+  if (millis() - fpsTime > 1000) {
+    // Serial.println(millis() - fpsTime);
+    Serial.println(fpsCounter);
+    fpsTime = millis();
+    fpsCounter = 0;
+  }
 }
 
 void loop() {
-  /*if (millis() - etime > 1000) {
-    etime = millis();
-    lcd2.setCursor(0, 0);
-    lcd2.print("カウター:");
-    lcd2.setCursor(6, 0);
-    String str = String(counter);
-    lcd2.print(str + "セカンド");
-    counter++;
-  }*/
-  if (millis() - etime2 > 30) {
-    etime2 = millis();
-    lcd2.setCursor(counter2, 1);
-    lcd2.print("-");
-    lcd2.setCursor(15 - counter2, 1);
-    lcd2.print("+");
-    if (counter2 == 15) {
-      counter2 = 0;
-    } else {
-      counter2++;
+  if (sleeping) {
+    yield();  // gives time to process backend processes like Wi-Fi connections
+  } else {
+    if (Serial.available() > 0) {
+      handleSerial();
+    }
+    Menu.render(); // main rendering method, handles everything on the LCD
+    if (showFps) {
+      fps(); // returns fps count with serial
+    }
+    if (debug) { // prints LCD custom characters debug screen
+      Menu.debug();
+      debug = !debug;
+    }
+    if (isSwitchPressed) {
+      if (millis() - switchHold > switchHoldTime) {
+        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255)); // lights up blue LED if switch pressed for hold time
+      }
+      if (millis() - switchHold > 3000) {
+        isSwitchPressed = false;
+        digitalWrite(led_b, LOW);
+        switchHold = -1;
+      }
+    }
+    if (millis() - lastActive > sleepAfterS * 1000) { // starts sleep mode if inactive
+      Menu.sleep();
+      sleeping = true;
     }
   }
 }

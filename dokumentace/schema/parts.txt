@@ -1,6 +1,0 @@
-led x2 - ok
-lcd - 
-led strip -
-temp - ok
-photo - ok
-encoder - ok

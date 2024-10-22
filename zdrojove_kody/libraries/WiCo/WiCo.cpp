@@ -38,6 +38,10 @@ void WiCo::connectSTA()
         for (int i = 0; i < sta_ssid.size(); i++)
         {
             wifiMulti.addAP(sta_ssid.at(i), sta_psk.at(i));
+            Serial.println("...");
+            Serial.print(sta_ssid.at(i));
+            Serial.print("|");
+            Serial.println(sta_psk.at(i));
         }
         for (int i = 0; i < 30; i++)
         {

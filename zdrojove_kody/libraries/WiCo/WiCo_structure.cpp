@@ -46,18 +46,4 @@ void WiCo::setWebStructure()
 	server->send(200, "text/css", output);
 	});
 
-	server->on("/test",[this]() 
-	{
-	auto idk_name= server->arg("idk_name");
-	
-
-	String output = "";
-	
-	JsonDocument json;
-	json["test"] = idk_name;
-	output = serializeJson(json, Serial);
-
-	server->send(200, "text/plain", output);
-	});
-
 }

@@ -9,7 +9,7 @@
 #include <ESP8266WiFiMulti.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-#include <ArduinoJson.h>
+#include <PubSubClient.h>
 
 class WiCo
 {
@@ -33,6 +33,8 @@ public:
     void handleWebServer();
     void setWebStructure();
 
+    // MQTT
+    void connectMQTT();
 private:
     // settings setting methods
     void setAPsettings();

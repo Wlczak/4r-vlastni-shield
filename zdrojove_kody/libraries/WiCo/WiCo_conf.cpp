@@ -12,8 +12,8 @@ void WiCo::setAPsettings()
 void WiCo::setSTAsettings()
 {
     sta_timeout = 5000; // in ms
-    sta_ssid = {"ADAM-PC", "wemos", "PixelSpot", "3301-IoT"};
-    sta_psk = {"12345678", "wemosD1R2", "0987654321", "mikrobus"};
+    sta_ssid = {"3301-IoT", "ADAM-PC", "wemos", "PixelSpot"};
+    sta_psk = {"mikrobus", "12345678", "wemosD1R2", "0987654321"};
 
     if (sta_ssid.size() != sta_psk.size())
     {

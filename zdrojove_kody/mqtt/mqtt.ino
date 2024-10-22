@@ -1,11 +1,11 @@
 #include <WiCo.h>
 
-WiCo WiCo;
+WiCo wifi;
 
 void setup() {
   Serial.begin(115200);
-  Serial.print("hi");
-  WiCo.startAP();
+  Serial.println("");
+  wifi.connectSTA();
 }
 
 void loop() {

@@ -30,6 +30,7 @@ String WiCo::getAPIP()
 
 void WiCo::connectSTA()
 {
+    Serial.println("connecting");
     if (!isSTAActive)
     {
         WiFi.mode(WIFI_STA);
@@ -48,6 +49,8 @@ void WiCo::connectSTA()
                 Serial.print(" ");
                 Serial.println(WiFi.localIP());
                 break;
+            }else{
+                Serial.println("not connected");
             }
         }
         isSTAActive = true;

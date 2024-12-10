@@ -2,7 +2,7 @@
 
 void WiCo::connectMQTT()
 {
-    PubSubClient client(espClient);
+   //client();
 }
 
 void WiCo::handleInMQTT(char *topic, byte *payload, unsigned int length)
@@ -27,6 +27,7 @@ void WiCo::reconnectMQTT()
         String clientId = "ESP8266Client-";
         clientId += String(random(0xffff), HEX);
         // Attempt to connect
+        Serial.println("Connecting...");
         if (client.connect(clientId.c_str()))
         {
             Serial.println("connected");
@@ -48,6 +49,7 @@ void WiCo::reconnectMQTT()
 
 void WiCo::setupMQTT()
 {
+    client.setClient(espClient);
     client.setServer(mqtt_server, 1883);
     client.setCallback(WiCo::handleInMQTT);
 }

@@ -8,6 +8,7 @@ void setup() {
   WiCo.setSTAsettings();
   WiCo.connectSTA();
   WiCo.connectMQTT();
+  WiCo.setupMQTT();
 }
 
 void loop() {

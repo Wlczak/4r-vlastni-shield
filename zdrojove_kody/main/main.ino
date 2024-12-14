@@ -59,6 +59,11 @@ void IRAM_ATTR handleRotation() {
   bool dt = digitalRead(re_dt);
   bool clk = digitalRead(re_clk);
 
+  Serial.print("dt: ");
+  Serial.println(dt);
+  Serial.print("clk: ");
+  Serial.println(clk);
+
   if (digitalRead(re_sw) == HIGH && millis() - debounceTime > 10) {
     wake_up();
     debounceTime = millis();
@@ -81,6 +86,7 @@ void IRAM_ATTR handleRotation() {
 
 // handles rotary encoder switch
 void IRAM_ATTR handleSw() {
+  Serial.println("clicked!!!");
   if (millis() - lastSwPress > 500) {
     wake_up();
     if (digitalRead(re_sw) == HIGH) {

@@ -55,10 +55,11 @@ void Menu::render()
             digitalWrite(LED_B, HIGH);
             digitalWrite(LED_R, HIGH);
             break;
-        default:
+        case 0:
             digitalWrite(LED_B, LOW);
             digitalWrite(LED_R, LOW);
-
+            break;
+        default:
             break;
         }
         neopixel.render(settings[SET_NEOPIXEL_EFFECT], settings[SET_NEOPIXEL_BRIGHTNESS]);
@@ -400,19 +401,17 @@ void Menu::renderMenu(int taskId)
                     {
                         settings[SET_DEBUG_LED] = 1;
                     }
-                    else if(temp > 23)
+                    else if (temp > 23)
                     {
                         settings[SET_DEBUG_LED] = 2;
-                    }
-                    else
-                    {
-                        settings[SET_DEBUG_LED] = 0;
                     }
                 }
                 else
                 {
+
                     settings[SET_NEOPIXEL_EFFECT] = 0;
                     settings[SET_NEOPIXEL_BRIGHTNESS] = 0;
+                    settings[SET_DEBUG_LED] = 0;
                 }
             }
 

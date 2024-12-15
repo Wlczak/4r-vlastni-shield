@@ -388,27 +388,34 @@ void Menu::renderMenu(int taskId)
 
             if (deviceId == 1)
             {
+                // sleep
+                int minTemp = 19;
+                int maxTemp = 20;
+
+                // work
+                /*int minTemp = 21;
+                int maxTemp = 23;*/
+
                 std::string text = data.c_str();
                 Serial.println(text.c_str());
                 text = text.substr(0, text.size() - 3);
                 double temp = std::stod(text);
                 Serial.println(temp);
-                if (temp < 21 || temp > 23)
+                if (temp < minTemp || temp > maxTemp)
                 {
                     settings[SET_NEOPIXEL_EFFECT] = 2;
                     settings[SET_NEOPIXEL_BRIGHTNESS] = 20;
-                    if (temp < 21)
+                    if (temp < minTemp)
                     {
                         settings[SET_DEBUG_LED] = 1;
                     }
-                    else if (temp > 23)
+                    else if (temp > maxTemp)
                     {
                         settings[SET_DEBUG_LED] = 2;
                     }
                 }
                 else
                 {
-
                     settings[SET_NEOPIXEL_EFFECT] = 0;
                     settings[SET_NEOPIXEL_BRIGHTNESS] = 0;
                     settings[SET_DEBUG_LED] = 0;

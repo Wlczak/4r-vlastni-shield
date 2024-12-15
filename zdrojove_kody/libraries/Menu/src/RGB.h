@@ -15,6 +15,7 @@ public:
     // effects methods
     void blank();
     void light();
+    void red();
 
 private:
     Adafruit_NeoPixel neofruit;

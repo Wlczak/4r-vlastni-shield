@@ -44,18 +44,21 @@ void Menu::render()
         switch (settings[SET_DEBUG_LED])
         {
         case 1:
-            digitalWrite(D0, HIGH);
-            digitalWrite(D3, LOW);
+            digitalWrite(LED_B, HIGH);
+            digitalWrite(LED_R, LOW);
             break;
         case 2:
-            digitalWrite(D0, LOW);
-            digitalWrite(D3, HIGH);
+            digitalWrite(LED_B, LOW);
+            digitalWrite(LED_R, HIGH);
             break;
         case 3:
-            digitalWrite(D0, HIGH);
-            digitalWrite(D3, HIGH);
+            digitalWrite(LED_B, HIGH);
+            digitalWrite(LED_R, HIGH);
             break;
         default:
+            digitalWrite(LED_B, LOW);
+            digitalWrite(LED_R, LOW);
+
             break;
         }
         neopixel.render(settings[SET_NEOPIXEL_EFFECT], settings[SET_NEOPIXEL_BRIGHTNESS]);
@@ -381,6 +384,37 @@ void Menu::renderMenu(int taskId)
         if (millis() - lastMillis > 100)
         {
             data = readDeviceInput(deviceId);
+
+            if (deviceId == 1)
+            {
+                std::string text = data.c_str();
+                Serial.println(text.c_str());
+                text = text.substr(0, text.size() - 3);
+                double temp = std::stod(text);
+                Serial.println(temp);
+                if (temp < 21 || temp > 23)
+                {
+                    settings[SET_NEOPIXEL_EFFECT] = 2;
+                    settings[SET_NEOPIXEL_BRIGHTNESS] = 20;
+                    if (temp < 21)
+                    {
+                        settings[SET_DEBUG_LED] = 1;
+                    }
+                    else if(temp > 23)
+                    {
+                        settings[SET_DEBUG_LED] = 2;
+                    }
+                    else
+                    {
+                        settings[SET_DEBUG_LED] = 0;
+                    }
+                }
+                else
+                {
+                    settings[SET_NEOPIXEL_EFFECT] = 0;
+                    settings[SET_NEOPIXEL_BRIGHTNESS] = 0;
+                }
+            }
 
             // checks to delete any characters that are not automatically overflowing
             if (data.length() != lastDataLength)

@@ -17,7 +17,7 @@
 #define neopixelLeds 8
 
 // automatic sleep timeout
-#define sleepAfterS 120
+#define sleepAfterS 60
 
 // initialization of Menu object
 Menu Menu(0x27, 16, 2, one_w_temp, neopixelPin, neopixelLeds);
@@ -182,22 +182,27 @@ void fps() {
 
 void loop() {
   if (sleeping) {
-    yield();  // gives time to process backend processes like Wi-Fi connections
+    yield();        // gives time to process backend processes like Wi-Fi connections
+    Menu.render();  // main rendering method, handles everything on the LCD
+    for (int i = 0; i < 30; i++) {
+      delay(1000);
+      yield();
+    }
   } else {
     if (Serial.available() > 0) {
       handleSerial();
     }
-    Menu.render(); // main rendering method, handles everything on the LCD
+    Menu.render();  // main rendering method, handles everything on the LCD
     if (showFps) {
-      fps(); // returns fps count with serial
+      fps();  // returns fps count with serial
     }
-    if (debug) { // prints LCD custom characters debug screen
+    if (debug) {  // prints LCD custom characters debug screen
       Menu.debug();
       debug = !debug;
     }
     if (isSwitchPressed) {
       if (millis() - switchHold > switchHoldTime) {
-        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255)); // lights up blue LED if switch pressed for hold time
+        analogWrite(led_b, map(analogRead(A0), 0, 1023, 0, 255));  // lights up blue LED if switch pressed for hold time
       }
       if (millis() - switchHold > 3000) {
         isSwitchPressed = false;
@@ -205,7 +210,7 @@ void loop() {
         switchHold = -1;
       }
     }
-    if (millis() - lastActive > sleepAfterS * 1000) { // starts sleep mode if inactive
+    if (millis() - lastActive > sleepAfterS * 1000) {  // starts sleep mode if inactive
       Menu.sleep();
       sleeping = true;
     }

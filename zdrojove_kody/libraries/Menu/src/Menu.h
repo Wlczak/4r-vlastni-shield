@@ -4,6 +4,7 @@
 #include "LCDChars.h"
 
 #include <cmath> // i dont think this needs to be here but am afraid that if I touch anything it will just fall like a house of cars -_-
+#include <string>
 
 #include <Arduino.h> // imports arduino stadard lib
 #include <LiquidCrystal_I2C.h>

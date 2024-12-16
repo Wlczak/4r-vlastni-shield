@@ -389,12 +389,12 @@ void Menu::renderMenu(int taskId)
             if (deviceId == 1)
             {
                 // sleep
-                int minTemp = 19;
-                int maxTemp = 20;
+                /*int minTemp = 19;
+                int maxTemp = 20;*/
 
                 // work
-                /*int minTemp = 21;
-                int maxTemp = 23;*/
+                int minTemp = 20;
+                int maxTemp = 23;
 
                 std::string text = data.c_str();
                 Serial.println(text.c_str());

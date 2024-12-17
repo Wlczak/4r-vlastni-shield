@@ -67,10 +67,18 @@ void WiCo::runMQTT()
     if (now - lastMsg > 2000)
     {
         lastMsg = now;
-        ++value;
-        snprintf(msg, MSG_BUFFER_SIZE, "hello world #%ld", value);
-        Serial.print("Publish message: ");
-        Serial.println(msg);
-        client.publish("4hs1/vlceka/wemos/hello", msg);
+
+        sensors.setWaitForConversion(false);
+        sensors.requestTemperatures();
+        temp = sensors.getTempCByIndex(0);
+        if (temp != DEVICE_DISCONNECTED_C)
+        {
+        }
+        else
+        {
+            temp = -1;
+        }
+
+        client.publish("esp", output);
     }
 }

@@ -126,7 +126,7 @@ void setup() {
   Menu.asynchDelay(1000);
   Menu.clearArea(false);
 
-  Menu.startMenu(1);
+  Menu.startMenu(2);
   digitalWrite(led_b, LOW);
 }
 

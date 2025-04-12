@@ -1,3 +1,6 @@
 [submodule "zdrojove_kody/libraries/Adafruit_NeoPixel"]
 	path = zdrojove_kody/libraries/Adafruit_NeoPixel
 	url = https://github.com/adafruit/Adafruit_NeoPixel.git
+[submodule "zdrojove_kody/libraries/ArduinoJson"]
+	path = zdrojove_kody/libraries/ArduinoJson
+	url = https://github.com/bblanchon/ArduinoJson.git

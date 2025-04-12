@@ -4,3 +4,6 @@
 [submodule "zdrojove_kody/libraries/ArduinoJson"]
 	path = zdrojove_kody/libraries/ArduinoJson
 	url = https://github.com/bblanchon/ArduinoJson.git
+[submodule "zdrojove_kody/libraries/Arduino-Temperature-Control-Library"]
+	path = zdrojove_kody/libraries/Arduino-Temperature-Control-Library
+	url = https://github.com/milesburton/Arduino-Temperature-Control-Library.git

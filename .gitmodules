@@ -1,0 +1,3 @@
+[submodule "zdrojove_kody/libraries/Adafruit_NeoPixel"]
+	path = zdrojove_kody/libraries/Adafruit_NeoPixel
+	url = https://github.com/adafruit/Adafruit_NeoPixel.git

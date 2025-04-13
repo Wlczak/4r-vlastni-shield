@@ -16,3 +16,6 @@
 [submodule "zdrojove_kody/libraries/LiquidCrystal_I2C"]
 	path = zdrojove_kody/libraries/LiquidCrystal_I2C
 	url = https://github.com/johnrickman/LiquidCrystal_I2C.git
+[submodule "zdrojove_kody/libraries/WiCo"]
+	path = zdrojove_kody/libraries/WiCo
+	url = https://github.com/Wlczak/WiCo.git

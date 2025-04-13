@@ -7,3 +7,12 @@
 [submodule "zdrojove_kody/libraries/Arduino-Temperature-Control-Library"]
 	path = zdrojove_kody/libraries/Arduino-Temperature-Control-Library
 	url = https://github.com/milesburton/Arduino-Temperature-Control-Library.git
+[submodule "zdrojove_kody/libraries/OneWire"]
+	path = zdrojove_kody/libraries/OneWire
+	url = https://github.com/PaulStoffregen/OneWire.git
+[submodule "zdrojove_kody/libraries/LCDI2C_Multilingual"]
+	path = zdrojove_kody/libraries/LCDI2C_Multilingual
+	url = https://github.com/locple/LCDI2C_Multilingual.git
+[submodule "zdrojove_kody/libraries/LiquidCrystal_I2C"]
+	path = zdrojove_kody/libraries/LiquidCrystal_I2C
+	url = https://github.com/johnrickman/LiquidCrystal_I2C.git
